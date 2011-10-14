@@ -1,3 +1,12 @@
+SitronnierSmBoxBundle:
+    resource: "@SitronnierSmBoxBundle/Resources/config/routing.yml"
+    prefix:   /
+
+SitronnierMyUserBundle:
+    resource: "@SitronnierMyUserBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 # Internal routing configuration to handle ESI
 #_internal:
 #   resource: "@FrameworkBundle/Resources/config/routing/internal.xml"

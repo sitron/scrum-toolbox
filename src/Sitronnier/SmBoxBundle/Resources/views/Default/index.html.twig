@@ -1,0 +1,7 @@
+Hello {{ name }}!
+
+{% if is_granted('ROLE_ADMIN') %}
+<h2>You re an admin</h2>
+{% else %}
+You re not an admin
+{% endif %}
