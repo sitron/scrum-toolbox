@@ -1,3 +1,6 @@
+{% extends 'SitronnierSmBoxBundle::layout.html.twig' %}
+
+{% block body %}
 Hello {{ name }}!
 
 {% if is_granted('ROLE_ADMIN') %}
@@ -5,3 +8,4 @@ Hello {{ name }}!
 {% else %}
 You re not an admin
 {% endif %}
+{% endblock %}
