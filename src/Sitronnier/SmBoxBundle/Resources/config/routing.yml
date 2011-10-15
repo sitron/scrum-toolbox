@@ -2,6 +2,10 @@ SitronnierSmBoxBundle_homepage:
     pattern:  /hello/{name}
     defaults: { _controller: SitronnierSmBoxBundle:Default:index }
 
+SitronnierSmBoxBundle_projects:
+    resource: "@SitronnierSmBoxBundle/Resources/config/routing/project.yml"
+    prefix: /project
+
 fos_user_security:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"
     prefix: /

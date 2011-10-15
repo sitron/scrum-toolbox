@@ -1,0 +1,30 @@
+project:
+    pattern:  /
+    defaults: { _controller: "SitronnierSmBoxBundle:Project:index" }
+
+project_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "SitronnierSmBoxBundle:Project:show" }
+
+project_new:
+    pattern:  /new
+    defaults: { _controller: "SitronnierSmBoxBundle:Project:new" }
+
+project_create:
+    pattern:  /create
+    defaults: { _controller: "SitronnierSmBoxBundle:Project:create" }
+    requirements: { _method: post }
+
+project_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "SitronnierSmBoxBundle:Project:edit" }
+
+project_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "SitronnierSmBoxBundle:Project:update" }
+    requirements: { _method: post }
+
+project_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "SitronnierSmBoxBundle:Project:delete" }
+    requirements: { _method: post }

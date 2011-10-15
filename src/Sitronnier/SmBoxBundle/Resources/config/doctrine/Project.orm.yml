@@ -1,0 +1,16 @@
+Sitronnier\SmBoxBundle\Entity\Project:
+  type: entity
+  table: null
+  fields:
+    id:
+      type: integer
+      id: true
+      generator:
+        strategy: AUTO
+    title:
+      type: string
+      length: 255
+  manyToOne:
+    owner:
+      targetEntity: Sitronnier\MyUserBundle\Entity\MyUser
+  lifecycleCallbacks: {  }
