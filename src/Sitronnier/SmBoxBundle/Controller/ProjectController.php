@@ -3,6 +3,10 @@
 namespace Sitronnier\SmBoxBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\Security\Acl\Domain\ObjectIdentity;
+use Symfony\Component\Security\Acl\Domain\UserSecurityIdentity;
+use Symfony\Component\Security\Acl\Permission\MaskBuilder;
 
 use Sitronnier\SmBoxBundle\Entity\Project;
 use Sitronnier\SmBoxBundle\Form\ProjectType;
@@ -21,7 +25,10 @@ class ProjectController extends Controller
     {
         $em = $this->getDoctrine()->getEntityManager();
 
-        $entities = $em->getRepository('SitronnierSmBoxBundle:Project')->findAll();
+        $securityContext = $this->get('security.context');
+        $user = $securityContext->getToken()->getUser();
+
+        $entities = $em->getRepository('SitronnierSmBoxBundle:Project')->findByOwner($user->getId());
 
         return $this->render('SitronnierSmBoxBundle:Project:index.html.twig', array(
             'entities' => $entities
@@ -40,6 +47,14 @@ class ProjectController extends Controller
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Project entity.');
+        }
+
+        $securityContext = $this->get('security.context');
+
+        // check for view access
+        if (false === $securityContext->isGranted('VIEW', $entity))
+        {
+            throw new AccessDeniedException();
         }
 
         $deleteForm = $this->createDeleteForm($id);
@@ -82,6 +97,20 @@ class ProjectController extends Controller
             $em->persist($entity);
             $em->flush();
 
+            // creating the ACL
+            $aclProvider = $this->get('security.acl.provider');
+            $objectIdentity = ObjectIdentity::fromDomainObject($entity);
+            $acl = $aclProvider->createAcl($objectIdentity);
+
+            // retrieving the security identity of the currently logged-in user
+            $securityContext = $this->get('security.context');
+            $user = $securityContext->getToken()->getUser();
+            $securityIdentity = UserSecurityIdentity::fromAccount($user);
+
+            // grant owner access
+            $acl->insertObjectAce($securityIdentity, MaskBuilder::MASK_OWNER);
+            $aclProvider->updateAcl($acl);
+
             return $this->redirect($this->generateUrl('project_show', array('id' => $entity->getId())));
             
         }
@@ -106,6 +135,14 @@ class ProjectController extends Controller
             throw $this->createNotFoundException('Unable to find Project entity.');
         }
 
+        $securityContext = $this->get('security.context');
+
+        // check for edit access
+        if (false === $securityContext->isGranted('EDIT', $entity))
+        {
+            throw new AccessDeniedException();
+        }
+
         $editForm = $this->createForm(new ProjectType(), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
@@ -128,6 +165,14 @@ class ProjectController extends Controller
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Project entity.');
+        }
+
+        $securityContext = $this->get('security.context');
+
+        // check for edit access
+        if (false === $securityContext->isGranted('EDIT', $entity))
+        {
+            throw new AccessDeniedException();
         }
 
         $editForm   = $this->createForm(new ProjectType(), $entity);
@@ -168,6 +213,14 @@ class ProjectController extends Controller
 
             if (!$entity) {
                 throw $this->createNotFoundException('Unable to find Project entity.');
+            }
+
+            $securityContext = $this->get('security.context');
+
+            // check for delete access
+            if (false === $securityContext->isGranted('DELETE', $entity))
+            {
+                throw new AccessDeniedException();
             }
 
             $em->remove($entity);

@@ -1,4 +1,7 @@
 security:
+    acl:
+        connection: default
+
     encoders:
         Symfony\Component\Security\Core\User\User: plaintext
 
