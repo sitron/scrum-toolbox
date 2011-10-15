@@ -24,3 +24,6 @@ security:
                 path:   /logout
                 target: /
             anonymous:    true
+
+    access_control:
+        - { path: ^/project, role: ROLE_USER }
