@@ -93,6 +93,10 @@ class ProjectController extends Controller
         $form->bindRequest($request);
 
         if ($form->isValid()) {
+            $securityContext = $this->get('security.context');
+            $user = $securityContext->getToken()->getUser();
+            $entity->setOwner($user);
+
             $em = $this->getDoctrine()->getEntityManager();
             $em->persist($entity);
             $em->flush();
@@ -103,8 +107,6 @@ class ProjectController extends Controller
             $acl = $aclProvider->createAcl($objectIdentity);
 
             // retrieving the security identity of the currently logged-in user
-            $securityContext = $this->get('security.context');
-            $user = $securityContext->getToken()->getUser();
             $securityIdentity = UserSecurityIdentity::fromAccount($user);
 
             // grant owner access

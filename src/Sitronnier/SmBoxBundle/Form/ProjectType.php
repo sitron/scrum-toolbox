@@ -11,7 +11,6 @@ class ProjectType extends AbstractType
     {
         $builder
             ->add('title')
-            ->add('owner')
         ;
     }
 
