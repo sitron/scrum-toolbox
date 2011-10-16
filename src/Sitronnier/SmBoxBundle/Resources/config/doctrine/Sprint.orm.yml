@@ -1,0 +1,19 @@
+Sitronnier\SmBoxBundle\Entity\Sprint:
+  type: entity
+  table: null
+  fields:
+    id:
+      type: integer
+      id: true
+      generator:
+        strategy: AUTO
+    index:
+      type: integer
+    story_points:
+      type: float
+    business_value:
+      type: float
+  manyToOne:
+    project:
+      targetEntity: Project 
+  lifecycleCallbacks: {  }

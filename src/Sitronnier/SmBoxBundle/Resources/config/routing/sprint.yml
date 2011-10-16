@@ -1,0 +1,30 @@
+sprint:
+    pattern:  /
+    defaults: { _controller: "SitronnierSmBoxBundle:Sprint:index" }
+
+sprint_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "SitronnierSmBoxBundle:Sprint:show" }
+
+sprint_new:
+    pattern:  /new
+    defaults: { _controller: "SitronnierSmBoxBundle:Sprint:new" }
+
+sprint_create:
+    pattern:  /create
+    defaults: { _controller: "SitronnierSmBoxBundle:Sprint:create" }
+    requirements: { _method: post }
+
+sprint_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "SitronnierSmBoxBundle:Sprint:edit" }
+
+sprint_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "SitronnierSmBoxBundle:Sprint:update" }
+    requirements: { _method: post }
+
+sprint_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "SitronnierSmBoxBundle:Sprint:delete" }
+    requirements: { _method: post }

@@ -6,6 +6,10 @@ SitronnierSmBoxBundle_projects:
     resource: "@SitronnierSmBoxBundle/Resources/config/routing/project.yml"
     prefix: /project
 
+SitronnierSmBoxBundle_sprints:
+    resource: "@SitronnierSmBoxBundle/Resources/config/routing/sprint.yml"
+    prefix: /sprint
+
 fos_user_security:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"
     prefix: /

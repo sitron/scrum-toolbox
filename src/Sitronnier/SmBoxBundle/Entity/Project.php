@@ -25,6 +25,8 @@ class Project
      */
     private $title;
 
+    private $sprints;
+
 
     /**
      * Get id
@@ -72,6 +74,28 @@ class Project
      * @return string 
      */
     public function getTitle()
+    {
+        return $this->title;
+    }
+
+    public function addSprint($sprint)
+    {
+        $this->sprints[] = $sprint;
+    }
+
+    public function getSprints()
+    {
+        return $this->sprints;
+    }
+
+    public function setSprints($sprints)
+    {
+        foreach ($sprints as $item) {
+            $this->addSprint($item);
+        }
+    }
+
+    public function __toString()
     {
         return $this->title;
     }

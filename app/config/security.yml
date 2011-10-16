@@ -30,3 +30,4 @@ security:
 
     access_control:
         - { path: ^/project, role: ROLE_USER }
+        - { path: ^/sprint, role: ROLE_USER }
