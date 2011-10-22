@@ -13,6 +13,8 @@ Sitronnier\SmBoxBundle\Entity\Sprint:
       type: float
     business_value:
       type: float
+    status:
+      type: string
   manyToOne:
     project:
       targetEntity: Project 

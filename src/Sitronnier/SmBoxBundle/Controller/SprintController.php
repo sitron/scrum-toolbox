@@ -78,6 +78,7 @@ class SprintController extends Controller
         $form->bindRequest($request);
 
         if ($form->isValid()) {
+            $entity->setStatus('CREATED');
             $em = $this->getDoctrine()->getEntityManager();
             $em->persist($entity);
             $em->flush();

@@ -35,6 +35,10 @@ class Sprint
      */
     private $project;
 
+    /**
+     * @var string $status
+     */
+    private $status;
 
     /**
      * Get id
@@ -124,6 +128,16 @@ class Sprint
     public function getProject()
     {
         return $this->project;
+    }
+
+    public function setStatus($status)
+    {
+        $this->status = $status;
+    }
+
+    public function getStatus()
+    {
+        return $this->status;
     }
 
     public function __toString()
