@@ -1,0 +1,19 @@
+Sitronnier\SmBoxBundle\Entity\Day:
+  type: entity
+  table: null
+  fields:
+    id:
+      type: integer
+      id: true
+      generator:
+        strategy: AUTO
+    nb_hours:
+      type: float
+    nb_business_value:
+      type: float
+    nb_story_points:
+      type: float
+  manyToOne:
+    sprint:
+      targetEntity: Sprint 
+  lifecycleCallbacks: {  }

@@ -10,6 +10,10 @@ SitronnierSmBoxBundle_sprints:
     resource: "@SitronnierSmBoxBundle/Resources/config/routing/sprint.yml"
     prefix: /sprint
 
+SitronnierSmBoxBundle_days:
+    resource: "@SitronnierSmBoxBundle/Resources/config/routing/day.yml"
+    prefix: /day
+
 fos_user_security:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"
     prefix: /

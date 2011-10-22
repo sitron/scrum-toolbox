@@ -1,0 +1,46 @@
+{% extends "SitronnierSmBoxBundle::layout.html.twig" %}
+
+{% block body %}
+<h1>Day</h1>
+
+<table class="record_properties">
+    <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ entity.id }}</td>
+        </tr>
+        <tr>
+            <th>Nb_hours</th>
+            <td>{{ entity.nbhours }}</td>
+        </tr>
+        <tr>
+            <th>Nb_business_value</th>
+            <td>{{ entity.nbbusinessvalue }}</td>
+        </tr>
+        <tr>
+            <th>Nb_story_points</th>
+            <td>{{ entity.nbstorypoints }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('day') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('day_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>
+        <form action="{{ path('day_delete', { 'id': entity.id }) }}" method="post">
+            {{ form_widget(delete_form) }}
+            <button type="submit">Delete</button>
+        </form>
+    </li>
+</ul>
+{% endblock %}
+

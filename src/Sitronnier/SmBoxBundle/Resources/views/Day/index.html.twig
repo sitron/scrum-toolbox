@@ -1,0 +1,46 @@
+{% extends "SitronnierSmBoxBundle::layout.html.twig" %}
+
+{% block body %}
+<h1>Day list</h1>
+
+<table class="records_list">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Nb_hours</th>
+            <th>Nb_business_value</th>
+            <th>Nb_story_points</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+        <tr>
+            <td><a href="{{ path('day_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+            <td>{{ entity.nbhours }}</td>
+            <td>{{ entity.nbbusinessvalue }}</td>
+            <td>{{ entity.nbstorypoints }}</td>
+            <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('day_show', { 'id': entity.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('day_edit', { 'id': entity.id }) }}">edit</a>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<ul>
+    <li>
+        <a href="{{ path('day_new') }}">
+            Create a new entry
+        </a>
+    </li>
+</ul>
+{% endblock %}
+

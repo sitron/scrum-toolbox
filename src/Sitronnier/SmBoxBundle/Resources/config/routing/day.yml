@@ -1,0 +1,30 @@
+day:
+    pattern:  /
+    defaults: { _controller: "SitronnierSmBoxBundle:Day:index" }
+
+day_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "SitronnierSmBoxBundle:Day:show" }
+
+day_new:
+    pattern:  /new
+    defaults: { _controller: "SitronnierSmBoxBundle:Day:new" }
+
+day_create:
+    pattern:  /create
+    defaults: { _controller: "SitronnierSmBoxBundle:Day:create" }
+    requirements: { _method: post }
+
+day_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "SitronnierSmBoxBundle:Day:edit" }
+
+day_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "SitronnierSmBoxBundle:Day:update" }
+    requirements: { _method: post }
+
+day_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "SitronnierSmBoxBundle:Day:delete" }
+    requirements: { _method: post }
