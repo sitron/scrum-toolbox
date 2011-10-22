@@ -4,3 +4,4 @@ vendor
 web/bundles
 app/config/parameters.ini
 *.swp
+*.swo
