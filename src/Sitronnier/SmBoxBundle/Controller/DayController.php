@@ -57,12 +57,17 @@ class DayController extends Controller
      */
     public function newAction()
     {
+        $request = $this->get('request');
+        if ($request->query->get('sprint')) {
+            $selected_sprint = $request->query->get('sprint');
+        };
         $entity = new Day();
         $form   = $this->createForm(new DayType(), $entity);
 
         return $this->render('SitronnierSmBoxBundle:Day:new.html.twig', array(
             'entity' => $entity,
-            'form'   => $form->createView()
+            'form'   => $form->createView(),
+            'selected_sprint' => $selected_sprint,
         ));
     }
 

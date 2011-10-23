@@ -41,5 +41,12 @@
             <button type="submit">Delete</button>
         </form>
     </li>
+    {% if entity.status != 'CLOSED' %}
+    <li>
+        <a href="{{ path('day_new') }}?sprint={{ entity.id }}">
+            Add new day
+        </a>
+    </li>
+    {% endif %}
 </ul>
 {% endblock %}
