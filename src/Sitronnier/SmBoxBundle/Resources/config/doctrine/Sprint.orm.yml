@@ -18,4 +18,8 @@ Sitronnier\SmBoxBundle\Entity\Sprint:
   manyToOne:
     project:
       targetEntity: Project 
+  oneToMany:
+    days:
+      targetEntity: Day
+      mappedBy: sprint
   lifecycleCallbacks: {  }

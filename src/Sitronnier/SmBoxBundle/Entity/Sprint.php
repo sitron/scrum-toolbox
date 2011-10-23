@@ -4,6 +4,7 @@ namespace Sitronnier\SmBoxBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Sitronnier\SmboxBundle\Entity\Project;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Sitronnier\SmBoxBundle\Entity\Sprint
@@ -39,6 +40,13 @@ class Sprint
      * @var string $status
      */
     private $status;
+
+    private $days;
+
+    public function __construct()
+    {
+        $this->days = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -140,8 +148,23 @@ class Sprint
         return $this->status;
     }
 
+    public function setDays($days)
+    {
+        $this->days = $days;
+    }
+
+    public function getDays()
+    {
+        return $this->days;
+    }
+
+    public function addDay($day)
+    {
+        $this->days[] = $day;
+    }
+
     public function __toString()
     {
-        return $this->title;
+        return (string) $this->index;
     }
 }

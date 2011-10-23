@@ -16,4 +16,5 @@ Sitronnier\SmBoxBundle\Entity\Day:
   manyToOne:
     sprint:
       targetEntity: Sprint 
+      inversedBy: days
   lifecycleCallbacks: {  }
