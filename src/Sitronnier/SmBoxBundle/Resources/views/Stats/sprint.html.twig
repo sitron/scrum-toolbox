@@ -1,0 +1,16 @@
+{% extends "SitronnierSmBoxBundle::layout.html.twig" %}
+
+{% block body %}
+<h1>{{ project }}</h1>
+<h2>Stats for sprint {{ sprint.index }}</h2>
+
+See stats for:
+<ul>
+    {% for project_sprint in project_sprints %}
+        <li>
+            <a href="{{ path('stat', {'sprint' : project_sprint.id}) }}">Sprint {{ project_sprint.index }}</a>
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}
+
