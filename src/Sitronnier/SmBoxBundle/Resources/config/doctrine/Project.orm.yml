@@ -13,4 +13,8 @@ Sitronnier\SmBoxBundle\Entity\Project:
   manyToOne:
     owner:
       targetEntity: Sitronnier\MyUserBundle\Entity\MyUser
+  oneToMany:
+    sprints:
+      targetEntity: Sprint
+      mappedBy: project
   lifecycleCallbacks: {  }
