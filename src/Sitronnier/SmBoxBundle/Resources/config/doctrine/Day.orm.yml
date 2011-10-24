@@ -13,8 +13,9 @@ Sitronnier\SmBoxBundle\Entity\Day:
       type: float
     nb_story_points:
       type: float
+    date:
+      type: date
   manyToOne:
     sprint:
       targetEntity: Sprint 
-      inversedBy: days
   lifecycleCallbacks: {  }

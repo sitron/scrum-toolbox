@@ -34,6 +34,11 @@ class Day
      */
     private $sprint;
 
+    /**
+     * @var date $date
+     */
+    private $date;
+
 
     /**
      * Get id
@@ -124,5 +129,24 @@ class Day
     {
         return $this->sprint;
     }
-}
 
+    /**
+     * Set date
+     *
+     * @param date $date
+     */
+    public function setDate($date)
+    {
+        $this->date = $date;
+    }
+
+    /**
+     * Get date
+     *
+     * @return date
+     */
+    public function getDate()
+    {
+        return $this->date;
+    }
+}

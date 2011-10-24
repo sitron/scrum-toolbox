@@ -10,6 +10,7 @@ class DayType extends AbstractType
     public function buildForm(FormBuilder $builder, array $options)
     {
         $builder
+            ->add('date')
             ->add('nb_hours')
             ->add('nb_business_value')
             ->add('nb_story_points')
