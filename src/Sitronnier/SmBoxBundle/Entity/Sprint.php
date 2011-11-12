@@ -48,6 +48,24 @@ class Sprint
         $this->days = new ArrayCollection();
     }
 
+    public function toJson()
+    {
+        $jsondays = array();
+        foreach ($this->days as $day) {
+            $jsondays[] = $day->toJson();
+        }
+
+        $json = array(
+            'id' => $this->id,
+            'index' => $this->index,
+            'nbBV' => $this->business_value,
+            'nbSP' => $this->story_points,
+            'days' => $jsondays,
+        );
+
+        return $json;
+    }
+
     /**
      * Get id
      *

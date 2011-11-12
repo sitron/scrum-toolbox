@@ -40,6 +40,17 @@ class Day
     private $date;
 
 
+    public function toJson()
+    {
+        $json = array(
+            'nbHours' => $this->nb_hours,
+            'nbBV' => $this->nb_business_value,
+            'nbSP' => $this->nb_story_points,
+            'date' => $this->date->format('D d/m'),
+        );
+        return $json;
+    }
+
     /**
      * Get id
      *

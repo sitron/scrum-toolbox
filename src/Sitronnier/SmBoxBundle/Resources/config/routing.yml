@@ -16,7 +16,11 @@ SitronnierSmBoxBundle_days:
 
 smbox_sprint_stats:
     pattern:  /stats/sprint/{sprint}
-    defaults: { _controller: SitronnierSmBoxBundle:Stats:sprint }
+    defaults: { _controller: SitronnierSmBoxBundle:Stats:sprintData }
+
+smbox_sprint_stats_project:
+    pattern:  /stats/{project_id}
+    defaults: { _controller: SitronnierSmBoxBundle:Stats:project, _format: html }
 
 fos_user_security:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"

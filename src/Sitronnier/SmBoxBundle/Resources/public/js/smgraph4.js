@@ -1,21 +1,16 @@
-YUI().use('charts', function (Y) {
+YUI().use('charts', 'io-base', 'json-parse', function (Y) {
+    var myChart;
+
     // chart values
     var myDataValues = [
-        {'date':'11/06/2011', 'MD':0, 'BV':0,  'SP':0},
-        {'date':'11/07/2011', 'MD':3, 'BV':0,  'SP':2},
-        {'date':'11/08/2011', 'MD':5, 'BV':20, 'SP':5},
-        {'date':'11/09/2011', 'MD':5, 'BV':20, 'SP':5},
-        {'date':'11/10/2011', 'MD':5, 'BV':20, 'SP':5},
-        {'date':'11/11/2011', 'MD':5, 'BV':20, 'SP':5},
-        {'date':'11/12/2011', 'MD':5, 'BV':20, 'SP':5},
-        {'date':'11/13/2011', 'MD':5, 'BV':20, 'SP':5},
-        {'date':'11/14/2011', 'MD':5, 'BV':20, 'SP':5},
-        {'date':'11/15/2011', 'MD':5, 'BV':20, 'SP':5},
-        {'date':'11/16/2011', 'MD':5, 'BV':20, 'SP':5},
-        {'date':'11/17/2011', 'MD':5, 'BV':20, 'SP':5},
-        {'date':'11/18/2011', 'MD':5, 'BV':20, 'SP':5},
-        {'date':'11/19/2011', 'MD':5, 'BV':20, 'SP':5},
     ];
+
+    var fillDates = function(dates) {
+        while (dates.length < 10) {
+            dates.push({'date':'', 'MD':'', 'BV':'', 'SP':''});
+        }
+        return dates;
+    }
 
     // decide what serie to show
     var shownSeries = ['MD', 'BV', 'SP'];
@@ -92,17 +87,51 @@ YUI().use('charts', function (Y) {
         }
     ];
 
-    // Instantiate and render the chart
-    var mychart = new Y.Chart({
-        dataProvider: myDataValues,
-        render: "#graph-canvas",
-        categoryKey: 'date',
-//        categoryType: 'time',
-        seriesKeys: shownSeries,
-        axes: axes,
-        horizontalGridlines: true,
-        verticalGridlines: true,
-        seriesCollection: seriesCollection
-    });
+
+    var url = '/app_dev.php/stats/sprint/2';
+
+    function complete(id, o, args) {
+        var result = Y.JSON.parse(o.responseText).sprint;
+
+        // Transform data for chart
+        myDataValues = defineDataProvider(result);
+        updateAxes(result);
+
+        // Instantiate and render the chart
+        myChart = new Y.Chart({
+            dataProvider: fillDates(myDataValues),
+            render: "#graph-canvas",
+            categoryKey: 'date',
+    //        categoryType: 'time',
+            seriesKeys: shownSeries,
+            axes: axes,
+            horizontalGridlines: true,
+            verticalGridlines: true,
+            seriesCollection: seriesCollection
+        });
+    };
+
+    function updateAxes(result) {
+        //myChart.getAxisByKey('bv').set('maximum', result.nbBV);
+        axes.bv.maximum = result.nbBV;
+        axes.sp.maximum = result.nbSP;
+    };
+
+    function defineDataProvider(result) {
+        var data = [{'date':'', 'MD':0, 'BV':0, 'SP':0}];
+        var cSP = 0;
+        var cBV = 0;
+        var cMD = 0;
+        Y.each(result.days, function(day) {
+            cSP += day.nbSP;
+            cBV += day.nbBV;
+            cMD += day.nbHours;
+            data.push({'date':day.date, 'MD':cMD/8, 'BV':cBV, 'SP':cSP});
+        });
+        return data;
+    };
+
+    Y.on('io:complete', complete, this, []);
+    var request = Y.io(url);
 });
 

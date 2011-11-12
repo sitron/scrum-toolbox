@@ -1,5 +1,6 @@
 Sitronnier\SmBoxBundle\Entity\Sprint:
   type: entity
+  repositoryClass: Sitronnier\SmBoxBundle\Entity\SprintRepository
   table: null
   fields:
     id:
