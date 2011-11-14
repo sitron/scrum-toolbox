@@ -11,10 +11,12 @@ use Sitronnier\SmBoxBundle\Entity\Day;
 
 /**
  * Stats controller.
- *
  */
 class StatsController extends Controller
 {
+    /**
+     * Project page
+     */
     public function projectAction($project_id) {
         $em = $this->getDoctrine()->getEntityManager();
 
@@ -27,8 +29,20 @@ class StatsController extends Controller
     }
 
     /**
+     * Sprint graph include
+     */
+    public function sprintAction($sprint_id) {
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $sprint = $em->getRepository('SitronnierSmBoxBundle:Sprint')->find($sprint_id);
+
+        return $this->render('SitronnierSmBoxBundle:Stats:sprint.html.twig', array(
+            'sprint' => $sprint,
+        ));
+    }
+
+    /**
      * Stats for a sprint
-     *
      */
     public function sprintDataAction($sprint)
     {
@@ -42,29 +56,6 @@ class StatsController extends Controller
             200,
             array('Content-Type' => 'application/json')
         );
-
-//        $serializer = $this->container->get('serializer');
-//        $sprinttest = new Sprint();
-//        $sprinttest->setIndex(1);
-//        $test = $serializer->serialize($sprint_entity, 'json');
-
-//        $response = new Response(json_encode(array(
-//            'days' => $days,
-//            'sprint' => $sprint_entity,
-//            'project' => $project_entity,
-//            'project_sprints' => $project_entity->getSprints(),
-//        )));
-//        $response->headers->set('Content-Type', 'application/json');
-//        return $this->render('SitronnierSmBoxBundle:Stats:sprint.json.twig', array('days' => $days), $response); 
-//
-//        return $response;
-
-//        return $this->render('SitronnierSmBoxBundle:Stats:sprint.html.twig', array(
-//            'days' => $days,
-//            'sprint' => $sprint_entity,
-//            'project' => $project_entity,
-//            'project_sprints' => $project_entity->getSprints(),
-//        ));
     }
 }
 
