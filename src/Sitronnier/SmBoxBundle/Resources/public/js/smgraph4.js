@@ -1,21 +1,15 @@
-YUI().use('charts', 'io-base', 'json-parse', function (Y) {
-    var myChart;
+YUI.add('SprintChart', function (Y) {
+    Y.namespace('SmbSprintChart');
 
-    // chart values
-    var myDataValues = [
-    ];
+    var chart, chartValues, shownSeries, axes, seriesCollection;
 
-    var fillDates = function(dates) {
-        while (dates.length < 10) {
-            dates.push({'date':'', 'MD':'', 'BV':'', 'SP':''});
-        }
-        return dates;
-    }
+    chartValues = [];
 
     // decide what serie to show
-    var shownSeries = ['MD', 'BV', 'SP'];
+    shownSeries = ['MD', 'BV', 'SP'];
 
-    var axes = {
+    // define axes
+    axes = {
         md:{
             keys:["MD"],
             position:"left",
@@ -57,7 +51,8 @@ YUI().use('charts', 'io-base', 'json-parse', function (Y) {
         }
     };
 
-    var seriesCollection = [
+    // defines series (graphs)
+    seriesCollection = [
          {
             type:"combo",
             xAxis:"dates",
@@ -87,22 +82,19 @@ YUI().use('charts', 'io-base', 'json-parse', function (Y) {
         }
     ];
 
-
-    var url = '/app_dev.php/stats/sprint/2';
-
+    // on ajax call complete
     function complete(id, o, args) {
         var result = Y.JSON.parse(o.responseText).sprint;
 
         // Transform data for chart
-        myDataValues = defineDataProvider(result);
+        chartValues = defineDataProvider(result);
         updateAxes(result);
 
         // Instantiate and render the chart
-        myChart = new Y.Chart({
-            dataProvider: fillDates(myDataValues),
+        chart = new Y.Chart({
+            dataProvider: fillDates(chartValues),
             render: "#graph-canvas",
             categoryKey: 'date',
-    //        categoryType: 'time',
             seriesKeys: shownSeries,
             axes: axes,
             horizontalGridlines: true,
@@ -111,12 +103,13 @@ YUI().use('charts', 'io-base', 'json-parse', function (Y) {
         });
     };
 
+    // update axes max values
     function updateAxes(result) {
-        //myChart.getAxisByKey('bv').set('maximum', result.nbBV);
         axes.bv.maximum = result.nbBV;
         axes.sp.maximum = result.nbSP;
     };
 
+    // update data with ajax call result
     function defineDataProvider(result) {
         var data = [{'date':'', 'MD':0, 'BV':0, 'SP':0}];
         var cSP = 0;
@@ -131,7 +124,19 @@ YUI().use('charts', 'io-base', 'json-parse', function (Y) {
         return data;
     };
 
+    // show at least 10 dates
+    var fillDates = function(dates) {
+        while (dates.length < 10) {
+            dates.push({'date':'', 'MD':'', 'BV':'', 'SP':''});
+        }
+        return dates;
+    }
+
     Y.on('io:complete', complete, this, []);
-    var request = Y.io(url);
-});
+
+    Y.SmbSprintChart.loadSprint = function(url) {
+        var request = Y.io(url);
+    };
+
+}, '0.1', {requires: ['charts', 'io-base', 'json-parse']});
 
