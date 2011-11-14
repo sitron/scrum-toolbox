@@ -90,6 +90,9 @@ YUI.add('SprintChart', function (Y) {
         chartValues = defineDataProvider(result);
         updateAxes(result);
 
+        // Velocity
+        updateVelocity(result);
+
         // Instantiate and render the chart
         chart = new Y.Chart({
             dataProvider: fillDates(chartValues),
@@ -101,6 +104,13 @@ YUI.add('SprintChart', function (Y) {
             verticalGridlines: true,
             seriesCollection: seriesCollection
         });
+    };
+
+    function updateVelocity(sprint) {
+        //var planed = sprint.nbSP / sprint.nbMD;
+        var last = chartValues[chartValues.length - 1];
+        var actual = Math.round(last.SP / last.MD * 10) / 10;
+        Y.one('.sprint-velocity-actual').setContent(actual);
     };
 
     // update axes max values
@@ -138,5 +148,5 @@ YUI.add('SprintChart', function (Y) {
         var request = Y.io(url);
     };
 
-}, '0.1', {requires: ['charts', 'io-base', 'json-parse']});
+}, '0.1', {requires: ['charts', 'io-base', 'json-parse', 'node']});
 
