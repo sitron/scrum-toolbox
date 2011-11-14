@@ -1,0 +1,8 @@
+smbox_stats_sprint_data:
+    pattern:  /sprint/{sprint}
+    defaults: { _controller: SitronnierSmBoxBundle:Stats:sprintData }
+
+smbox_sprint_stats_project:
+    pattern:  /{project_id}
+    defaults: { _controller: SitronnierSmBoxBundle:Stats:project, _format: html }
+

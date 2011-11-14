@@ -14,13 +14,9 @@ SitronnierSmBoxBundle_days:
     resource: "@SitronnierSmBoxBundle/Resources/config/routing/day.yml"
     prefix: /day
 
-smbox_sprint_stats:
-    pattern:  /stats/sprint/{sprint}
-    defaults: { _controller: SitronnierSmBoxBundle:Stats:sprintData }
-
-smbox_sprint_stats_project:
-    pattern:  /stats/{project_id}
-    defaults: { _controller: SitronnierSmBoxBundle:Stats:project, _format: html }
+SitronnierSmBoxBundle_stats:
+    resource: "@SitronnierSmBoxBundle/Resources/config/routing/stats.yml"
+    prefix: /stats
 
 fos_user_security:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"
