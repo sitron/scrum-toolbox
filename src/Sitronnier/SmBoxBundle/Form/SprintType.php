@@ -13,6 +13,7 @@ class SprintType extends AbstractType
             ->add('index')
             ->add('story_points')
             ->add('business_value')
+            ->add('man_days')
             ->add('project')
         ;
     }

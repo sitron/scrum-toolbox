@@ -32,6 +32,11 @@ class Sprint
     private $business_value;
 
     /**
+     * @var float $man_days
+     */
+    private $man_days;
+
+    /**
      * @var Project $project
      */
     private $project;
@@ -58,6 +63,7 @@ class Sprint
         $json = array(
             'id' => $this->id,
             'index' => $this->index,
+            'nbMD' => $this->man_days,
             'nbBV' => $this->business_value,
             'nbSP' => $this->story_points,
             'days' => $jsondays,
@@ -134,6 +140,26 @@ class Sprint
     public function getBusinessValue()
     {
         return $this->business_value;
+    }
+
+    /**
+     * Set man_days
+     *
+     * @param float $man_days
+     */
+    public function setManDays($manDays)
+    {
+        $this->man_days= $manDays;
+    }
+
+    /**
+     * Get man_days
+     *
+     * @return float 
+     */
+    public function getManDays()
+    {
+        return $this->man_days;
     }
 
     /**
