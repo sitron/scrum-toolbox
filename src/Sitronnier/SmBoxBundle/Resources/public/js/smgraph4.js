@@ -145,8 +145,8 @@ YUI.add('SprintChart', function(Y) {
 
     Y.on('io:complete', complete, this, []);
 
-    Y.SmbSprintChart.loadSprint = function(url) {
-        var request = Y.io(url);
+    Y.SmbSprintChart.loadSprint = function(sprintId) {
+        Y.io(Routing.generate('smbox_stats_sprint_data', { sprint: sprintId }));
     };
 
 }, '0.1', {requires: ['charts', 'io-base', 'json-parse', 'node']});

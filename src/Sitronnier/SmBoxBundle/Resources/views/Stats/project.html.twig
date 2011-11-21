@@ -13,9 +13,25 @@ See stats for:
 <ul>
     {% for project_sprint in sprints %}
         <li>
-            <a href="{{ path('smbox_stats_sprint_data', {'sprint' : project_sprint.id}) }}">Sprint {{ project_sprint.index }}</a>
+            <a class="load-sprint-graph-bt" id="sprint-id-{{ project_sprint.id }}" href="#">Sprint {{ project_sprint.index }}</a>
         </li>
     {% endfor %}
 </ul>
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+<script type="text/javascript">
+    YUI().use('SprintChart', 'node', function (Y) {
+        Y.all('.load-sprint-graph-bt').each(function(item) {
+            item.on('click', function(e) {
+                e.preventDefault();
+                var itemId = this.get('id');
+                var sprintId = Number(itemId.substr(itemId.lastIndexOf('-') + 1));
+                Y.SmbSprintChart.loadSprint(sprintId);
+            });
+        });
+    });
+</script>
 {% endblock %}
 

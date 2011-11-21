@@ -1,6 +1,8 @@
 smbox_stats_sprint_data:
     pattern:  /sprint/{sprint}
     defaults: { _controller: SitronnierSmBoxBundle:Stats:sprintData }
+    options:
+        expose: true
 
 smbox_sprint_stats_project:
     pattern:  /{project_id}

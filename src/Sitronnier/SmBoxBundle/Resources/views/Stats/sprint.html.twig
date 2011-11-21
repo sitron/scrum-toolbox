@@ -9,7 +9,7 @@
 <script src="{{ asset('/bundles/sitronniersmbox/js/smgraph4.js') }}" type="text/javascript"></script>
 <script type="text/javascript">
     YUI().use('SprintChart', function (Y) {
-        Y.SmbSprintChart.loadSprint('{{ path('smbox_stats_sprint_data', {'sprint': sprint.id}) }}');
+        Y.SmbSprintChart.loadSprint({{ sprint.id }});
     });
 </script>
 
