@@ -20,6 +20,7 @@ class AppKernel extends Kernel
             new FOS\UserBundle\FOSUserBundle(),
             new Sitronnier\MyUserBundle\SitronnierMyUserBundle(),
             new Sitronnier\SmBoxBundle\SitronnierSmBoxBundle(),
+            new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
