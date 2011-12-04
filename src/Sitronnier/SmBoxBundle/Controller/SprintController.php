@@ -185,4 +185,25 @@ class SprintController extends Controller
             ->getForm()
         ;
     }
+
+    public function printAction($id)
+    {
+        $securityContext = $this->get('security.context');
+        $user = $securityContext->getToken()->getUser();
+
+        $sprint = $this->getDoctrine()->getRepository('SitronnierSmBoxBundle:Sprint')->findOneWithOrderedDaysAndOwner($id, $user->getId());
+        $project = $sprint->getProject();
+
+        if (!$sprint) {
+            throw $this->createNotFoundException('Unable to find Sprint entity.');
+        }
+
+        $jsSprint = json_encode($sprint->toJson());
+
+        return $this->render('SitronnierSmBoxBundle:Sprint:print.html.twig', array(
+            'project' => $project,
+            'sprint' => $sprint,
+            'jsSprint' => $jsSprint,
+        ));
+    }
 }

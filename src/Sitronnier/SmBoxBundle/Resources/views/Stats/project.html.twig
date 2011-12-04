@@ -17,20 +17,28 @@ See stats for:
         </li>
     {% endfor %}
 </ul>
+<a href="{{ path('sprint_print', {'id': lastSprint.id }) }}" class="print-chart">Print chart</a>
 {% endblock %}
 
 {% block javascripts %}
 {{ parent() }}
+<script src="http://yui.yahooapis.com/3.4.1/build/yui/yui-min.js"></script>
+<script src="{{ asset('/bundles/sitronniersmbox/js/smgraph4.js') }}" type="text/javascript"></script>
 <script type="text/javascript">
     YUI().use('SprintChart', 'node', function (Y) {
+        var chart;
         Y.all('.load-sprint-graph-bt').each(function(item) {
             item.on('click', function(e) {
                 e.preventDefault();
                 var itemId = this.get('id');
                 var sprintId = Number(itemId.substr(itemId.lastIndexOf('-') + 1));
+                console.log(sprintId);
+                Y.one('.print-chart').setAttrs({'href': Routing.generate('sprint_print', { id: sprintId })});
                 Y.SmbSprintChart.loadSprint(sprintId);
             });
         });
+
+        chart = Y.SmbSprintChart.loadSprint({{ lastSprint.id }});
     });
 </script>
 {% endblock %}

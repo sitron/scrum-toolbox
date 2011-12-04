@@ -4,6 +4,7 @@ namespace Sitronnier\SmBoxBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 use Sitronnier\SmBoxBundle\Entity\Sprint;
 use Sitronnier\SmBoxBundle\Entity\Project;
@@ -20,11 +21,19 @@ class StatsController extends Controller
     public function projectAction($project_id) {
         $em = $this->getDoctrine()->getEntityManager();
 
-        $project = $em->getRepository('SitronnierSmBoxBundle:Project')->find($project_id);
+        $securityContext = $this->get('security.context');
+        $user = $securityContext->getToken()->getUser();
+
+        $project = $em->getRepository('SitronnierSmBoxBundle:Project')->findOneBy(array('id' => $project_id, 'owner' => $user->getId()));
+        if (is_null($project)) {
+            throw new AccessDeniedException();
+        }
+        $sprints = $this->getDoctrine()->getRepository('SitronnierSmBoxBundle:Sprint')->findAllForProject($project);
 
         return $this->render('SitronnierSmBoxBundle:Stats:project.html.twig', array(
             'project' => $project,
-            'sprints' => $project->getSprints(),
+            'sprints' => $sprints,
+            'lastSprint' => $sprints[count($sprints) - 1],
         ));
     }
 

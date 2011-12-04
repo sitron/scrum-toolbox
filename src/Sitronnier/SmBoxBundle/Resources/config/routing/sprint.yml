@@ -2,10 +2,6 @@ sprint:
     pattern:  /
     defaults: { _controller: "SitronnierSmBoxBundle:Sprint:index" }
 
-sprint_show:
-    pattern:  /{id}/show
-    defaults: { _controller: "SitronnierSmBoxBundle:Sprint:show" }
-
 sprint_new:
     pattern:  /new
     defaults: { _controller: "SitronnierSmBoxBundle:Sprint:new" }
@@ -14,6 +10,16 @@ sprint_create:
     pattern:  /create
     defaults: { _controller: "SitronnierSmBoxBundle:Sprint:create" }
     requirements: { _method: post }
+
+sprint_print:
+    pattern:  /{id}/print
+    defaults: { _controller: "SitronnierSmBoxBundle:Sprint:print" }
+    options:
+        expose: true
+
+sprint_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "SitronnierSmBoxBundle:Sprint:show" }
 
 sprint_edit:
     pattern:  /{id}/edit

@@ -85,15 +85,33 @@ YUI.add('SprintChart', function(Y) {
     // on ajax call complete
     function complete(id, o, args) {
         var result = Y.JSON.parse(o.responseText).sprint;
+        drawChart(result);
+    };
 
+    Y.SmbSprintChart.createChart = function(sprint) {
+        if (typeof sprint === 'string') {
+            sprint = sprint.replace(/&quot;/ig,'"');
+            sprint = Y.JSON.parse(sprint);
+        };
+        drawChart(sprint);
+    }
+
+    function drawChart(sprint) {
         // Transform data for chart
-        chartValues = defineDataProvider(result);
-        updateAxes(result);
+        chartValues = defineDataProvider(sprint);
+        updateAxes(sprint);
 
         // Velocity
-        updateVelocity(result);
+        updateVelocity(sprint);
+
+        // Burnt ratio
+        updateBurntPercent(sprint);
+
+        // Title
+        updateTitleIndex(sprint.index);
 
         // Instantiate and render the chart
+        Y.one('#graph-canvas').setContent('');
         chart = new Y.Chart({
             dataProvider: fillDates(chartValues),
             render: '#graph-canvas',
@@ -104,6 +122,11 @@ YUI.add('SprintChart', function(Y) {
             verticalGridlines: true,
             seriesCollection: seriesCollection
         });
+        console.log(chart);
+    };
+
+    function updateTitleIndex(index) {
+        Y.one('#sprint-index').setContent(index);
     };
 
     function updateVelocity(sprint) {
@@ -112,6 +135,13 @@ YUI.add('SprintChart', function(Y) {
         var actual = Math.round(last.SP / last.MD * 10) / 10;
         Y.one('.sprint-velocity-planed').setContent(planed);
         Y.one('.sprint-velocity-actual').setContent(actual);
+    };
+
+    function updateBurntPercent(sprint) {
+        var last = chartValues[chartValues.length - 1];
+        Y.one('.sprint-burnt-md').setContent(Math.round((last.MD / sprint.nbMD) * 100));
+        Y.one('.sprint-burnt-sp').setContent(Math.round((last.SP / sprint.nbSP) * 100));
+        Y.one('.sprint-burnt-bv').setContent(Math.round((last.BV / sprint.nbBV) * 100));
     };
 
     // update axes max values
@@ -146,8 +176,16 @@ YUI.add('SprintChart', function(Y) {
     Y.on('io:complete', complete, this, []);
 
     Y.SmbSprintChart.loadSprint = function(sprintId) {
+        console.log('here');
+        console.log(chart);
         Y.io(Routing.generate('smbox_stats_sprint_data', { sprint: sprintId }));
+        return chart;
     };
+
+    Y.SmbSprintChart.updateSize = function(w, h) {
+        chart.set('width', w);
+        chart.set('height', h);
+    }
 
 }, '0.1', {requires: ['charts', 'io-base', 'json-parse', 'node']});
 
