@@ -1,13 +1,12 @@
 {% extends "SitronnierSmBoxBundle::layout.html.twig" %}
 
 {% block stylesheets %}
-<link href="{{ asset('/bundles/sitronniersmbox/css/smbox.css') }}" rel="stylesheet" type="text/css" />
 {% endblock %}
 
 {% block body %}
 <h1>{{ project }}</h1>
 
-{% render "SitronnierSmBoxBundle:stats:sprint" with {'sprint_id': 2} %}
+{% include "SitronnierSmBoxBundle:Stats:sprint.html.twig" with {'sprint': lastSprint} %}
 
 See stats for:
 <ul>
