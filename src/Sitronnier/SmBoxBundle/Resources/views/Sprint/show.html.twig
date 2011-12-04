@@ -3,30 +3,28 @@
 {% block body %}
 <h1>Sprint</h1>
 
-<table class="record_properties">
-    <tbody>
-        <tr>
-            <th>Id</th>
-            <td>{{ entity.id }}</td>
-        </tr>
-        <tr>
-            <th>Index</th>
-            <td>{{ entity.index }}</td>
-        </tr>
-        <tr>
-            <th>Man days</th>
-            <td>{{ entity.mandays }}</td>
-        </tr>
-        <tr>
-            <th>Story_points</th>
-            <td>{{ entity.storypoints }}</td>
-        </tr>
-        <tr>
-            <th>Business_value</th>
-            <td>{{ entity.businessvalue }}</td>
-        </tr>
-    </tbody>
-</table>
+<div class="record-data">
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <th>Index</th>
+                <th>Man days</th>
+                <th>Story_points</th>
+                <th>Business_value</th>
+            </tr>
+            <tr>
+                <td>{{ entity.id }}</td>
+                <td>{{ entity.index }}</td>
+                <td>{{ entity.mandays }}</td>
+                <td>{{ entity.storypoints }}</td>
+                <td>{{ entity.businessvalue }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+{% include "SitronnierSmBoxBundle:Stats:sprint.html.twig" with {'sprint': entity} %}
 
 <ul class="record_actions">
     <li>
@@ -54,3 +52,15 @@
     {% endif %}
 </ul>
 {% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+<script src="http://yui.yahooapis.com/3.4.1/build/yui/yui-min.js"></script>
+<script src="{{ asset('/bundles/sitronniersmbox/js/smgraph4.js') }}" type="text/javascript"></script>
+<script type="text/javascript">
+    YUI().use('SprintChart', 'node', function (Y) {
+        Y.SmbSprintChart.createChart('{{ jsSprint }}');
+    });
+</script>
+{% endblock %}
+

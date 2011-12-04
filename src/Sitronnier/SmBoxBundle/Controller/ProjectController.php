@@ -43,19 +43,20 @@ class ProjectController extends Controller
     {
         $em = $this->getDoctrine()->getEntityManager();
 
-        $entity = $em->getRepository('SitronnierSmBoxBundle:Project')->find($id);
+        $securityContext = $this->get('security.context');
+        $user = $securityContext->getToken()->getUser();
+
+        $entity = $em->getRepository('SitronnierSmBoxBundle:Project')->findOneBy(array('id' => $id, 'owner' => $user->getId()));
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Project entity.');
         }
 
-        $securityContext = $this->get('security.context');
-
-        // check for view access
-        if (false === $securityContext->isGranted('VIEW', $entity))
-        {
-            throw new AccessDeniedException();
-        }
+//        // check for view access
+//        if (false === $securityContext->isGranted('VIEW', $entity))
+//        {
+//            throw new AccessDeniedException();
+//        }
 
         $deleteForm = $this->createDeleteForm($id);
 

@@ -44,10 +44,12 @@ class SprintController extends Controller
 
         $deleteForm = $this->createDeleteForm($id);
 
+        $jsSprint = json_encode($entity->toJson());
+
         return $this->render('SitronnierSmBoxBundle:Sprint:show.html.twig', array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
-
+            'jsSprint'    => $jsSprint,
         ));
     }
 
