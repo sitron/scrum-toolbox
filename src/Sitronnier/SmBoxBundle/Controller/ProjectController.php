@@ -46,9 +46,10 @@ class ProjectController extends Controller
         $securityContext = $this->get('security.context');
         $user = $securityContext->getToken()->getUser();
 
-        $entity = $em->getRepository('SitronnierSmBoxBundle:Project')->findOneBy(array('id' => $id, 'owner' => $user->getId()));
+        $project = $em->getRepository('SitronnierSmBoxBundle:Project')->findOneBy(array('id' => $id, 'owner' => $user->getId()));
+        $sprints = $this->getDoctrine()->getRepository('SitronnierSmBoxBundle:Sprint')->findAllForProject($project);
 
-        if (!$entity) {
+        if (!$project) {
             throw $this->createNotFoundException('Unable to find Project entity.');
         }
 
@@ -61,9 +62,9 @@ class ProjectController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('SitronnierSmBoxBundle:Project:show.html.twig', array(
-            'entity'      => $entity,
+            'entity'      => $project,
             'delete_form' => $deleteForm->createView(),
-
+            'sprints'     => $sprints,
         ));
     }
 

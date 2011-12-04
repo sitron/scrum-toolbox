@@ -5,3 +5,20 @@
     background: #f9f9f9;
 }
 
+.key-figures th {
+    width: 100px;
+    text-align: left;
+}
+
+.key-figures .record-properties {
+    margin-bottom: 1em;
+}
+
+.key-figures th.label {
+    width: 150px;
+}
+
+.key-figures td {
+    background-color: #f9f9f9;
+}
+

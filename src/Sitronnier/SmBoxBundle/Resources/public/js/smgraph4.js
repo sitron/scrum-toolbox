@@ -104,8 +104,8 @@ YUI.add('SprintChart', function(Y) {
         // Velocity
         updateVelocity(sprint);
 
-        // Burnt ratio
-        updateBurntPercent(sprint);
+        // Burnt
+        updateBurnt(sprint);
 
         // Title
         updateTitleIndex(sprint.index);
@@ -137,11 +137,14 @@ YUI.add('SprintChart', function(Y) {
         Y.one('.sprint-velocity-actual').setContent(actual);
     };
 
-    function updateBurntPercent(sprint) {
+    function updateBurnt(sprint) {
         var last = chartValues[chartValues.length - 1];
-        Y.one('.sprint-burnt-md').setContent(Math.round((last.MD / sprint.nbMD) * 100));
-        Y.one('.sprint-burnt-sp').setContent(Math.round((last.SP / sprint.nbSP) * 100));
-        Y.one('.sprint-burnt-bv').setContent(Math.round((last.BV / sprint.nbBV) * 100));
+        Y.one('.sprint-burnt-md').setContent(last.MD);
+        Y.one('.sprint-burnt-sp').setContent(last.SP);
+        Y.one('.sprint-burnt-bv').setContent(last.BV);
+        Y.one('.sprint-burnt-md-ratio').setContent(Math.round((last.MD / sprint.nbMD) * 100));
+        Y.one('.sprint-burnt-sp-ratio').setContent(Math.round((last.SP / sprint.nbSP) * 100));
+        Y.one('.sprint-burnt-bv-ratio').setContent(Math.round((last.BV / sprint.nbBV) * 100));
     };
 
     // update axes max values

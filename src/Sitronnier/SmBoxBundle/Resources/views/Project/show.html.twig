@@ -13,12 +13,17 @@
     </tbody>
 </table>
 
+<div>
+    <ul>
+        {% for sprint in sprints %}
+        <li>
+            <a href="{{ path('sprint_show', {'id': sprint.id}) }}">Sprint {{ sprint.index }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+
 <ul class="record_actions">
-    <li>
-        <a href="{{ path('project') }}">
-            Back to the list
-        </a>
-    </li>
     <li>
         <a href="{{ path('project_edit', { 'id': entity.id }) }}">
             Edit
@@ -29,5 +34,10 @@
             {{ form_widget(delete_form) }}
             <button type="submit">Delete</button>
         </form>
+    </li>
+    <li>
+        <a href="{{ path('project') }}">
+            See all projects
+        </a>
     </li>
 </ul>

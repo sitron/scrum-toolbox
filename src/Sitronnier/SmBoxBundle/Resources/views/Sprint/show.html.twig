@@ -1,24 +1,49 @@
 {% extends "SitronnierSmBoxBundle::layout.html.twig" %}
 
 {% block body %}
-<h1>Sprint</h1>
+<h1>{{ entity.project.title }}</h1>
+<h3>Sprint {{ entity.index }}</h3>
 
-<div class="record-data">
-    <table class="record_properties">
+<div class="key-figures">
+    <table class="record-properties">
         <tbody>
             <tr>
-                <th>Id</th>
-                <th>Index</th>
-                <th>Man days</th>
-                <th>Story_points</th>
-                <th>Business_value</th>
+                <th></th>
+                <th>MD</th>
+                <th>SP</th>
+                <th>BV</th>
             </tr>
             <tr>
-                <td>{{ entity.id }}</td>
-                <td>{{ entity.index }}</td>
+                <th class="label">Total</th>
                 <td>{{ entity.mandays }}</td>
                 <td>{{ entity.storypoints }}</td>
                 <td>{{ entity.businessvalue }}</td>
+            </tr>
+            <tr>
+                <th class="label">Burnt</th>
+                <td><span class="sprint-burnt-md"></span></td>
+                <td><span class="sprint-burnt-sp"></span></td>
+                <td><span class="sprint-burnt-bv"></span></td>
+            </tr>
+            <tr>
+                <th class="label">Burnt ratio</th>
+                <td><span class="sprint-burnt-md-ratio"></span></td>
+                <td><span class="sprint-burnt-sp-ratio"></span></td>
+                <td><span class="sprint-burnt-bv-ratio"></span></td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="record-properties">
+        <tbody>
+            <tr>
+                <th></th>
+                <th>Planed</th>
+                <th>Actual</th>
+            </tr>
+            <tr>
+                <th class="label">Velocity</th>
+                <td><span class="sprint-velocity-planed"></span></td>
+                <td><span class="sprint-velocity-actual"></span></td>
             </tr>
         </tbody>
     </table>
@@ -27,11 +52,6 @@
 {% include "SitronnierSmBoxBundle:Stats:sprint.html.twig" with {'sprint': entity} %}
 
 <ul class="record_actions">
-    <li>
-        <a href="{{ path('sprint') }}">
-            Back to the list
-        </a>
-    </li>
     <li>
         <a href="{{ path('sprint_edit', { 'id': entity.id }) }}">
             Edit
@@ -50,6 +70,11 @@
         </a>
     </li>
     {% endif %}
+    <li>
+        <a href="{{ path('sprint') }}">
+            See all sprints for {{ entity.project.title }}
+        </a>
+    </li>
 </ul>
 {% endblock %}
 
