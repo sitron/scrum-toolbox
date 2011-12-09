@@ -45,8 +45,10 @@ class SprintController extends Controller
     public function showAction($id)
     {
         $em = $this->getDoctrine()->getEntityManager();
+        $securityContext = $this->get('security.context');
+        $user = $securityContext->getToken()->getUser();
 
-        $sprint = $em->getRepository('SitronnierSmBoxBundle:Sprint')->find($id);
+        $sprint = $this->getDoctrine()->getRepository('SitronnierSmBoxBundle:Sprint')->findOneOwned($id, $user->getId());
 
         if (!$sprint) {
             throw $this->createNotFoundException('Unable to find Sprint entity.');
@@ -134,14 +136,16 @@ class SprintController extends Controller
     public function editAction($id)
     {
         $em = $this->getDoctrine()->getEntityManager();
+        $securityContext = $this->get('security.context');
+        $user = $securityContext->getToken()->getUser();
 
-        $entity = $em->getRepository('SitronnierSmBoxBundle:Sprint')->find($id);
+        $entity = $this->getDoctrine()->getRepository('SitronnierSmBoxBundle:Sprint')->findOneOwned($id, $user->getId());
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Sprint entity.');
         }
 
-        $editForm = $this->createForm(new SprintType(), $entity);
+        $editForm = $this->createForm(new SprintType($user->getId()), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('SitronnierSmBoxBundle:Sprint:edit.html.twig', array(
@@ -158,6 +162,8 @@ class SprintController extends Controller
     public function updateAction($id)
     {
         $em = $this->getDoctrine()->getEntityManager();
+        $securityContext = $this->get('security.context');
+        $user = $securityContext->getToken()->getUser();
 
         $entity = $em->getRepository('SitronnierSmBoxBundle:Sprint')->find($id);
 
@@ -165,7 +171,7 @@ class SprintController extends Controller
             throw $this->createNotFoundException('Unable to find Sprint entity.');
         }
 
-        $editForm   = $this->createForm(new SprintType(), $entity);
+        $editForm   = $this->createForm(new SprintType($user->getId()), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
         $request = $this->getRequest();
@@ -176,7 +182,7 @@ class SprintController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('sprint_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('sprint_show', array('id' => $id)));
         }
 
         return $this->render('SitronnierSmBoxBundle:Sprint:edit.html.twig', array(

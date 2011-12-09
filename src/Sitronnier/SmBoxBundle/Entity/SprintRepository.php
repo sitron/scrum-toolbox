@@ -50,6 +50,34 @@ class SprintRepository extends EntityRepository
 
     public function findAllOwned($owner)
     {
+        $qb = $this->sprintsByOwner($owner);
+
+        $query = $qb->getQuery();
+
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+
+    public function findOneOwned($id, $owner)
+    {
+        $qb = $this->sprintsByOwner($owner)
+            ->andWhere('s.id = :id')
+            ->setParameter('id', $id);
+
+        $query = $qb->getQuery();
+
+        try {
+            return $query->getSingleResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+
+    protected function sprintsByOwner($owner)
+    {
         $qb = $this->getEntityManager()->createQueryBuilder()
             ->from('SitronnierSmBoxBundle:Sprint', 's')
             ->select('s')
@@ -59,13 +87,7 @@ class SprintRepository extends EntityRepository
             ->addOrderBy('s.index', 'DESC')
             ->setParameter('owner', $owner);
 
-        $query = $qb->getQuery();
-
-        try {
-            return $query->getResult();
-        } catch (\Doctrine\ORM\NoResultException $e) {
-            return null;
-        }
+        return $qb;
     }
 
     protected function sprintWithOrderedDays($id)
