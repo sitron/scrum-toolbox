@@ -121,7 +121,7 @@ class DayController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('day_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('sprint_show', array('id' => $entity->getSprint()->getId())));
             
         }
 

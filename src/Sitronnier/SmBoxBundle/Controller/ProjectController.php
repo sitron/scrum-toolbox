@@ -190,7 +190,7 @@ class ProjectController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('project_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('project_show', array('id' => $id)));
         }
 
         return $this->render('SitronnierSmBoxBundle:Project:edit.html.twig', array(
