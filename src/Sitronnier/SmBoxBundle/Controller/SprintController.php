@@ -89,7 +89,7 @@ class SprintController extends Controller
         };
 
         $sprint->setIndex(isset($nb_sprints) ? $nb_sprints + 1 : 1);
-        $form = $this->createForm(new SprintType(), $sprint);
+        $form = $this->createForm(new SprintType($user->getId()), $sprint);
 
         return $this->render('SitronnierSmBoxBundle:Sprint:new.html.twig', array(
             'entity' => $sprint,
@@ -103,9 +103,12 @@ class SprintController extends Controller
      */
     public function createAction()
     {
+        $securityContext = $this->get('security.context');
+        $user = $securityContext->getToken()->getUser();
+
         $entity  = new Sprint();
         $request = $this->getRequest();
-        $form    = $this->createForm(new SprintType(), $entity);
+        $form    = $this->createForm(new SprintType($user->getId()), $entity);
         $form->bindRequest($request);
 
         if ($form->isValid()) {
