@@ -28,9 +28,9 @@ class SprintController extends Controller
         if ($request->query->get('project')) {
             $project_id = $request->query->get('project');
             $project = $em->getRepository('SitronnierSmBoxBundle:Project')->findOneBy(array('id' => $project_id, 'owner' => $user->getId()));
-            $sprints = $em->getRepository('SitronnierSmBoxBundle:Sprint')->findAllBy(array('project' => $project));
+            $sprints = $project->getSprints();
         } else {
-            $sprints = $em->getRepository('SitronnierSmBoxBundle:Sprint')->findAll();
+            $sprints = $this->getDoctrine()->getRepository('SitronnierSmBoxBundle:Sprint')->findAllOwned($user->getId());
         }
 
         return $this->render('SitronnierSmBoxBundle:Sprint:index.html.twig', array(
