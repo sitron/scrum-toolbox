@@ -5,6 +5,7 @@ namespace Sitronnier\SmBoxBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use Sitronnier\SmBoxBundle\Entity\Day;
+use Sitronnier\SmBoxBundle\Entity\Project;
 use Sitronnier\SmBoxBundle\Form\DayType;
 
 /**
@@ -21,10 +22,26 @@ class DayController extends Controller
     {
         $em = $this->getDoctrine()->getEntityManager();
 
-        $entities = $em->getRepository('SitronnierSmBoxBundle:Day')->findAll();
+        $securityContext = $this->get('security.context');
+        $user = $securityContext->getToken()->getUser();
+
+        $days = $this->getDoctrine()->getRepository('SitronnierSmBoxBundle:Project')->findAllWithOrderedDays($user->getId());
+
+        // TODO find a better way to do this
+//        $splitted = array();
+//        foreach($days as $day) {
+//            if (!isset($splitted[$day['project_id']])) {
+//                $splitted[$day['project_id']] = array(); 
+//            } 
+//            if (!isset($splitted[$day['project_id']][$day['sprint_id']])) {
+//                $splitted[$day['project_id']][$day['sprint_id']] = array();
+//            }
+//            $splitted[$day['project_id']][$day['sprint_id']][] = $day;
+//        }
+        //var_dump($days); exit;
 
         return $this->render('SitronnierSmBoxBundle:Day:index.html.twig', array(
-            'entities' => $entities
+            'days' => $days,
         ));
     }
 
@@ -58,16 +75,28 @@ class DayController extends Controller
     public function newAction()
     {
         $request = $this->get('request');
+
+        $day = new Day();
+        $em = $this->getDoctrine()->getEntityManager();
+
         if ($request->query->get('sprint')) {
-            $selected_sprint = $request->query->get('sprint');
-        };
-        $entity = new Day();
-        $form   = $this->createForm(new DayType(), $entity);
+            $sprint_id = $request->query->get('sprint');
+            $sprint = $em->getRepository('SitronnierSmBoxBundle:Sprint')->find($sprint_id);
+            $project = $sprint->getProject();
+            $day->setSprint($sprint);
+        } else if ($request->query->get('project')) {
+            $project_id = $request->query->get('project');
+            $project = $em->getRepository('SitronnierSmBoxBundle:Project')->find($project_id);
+        } else {
+            throw $this->createNotFoundException('Either a project or a sprint must be specified');
+        }
+        $day->setDate(new \DateTime);
+        $form = $this->createForm(new DayType($project), $day);
 
         return $this->render('SitronnierSmBoxBundle:Day:new.html.twig', array(
-            'entity' => $entity,
+            'entity' => $day,
             'form'   => $form->createView(),
-            'selected_sprint' => $selected_sprint,
+            'project'=> $project,
         ));
     }
 
@@ -79,7 +108,12 @@ class DayController extends Controller
     {
         $entity  = new Day();
         $request = $this->getRequest();
-        $form    = $this->createForm(new DayType(), $entity);
+
+        $project_id = $request->query->get('project');
+        $em = $this->getDoctrine()->getEntityManager();
+        $project = $em->getRepository('SitronnierSmBoxBundle:Project')->find($project_id);
+
+        $form    = $this->createForm(new DayType($project), $entity);
         $form->bindRequest($request);
 
         if ($form->isValid()) {
@@ -103,19 +137,22 @@ class DayController extends Controller
      */
     public function editAction($id)
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $securityContext = $this->get('security.context');
+        $user = $securityContext->getToken()->getUser();
 
-        $entity = $em->getRepository('SitronnierSmBoxBundle:Day')->find($id);
+        //$em = $this->getDoctrine()->getEntityManager();
 
-        if (!$entity) {
+        $day = $this->getDoctrine()->getRepository('SitronnierSmBoxBundle:Day')->findOneWithOwner($id, $user->getId());
+
+        if (!$day) {
             throw $this->createNotFoundException('Unable to find Day entity.');
         }
 
-        $editForm = $this->createForm(new DayType(), $entity);
+        $editForm = $this->createForm(new DayType($day->getSprint()->getProject()), $day);
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('SitronnierSmBoxBundle:Day:edit.html.twig', array(
-            'entity'      => $entity,
+            'entity'      => $day,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ));

@@ -10,11 +10,11 @@ class SprintType extends AbstractType
     public function buildForm(FormBuilder $builder, array $options)
     {
         $builder
+            ->add('project')
             ->add('index')
+            ->add('man_days')
             ->add('story_points')
             ->add('business_value')
-            ->add('man_days')
-            ->add('project')
         ;
     }
 

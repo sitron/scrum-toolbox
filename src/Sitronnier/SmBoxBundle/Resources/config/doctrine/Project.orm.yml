@@ -1,5 +1,6 @@
 Sitronnier\SmBoxBundle\Entity\Project:
   type: entity
+  repositoryClass: Sitronnier\SmBoxBundle\Entity\ProjectRepository
   table: null
   fields:
     id:

@@ -3,30 +3,36 @@
 {% block body %}
 <h1>Day list</h1>
 
-<table class="records_list">
+<table class="records_list day-list">
     <thead>
         <tr>
+            <th>Project</th>
+            <th>Sprint</th>
             <th>Id</th>
-            <th>Nb_hours</th>
-            <th>Nb_business_value</th>
-            <th>Nb_story_points</th>
+            <th>Date</th>
+            <th>MD</th>
+            <th>SP</th>
+            <th>BV</th>
             <th>Actions</th>
         </tr>
     </thead>
     <tbody>
-    {% for entity in entities %}
+    {% for day in days %}
         <tr>
-            <td><a href="{{ path('day_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-            <td>{{ entity.nbhours }}</td>
-            <td>{{ entity.nbbusinessvalue }}</td>
-            <td>{{ entity.nbstorypoints }}</td>
+            <td><a href="{{ path('project_show', { 'id': day['project_id'] }) }}">{{ day['title'] }}</a></td>
+            <td><a href="{{ path('sprint_show', { 'id': day['sprint_id'] }) }}">{{ day['index'] }}</a></td>
+            <td><a href="{{ path('day_show', { 'id': day['day_id'] }) }}">{{ day['day_id'] }}</a></td>
+            <td>{{ day['date'] }}</td>
+            <td>{{ day['nb_hours'] }}</td>
+            <td>{{ day['nb_story_points'] }}</td>
+            <td>{{ day['nb_business_value'] }}</td>
             <td>
                 <ul>
                     <li>
-                        <a href="{{ path('day_show', { 'id': entity.id }) }}">show</a>
+                        <a href="{{ path('day_show', { 'id': day['day_id'] }) }}">show</a>
                     </li>
                     <li>
-                        <a href="{{ path('day_edit', { 'id': entity.id }) }}">edit</a>
+                        <a href="{{ path('day_edit', { 'id': day['day_id'] }) }}">edit</a>
                     </li>
                 </ul>
             </td>
@@ -35,12 +41,5 @@
     </tbody>
 </table>
 
-<ul>
-    <li>
-        <a href="{{ path('day_new') }}">
-            Create a new entry
-        </a>
-    </li>
-</ul>
 {% endblock %}
 

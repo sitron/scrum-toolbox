@@ -3,7 +3,7 @@
 {% block body %}
 <h1>Day creation</h1>
 
-<form action="{{ path('day_create') }}" method="post" {{ form_enctype(form) }}>
+<form action="{{ path('day_create', {'project': project.id}) }}" method="post" {{ form_enctype(form) }}>
     {{ form_widget(form) }}
     <p>
         <button type="submit">Create</button>
@@ -17,9 +17,11 @@
         </a>
     </li>
     <li>
-        <a href="{{ path('sprint_new') }}">
+    {#
+    <a href="{{ path('sprint_new', {'project': project.id}) }}">
             Sprint not created? create it now
         </a>
+    #}
     </li>
 </ul>
 {% endblock %}

@@ -1,5 +1,6 @@
 Sitronnier\SmBoxBundle\Entity\Day:
   type: entity
+  repositoryClass: Sitronnier\SmBoxBundle\Entity\DayRepository
   table: null
   fields:
     id:

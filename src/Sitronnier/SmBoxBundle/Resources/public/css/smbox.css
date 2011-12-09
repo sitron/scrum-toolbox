@@ -22,3 +22,25 @@
     background-color: #f9f9f9;
 }
 
+label {
+    width: 160px;
+    display: inline-block;
+}
+
+#sitronnier_smboxbundle_daytype_date {
+    display: inline-block;
+}
+
+table.record_properties th, table.records_list th {
+    text-align: left;
+}
+
+table.day-list th {
+    width: 80px;
+}
+
+#user-bundle-box label {
+    width: 0px;
+    display: inline;
+}
+

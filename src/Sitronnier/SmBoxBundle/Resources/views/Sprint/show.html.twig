@@ -4,6 +4,21 @@
 <h1>{{ entity.project.title }}</h1>
 <h3>Sprint {{ entity.index }}</h3>
 
+<ul>
+    {% if entity.status != 'CLOSED' %}
+    <li>
+        <a href="{{ path('day_new') }}?sprint={{ entity.id }}">
+            Add new day
+        </a>
+    </li>
+    {% endif %}
+    <li>
+    <a href="{{ path('sprint', {'project': entity.project.id}) }}">
+            See all sprints for {{ entity.project.title }}
+        </a>
+    </li>
+</ul>
+
 <div class="key-figures">
     <table class="record-properties">
         <tbody>
@@ -53,27 +68,13 @@
 
 <ul class="record_actions">
     <li>
-        <a href="{{ path('sprint_edit', { 'id': entity.id }) }}">
-            Edit
-        </a>
+        <a href="{{ path('sprint_edit', { 'id': entity.id }) }}">Edit sprint data</a>
     </li>
     <li>
         <form action="{{ path('sprint_delete', { 'id': entity.id }) }}" method="post">
             {{ form_widget(delete_form) }}
             <button type="submit">Delete</button>
         </form>
-    </li>
-    {% if entity.status != 'CLOSED' %}
-    <li>
-        <a href="{{ path('day_new') }}?sprint={{ entity.id }}">
-            Add new day
-        </a>
-    </li>
-    {% endif %}
-    <li>
-        <a href="{{ path('sprint') }}">
-            See all sprints for {{ entity.project.title }}
-        </a>
     </li>
 </ul>
 {% endblock %}
