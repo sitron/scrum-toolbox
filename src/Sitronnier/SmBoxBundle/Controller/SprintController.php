@@ -59,7 +59,7 @@ class SprintController extends Controller
         $jsSprint = json_encode($sprint->toJson());
 
         return $this->render('SitronnierSmBoxBundle:Sprint:show.html.twig', array(
-            'entity'      => $sprint,
+            'sprint'      => $sprint,
             'delete_form' => $deleteForm->createView(),
             'jsSprint'    => $jsSprint,
         ));
@@ -232,6 +232,9 @@ class SprintController extends Controller
         $user = $securityContext->getToken()->getUser();
 
         $sprint = $this->getDoctrine()->getRepository('SitronnierSmBoxBundle:Sprint')->findOneWithOrderedDaysAndOwner($id, $user->getId());
+        if (is_null($sprint)) {
+            throw $this->createNotFoundException('Unable to find days for this sprint.');
+        }
         $project = $sprint->getProject();
 
         if (!$sprint) {

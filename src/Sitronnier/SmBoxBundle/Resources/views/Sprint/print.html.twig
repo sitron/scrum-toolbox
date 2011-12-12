@@ -10,16 +10,11 @@
 
 {% block body %}
 <h1>{{ project }}</h1>
+<h3>Sprint <span id="sprint-index">{{ sprint.index }}</span></h3>
+
+{% include "SitronnierSmBoxBundle:Sprint:keyData.html.twig" with {'sprint': sprint} %}
 
 <div id="sprint-stats">
-    <h2>Sprint <span id="sprint-index">{{ sprint.index }}</span></h2>
-    <div class="velocity">
-        <p>Planed velocity: <span class="sprint-velocity-planed"></span></p>
-        <p>Actual velocity: <span class="sprint-velocity-actual"></span></p>
-        <p>Burnt MD: <span class="sprint-burnt-md"></span> %</p>
-        <p>Burnt SP: <span class="sprint-burnt-sp"></span> %</p>
-        <p>Burnt BV: <span class="sprint-burnt-bv"></span> %</p>
-    </div>
     <div id="graph-canvas"></div>
 </div>
 
