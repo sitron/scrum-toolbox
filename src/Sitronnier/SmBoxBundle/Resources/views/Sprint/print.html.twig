@@ -1,7 +1,7 @@
 {% extends "SitronnierSmBoxBundle::layout.html.twig" %}
 
 {% block stylesheets %}
-<link href="{{ asset('/bundles/sitronniersmbox/css/smbox.css') }}" rel="stylesheet" type="text/css" />
+{{ parent() }}
 <link href="{{ asset('/bundles/sitronniersmbox/css/print.css') }}" rel="stylesheet" type="text/css" />
 {% endblock %}
 

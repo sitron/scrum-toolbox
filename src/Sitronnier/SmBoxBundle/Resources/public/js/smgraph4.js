@@ -1,7 +1,7 @@
 YUI.add('SprintChart', function(Y) {
     Y.namespace('SmbSprintChart');
 
-    var chart, chartValues, shownSeries, axes, seriesCollection;
+    var chart, chartValues, shownSeries, axes, seriesCollection, chartStyle;
 
     chartValues = [];
 
@@ -82,6 +82,23 @@ YUI.add('SprintChart', function(Y) {
         }
     ];
 
+    chartStyle = {
+       background: {
+          fill : {
+             color : getBackgroundColor()
+          },
+          border : {
+             color : "#9aa",
+             weight : 1
+          }
+       }
+    };
+
+    function getBackgroundColor() {
+        var c = Y.one('#graph-canvas').getStyle('backgroundColor');
+        return c;
+    };
+
     // on ajax call complete
     function complete(id, o, args) {
         var result = Y.JSON.parse(o.responseText).sprint;
@@ -120,7 +137,8 @@ YUI.add('SprintChart', function(Y) {
             axes: axes,
             horizontalGridlines: true,
             verticalGridlines: true,
-            seriesCollection: seriesCollection
+            seriesCollection: seriesCollection,
+            styles: {graph: chartStyle}
         });
         console.log(chart);
     };
