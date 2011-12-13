@@ -60,7 +60,18 @@ YUI.add('SprintChart', function(Y) {
             xKey: 'date',
             yKey: 'MD',
             xDisplayName: 'Date',
-            yDisplayName: 'Man/Days'
+            yDisplayName: 'Man/Days',
+            line: {
+               'color': '#000'
+            },
+            marker: {
+                'border': {
+                    'color': '#000'
+                },
+                'fill': {
+                    'color': '#fff'
+                }
+            }
         },
         {
             type: 'combo',
@@ -69,7 +80,18 @@ YUI.add('SprintChart', function(Y) {
             xKey: 'date',
             yKey: 'BV',
             xDisplayName: 'Date',
-            yDisplayName: 'Business Value'
+            yDisplayName: 'Business Value',
+            line: {
+               'color': '#F64227'
+            },
+            marker: {
+                'border': {
+                    'color': '#F64227'
+                },
+                'fill': {
+                    'color': '#fff'
+                }
+            }
         },
         {
             type: 'combo',
@@ -78,7 +100,18 @@ YUI.add('SprintChart', function(Y) {
             xKey: 'date',
             yKey: 'SP',
             xDisplayName: 'Date',
-            yDisplayName: 'Story Points'
+            yDisplayName: 'Story Points',
+            line: {
+               'color': '#26BCD6'
+            },
+            marker: {
+                'border': {
+                    'color': '#26BCD6'
+                },
+                'fill': {
+                    'color': '#fff'
+                }
+            }
         }
     ];
 
