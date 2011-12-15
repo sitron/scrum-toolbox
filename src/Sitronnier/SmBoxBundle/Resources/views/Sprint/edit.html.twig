@@ -12,9 +12,7 @@
 
 <ul class="record_actions">
     <li>
-        <a href="{{ path('sprint') }}">
-            Back to the list
-        </a>
+        <a href="{{ path('sprint') }}">See all sprints</a>
     </li>
     <li>
         <form action="{{ path('sprint_delete', { 'id': entity.id }) }}" method="post">

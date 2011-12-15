@@ -22,7 +22,12 @@
     background-color: #f9f9f9;
 }
 
-label {
+#user-bundle-box label {
+    width: 0px;
+    display: inline;
+}
+
+label, #fos_user_registration_form label {
     width: 160px;
     display: inline-block;
 }
@@ -37,10 +42,5 @@ table.record_properties th, table.records_list th {
 
 table.day-list th {
     width: 80px;
-}
-
-#user-bundle-box label {
-    width: 0px;
-    display: inline;
 }
 
