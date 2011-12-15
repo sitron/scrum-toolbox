@@ -173,7 +173,6 @@ YUI.add('SprintChart', function(Y) {
             seriesCollection: seriesCollection,
             styles: {graph: chartStyle}
         });
-        console.log(chart);
     };
 
     function updateTitleIndex(index) {
@@ -190,9 +189,9 @@ YUI.add('SprintChart', function(Y) {
 
     function updateBurnt(sprint) {
         var last = chartValues[chartValues.length - 1];
-        Y.one('.sprint-burnt-md').setContent(last.MD);
-        Y.one('.sprint-burnt-sp').setContent(last.SP);
-        Y.one('.sprint-burnt-bv').setContent(last.BV);
+        Y.one('.sprint-burnt-md').setContent(Math.round(last.MD * 10) / 10);
+        Y.one('.sprint-burnt-sp').setContent(Math.round(last.SP * 10) / 10);
+        Y.one('.sprint-burnt-bv').setContent(Math.round(last.BV * 10) / 10);
         Y.one('.sprint-burnt-md-ratio').setContent(Math.round((last.MD / sprint.nbMD) * 100));
         Y.one('.sprint-burnt-sp-ratio').setContent(Math.round((last.SP / sprint.nbSP) * 100));
         Y.one('.sprint-burnt-bv-ratio').setContent(Math.round((last.BV / sprint.nbBV) * 100));
@@ -200,6 +199,7 @@ YUI.add('SprintChart', function(Y) {
 
     // update axes max values
     function updateAxes(result) {
+        axes.md.maximum = result.nbMD;
         axes.bv.maximum = result.nbBV;
         axes.sp.maximum = result.nbSP;
     };
@@ -230,8 +230,6 @@ YUI.add('SprintChart', function(Y) {
     Y.on('io:complete', complete, this, []);
 
     Y.SmbSprintChart.loadSprint = function(sprintId) {
-        console.log('here');
-        console.log(chart);
         Y.io(Routing.generate('smbox_stats_sprint_data', { sprint: sprintId }));
         return chart;
     };
