@@ -1,11 +1,18 @@
 {% extends 'SitronnierSmBoxBundle::layout.html.twig' %}
 
 {% block body %}
-Hello {{ name }}!
+<p>Welcome!</p>
 
-{% if is_granted('ROLE_ADMIN') %}
-<h2>You re an admin</h2>
+{% if is_granted('role_user') %}
+<ul>
+    <li><a href="{{ path('project') }}">See all your projects</a></li>
+    <li><a href="{{ path('project') }}">See all your sprints</a></li>
+    <li><a href="{{ path('project') }}">See all your days</a></li>
+</ul>
 {% else %}
-You re not an admin
+<p>You're not logged in. <a href="{{ path('fos_user_security_login') }}">Login</a> or <a href="{{ path('fos_user_registration_register') }}">register</a>.</p>
 {% endif %}
+        {% block fos_user_content %}{% endblock %}
+
 {% endblock %}
+

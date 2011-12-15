@@ -1,5 +1,5 @@
 SitronnierSmBoxBundle_homepage:
-    pattern:  /hello/{name}
+    pattern:  /
     defaults: { _controller: SitronnierSmBoxBundle:Default:index }
 
 SitronnierSmBoxBundle_projects:
