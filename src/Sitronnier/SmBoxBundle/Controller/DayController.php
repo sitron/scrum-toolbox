@@ -20,12 +20,18 @@ class DayController extends Controller
      */
     public function indexAction()
     {
-        $em = $this->getDoctrine()->getEntityManager();
-
+        $request = $this->get('request');
         $securityContext = $this->get('security.context');
         $user = $securityContext->getToken()->getUser();
 
-        $days = $this->getDoctrine()->getRepository('SitronnierSmBoxBundle:Project')->findAllWithOrderedDays($user->getId());
+        $em = $this->getDoctrine()->getEntityManager();
+
+        if ($request->query->get('sprint')) {
+            $sprint_id = $request->query->get('sprint');
+            $days = $this->getDoctrine()->getRepository('SitronnierSmBoxBundle:Day')->findAllForSprint($sprint_id, $user->getId());
+        } else {
+            $days = $this->getDoctrine()->getRepository('SitronnierSmBoxBundle:Day')->findAllForOwner($user->getId());
+        }
 
         // TODO find a better way to do this
 //        $splitted = array();

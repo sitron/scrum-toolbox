@@ -12,7 +12,6 @@
 {% else %}
 <p>You're not logged in. <a href="{{ path('fos_user_security_login') }}">Login</a> or <a href="{{ path('fos_user_registration_register') }}">register</a>.</p>
 {% endif %}
-        {% block fos_user_content %}{% endblock %}
 
 {% endblock %}
 
