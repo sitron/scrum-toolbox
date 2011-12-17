@@ -44,3 +44,16 @@ table.day-list th {
     width: 80px;
 }
 
+body {
+    color: #333;
+    font-family: "Trebuchet MS", arial, sans-serif;
+}
+
+a {
+    color: #333;
+}
+
+a:hover {
+    color: #000;
+}
+
