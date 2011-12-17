@@ -4,7 +4,3 @@ smbox_stats_sprint_data:
     options:
         expose: true
 
-smbox_sprint_stats_project:
-    pattern:  /{project_id}
-    defaults: { _controller: SitronnierSmBoxBundle:Stats:project, _format: html }
-
