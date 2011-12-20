@@ -18,4 +18,5 @@ Sitronnier\SmBoxBundle\Entity\Project:
     sprints:
       targetEntity: Sprint
       mappedBy: project
+      cascade: [ 'remove' ]
   lifecycleCallbacks: {  }
