@@ -11,6 +11,13 @@ Sitronnier\SmBoxBundle\Entity\Project:
     title:
       type: string
       length: 255
+    zebra_url:
+      type: string
+      length: 255
+    jira_url:
+      type: string
+      length: 255
+
   manyToOne:
     owner:
       targetEntity: Sitronnier\MyUserBundle\Entity\MyUser

@@ -27,6 +27,21 @@ class Project
 
     private $sprints;
 
+    /**
+     * @var string $zebra_url
+     */
+    private $zebra_url;
+
+    /**
+     * @var string $jira_url
+     */
+    private $jira_url;
+
+
+    public function __construct()
+    {
+        $this->sprints = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
@@ -98,6 +113,46 @@ class Project
         foreach ($sprints as $item) {
             $this->addSprint($item);
         }
+    }
+
+    /**
+     * Set zebra_url
+     *
+     * @param string $zebraUrl
+     */
+    public function setZebraUrl($zebraUrl)
+    {
+        $this->zebra_url = $zebraUrl;
+    }
+
+    /**
+     * Get zebra_url
+     *
+     * @return string
+     */
+    public function getZebraUrl()
+    {
+        return $this->zebra_url;
+    }
+
+    /**
+     * Set jira_url
+     *
+     * @param string $jiraUrl
+     */
+    public function setJiraUrl($jiraUrl)
+    {
+        $this->jira_url = $jiraUrl;
+    }
+
+    /**
+     * Get jira_url
+     *
+     * @return string
+     */
+    public function getJiraUrl()
+    {
+        return $this->jira_url;
     }
 
     public function __toString()
