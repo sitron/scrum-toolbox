@@ -10,7 +10,19 @@ class ProjectType extends AbstractType
     public function buildForm(FormBuilder $builder, array $options)
     {
         $builder
-            ->add('title', null, array('label' => 'project\'s name'))
+            ->add('title', null, array(
+                'label' => 'Project\'s name'
+            ))
+            ->add('zebra_url', null, array(
+                'label' => 'Url in Zebra (optional)',
+                'required' => false,
+                'attr' => array('class' => 'large'),
+            ))
+            ->add('jira_url', null, array(
+                'label' => 'Url in Jira (optional)',
+                'required' => false,
+                'attr' => array('class' => 'large'),
+            ))
         ;
     }
 

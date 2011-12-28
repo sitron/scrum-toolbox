@@ -63,3 +63,9 @@ fos_user:
     firewall_name: main
     use_listener: false
     user_class:   Sitronnier\MyUserBundle\Entity\MyUser
+
+services:
+    zebra.twig.extension:
+        class: Sitronnier\SmBoxBundle\Extension\ZebraTwigExtension
+        tags:
+            -  { name: twig.extension }

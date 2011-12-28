@@ -146,9 +146,8 @@ class DayController extends Controller
         $securityContext = $this->get('security.context');
         $user = $securityContext->getToken()->getUser();
 
-        //$em = $this->getDoctrine()->getEntityManager();
-
         $day = $this->getDoctrine()->getRepository('SitronnierSmBoxBundle:Day')->findOneWithOwner($id, $user->getId());
+        $project = $day->getSprint()->getProject();
 
         if (!$day) {
             throw $this->createNotFoundException('Unable to find Day entity.');
@@ -161,6 +160,7 @@ class DayController extends Controller
             'entity'      => $day,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
+            'project'     => $project,
         ));
     }
 
@@ -170,15 +170,19 @@ class DayController extends Controller
      */
     public function updateAction($id)
     {
+        $securityContext = $this->get('security.context');
+        $user = $securityContext->getToken()->getUser();
+
         $em = $this->getDoctrine()->getEntityManager();
 
-        $entity = $em->getRepository('SitronnierSmBoxBundle:Day')->find($id);
+        $day = $this->getDoctrine()->getRepository('SitronnierSmBoxBundle:Day')->findOneWithOwner($id, $user->getId());
+        $project = $day->getSprint()->getProject();
 
-        if (!$entity) {
+        if (!$day) {
             throw $this->createNotFoundException('Unable to find Day entity.');
         }
 
-        $editForm   = $this->createForm(new DayType(), $entity);
+        $editForm   = $this->createForm(new DayType($day->getSprint()->getProject()), $day);
         $deleteForm = $this->createDeleteForm($id);
 
         $request = $this->getRequest();
@@ -186,16 +190,17 @@ class DayController extends Controller
         $editForm->bindRequest($request);
 
         if ($editForm->isValid()) {
-            $em->persist($entity);
+            $em->persist($day);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('day_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('day_show', array('id' => $id)));
         }
 
         return $this->render('SitronnierSmBoxBundle:Day:edit.html.twig', array(
-            'entity'      => $entity,
+            'entity'      => $day,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
+            'project'     => $project,
         ));
     }
 

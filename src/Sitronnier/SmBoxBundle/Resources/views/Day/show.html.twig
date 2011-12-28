@@ -10,15 +10,19 @@
             <td>{{ entity.id }}</td>
         </tr>
         <tr>
-            <th>Nb_hours</th>
+            <th>Date</th>
+            <td>{{ entity.date|date('d-m-Y') }}</td>
+        </tr>
+        <tr>
+            <th>Nb hours</th>
             <td>{{ entity.nbhours }}</td>
         </tr>
         <tr>
-            <th>Nb_business_value</th>
+            <th>Business value</th>
             <td>{{ entity.nbbusinessvalue }}</td>
         </tr>
         <tr>
-            <th>Nb_story_points</th>
+            <th>Story points</th>
             <td>{{ entity.nbstorypoints }}</td>
         </tr>
     </tbody>

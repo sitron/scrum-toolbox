@@ -3,6 +3,15 @@
 {% block body %}
 <h1>Day creation</h1>
 
+<p class="helpers">
+    {% if project.zebraUrl %}
+        <a href="{{ project.zebraUrl|zebraCurrentDay }}">zebra url for today</a>
+    {% endif %}
+    {% if project.jiraUrl %}
+        <a href="{{ project.jiraUrl }}">jira url</a>
+    {% endif %}
+</p>
+
 <form action="{{ path('day_create', {'project': project.id}) }}" method="post" {{ form_enctype(form) }}>
     {{ form_widget(form) }}
     <p>

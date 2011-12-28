@@ -57,3 +57,11 @@ a:hover {
     color: #000;
 }
 
+input.large {
+    width: 400px;
+}
+
+.helpers a {
+    display: block;
+}
+
