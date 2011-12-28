@@ -2,44 +2,42 @@
 
 {% block body %}
 <h1>{{ sprint.project.title }}</h1>
-<h3>Sprint {{ sprint.index }}</h3>
+<h3>{% trans %}sprint{% endtrans %} {{ sprint.index }}</h3>
 
 <ul>
     {% if sprint.status != 'CLOSED' %}
     <li>
-        <a href="{{ path('day_new') }}?sprint={{ sprint.id }}">
-            Add new day
-        </a>
+        <a href="{{ path('day_new') }}?sprint={{ sprint.id }}">{% trans %}add.day{% endtrans %}</a>
     </li>
     {% endif %}
     <li>
-        <a href="{{ path('sprint', {'project': sprint.project.id}) }}">See all sprints for {{ sprint.project.title }}</a>
+        <a href="{{ path('sprint', {'project': sprint.project.id}) }}">{% trans %}see.all.sprint_for{% endtrans %} {{ sprint.project.title }}</a>
     </li>
     <li>
-        <a href="{{ path('day', {'sprint': sprint.id}) }}">See all days for sprint {{ sprint.index }}</a>
+        <a href="{{ path('day', {'sprint': sprint.id}) }}">{% trans %}see.all.day_for_sprint{% endtrans %} {{ sprint.index }}</a>
     </li>
 </ul>
 
 {% include "SitronnierSmBoxBundle:Sprint:keyData.html.twig" with {'sprint': sprint} %}
 
 <div id="sprint-stats">
-    <h3>Stats for sprint <span id="sprint-index">{{ sprint.index }}</span></h3>
+    <h3>{% trans %}stats.for.sprint{% endtrans %} <span id="sprint-index">{{ sprint.index }}</span></h3>
     {% if sprint.days.count > 0 %}
         <div id="graph-canvas"></div>
-        <a href="{{ path('sprint_print', {'id': sprint.id }) }}" class="print-chart">Print chart</a>
+        <a href="{{ path('sprint_print', {'id': sprint.id }) }}" class="print-chart">{% trans %}print.chart{% endtrans %}</a>
     {% else %}
-        <p>No days registered for this sprint (<a href="{{ path('day_new') }}?sprint={{ sprint.id }}">add new day</a>)</p>
+        <p>{% trans %}no_days_registered_for_this_sprint{% endtrans %} (<a href="{{ path('day_new') }}?sprint={{ sprint.id }}">{% trans %}add.day{% endtrans %}</a>)</p>
     {% endif %}
 </div>
 
 <ul class="record_actions">
     <li>
-        <a href="{{ path('sprint_edit', { 'id': sprint.id }) }}">Edit sprint data</a>
+        <a href="{{ path('sprint_edit', { 'id': sprint.id }) }}">{% trans %}sprint_entity.edit_data{% endtrans %}</a>
     </li>
     <li>
         <form action="{{ path('sprint_delete', { 'id': sprint.id }) }}" method="post">
             {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
+            <button type="submit">{% trans %}delete{% endtrans %}</button>
         </form>
     </li>
 </ul>

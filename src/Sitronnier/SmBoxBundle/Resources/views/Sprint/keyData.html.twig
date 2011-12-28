@@ -3,24 +3,24 @@
         <tbody>
             <tr>
                 <th></th>
-                <th>MD</th>
-                <th>SP</th>
-                <th>BV</th>
+                <th>{% trans %}MD{% endtrans %}</th>
+                <th>{% trans %}SP{% endtrans %}</th>
+                <th>{% trans %}BV{% endtrans %}</th>
             </tr>
             <tr>
-                <th class="label">Total</th>
+                <th class="label">{% trans %}total{% endtrans %}</th>
                 <td>{{ sprint.mandays }}</td>
                 <td>{{ sprint.storypoints }}</td>
                 <td>{{ sprint.businessvalue }}</td>
             </tr>
             <tr>
-                <th class="label">Burnt</th>
+                <th class="label">{% trans %}burnt.data{% endtrans %}</th>
                 <td><span class="sprint-burnt-md"></span></td>
                 <td><span class="sprint-burnt-sp"></span></td>
                 <td><span class="sprint-burnt-bv"></span></td>
             </tr>
             <tr>
-                <th class="label">Burnt ratio</th>
+                <th class="label">{% trans %}burnt.ratio{% endtrans %}</th>
                 <td><span class="sprint-burnt-md-ratio"></span></td>
                 <td><span class="sprint-burnt-sp-ratio"></span></td>
                 <td><span class="sprint-burnt-bv-ratio"></span></td>
@@ -31,11 +31,11 @@
         <tbody>
             <tr>
                 <th></th>
-                <th>Planed</th>
-                <th>Actual</th>
+                <th>{% trans %}planed{% endtrans %}</th>
+                <th>{% trans %}actual{% endtrans %}</th>
             </tr>
             <tr>
-                <th class="label">Velocity</th>
+                <th class="label">{% trans %}velocity{% endtrans %}</th>
                 <td><span class="sprint-velocity-planed"></span></td>
                 <td><span class="sprint-velocity-actual"></span></td>
             </tr>

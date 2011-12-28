@@ -1,16 +1,16 @@
 {% extends "SitronnierSmBoxBundle::layout.html.twig" %}
 
 {% block body %}
-<h1>Project</h1>
+<h1>{% trans %}project{% endtrans %}</h1>
 
 <table class="record_properties">
     <tbody>
         <tr>
-            <th>Id</th>
+            <th>{% trans %}id{% endtrans %}</th>
             <td>{{ entity.id }}</td>
         </tr>
         <tr>
-            <th>Title</th>
+            <th>{% trans %}title{% endtrans %}</th>
             <td>{{ entity.title }}</td>
         </tr>
     </tbody>
@@ -20,7 +20,7 @@
     <ul>
         {% for sprint in sprints %}
         <li>
-            <a href="{{ path('sprint_show', {'id': sprint.id}) }}">Sprint {{ sprint.index }}</a>
+            <a href="{{ path('sprint_show', {'id': sprint.id}) }}">{% trans %}sprint{% endtrans %} {{ sprint.index }}</a>
         </li>
         {% endfor %}
     </ul>
@@ -28,23 +28,19 @@
 
 <ul class="record_actions">
     <li>
-    <a href="{{ path('sprint_new', {'project': entity.id}) }}">Add a sprint</a>
+        <a href="{{ path('sprint_new', {'project': entity.id}) }}">{% trans %}add.sprint{% endtrans %}</a>
     </li>
     <li>
-        <a href="{{ path('project_edit', { 'id': entity.id }) }}">
-            Edit
-        </a>
+    <a href="{{ path('project_edit', { 'id': entity.id }) }}">{% trans %}edit{% endtrans %}</a>
     </li>
     <li>
         <form action="{{ path('project_delete', { 'id': entity.id }) }}" method="post">
             {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
+            <button type="submit">{% trans %}delete{% endtrans %}</button>
         </form>
     </li>
     <li>
-        <a href="{{ path('project') }}">
-            See all projects
-        </a>
+        <a href="{{ path('project') }}">{% trans %}see.all.project{% endtrans %}</a>
     </li>
 </ul>
 {% endblock %}

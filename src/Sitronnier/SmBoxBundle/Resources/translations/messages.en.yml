@@ -1,0 +1,87 @@
+scrummaster:
+  toolbox:                                      ScrumMaster toolbox
+
+welcome:                                        welcome
+not_logged_in:                                  You are not logged in
+login:                                          login
+or:                                             or
+register:                                       register
+
+day_entity:
+  list:                                         all days
+  edit:                                         edit day
+  create:                                       create new day
+
+project_entity:
+  edit:                                         edit project
+  list:                                         all projects
+  create:                                       create new project
+
+sprint_entity:
+  edit:                                         edit sprint
+  list:                                         all sprints
+  create:                                       create new sprint
+  edit_data:                                    edit sprint data
+
+see:
+  all:
+    days:                                       see all days
+    day_for_sprint:                             see all days for sprint
+    project:                                    see all projects
+    sprint:                                     see all sprints
+    sprint_for:                                 see all sprints for
+    your:
+      project:                                  see all your projects
+      sprint:                                   see all your sprints
+      day:                                      see all your days
+
+stats:
+  for:
+    sprint:                                     stats for sprint
+
+print:
+  chart:                                        print chart
+
+add:
+  project:                                      add new project
+  sprint:                                       add new sprint
+  day:                                          add new day
+
+show:                                           show
+edit:                                           edit
+delete:                                         delete
+create:                                         create
+project:                                        project
+sprint:                                         sprint
+day:                                            day
+
+id:                                             id
+date:                                           date
+nb:
+  hours:                                        nb of hours
+MD:                                             MD
+story_points:                                   story points
+SP:                                             SP
+business_value:                                 business value
+BV:                                             BV
+title:                                          title
+
+actions:                                        actions
+total:                                          total
+burnt:
+  data:                                         burnt
+  ratio:                                        burnt ratio
+planed:                                         planed
+actual:                                         actual
+velocity:                                       velocity
+
+zebra:
+  url:
+    date:                                       zebra url for this day
+    today:                                      zebra url for today
+
+jira:
+  url:                                          jira url
+
+no_days_registered_for_this_sprint:             no days registered for this sprint
+

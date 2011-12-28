@@ -1,19 +1,19 @@
 {% extends "SitronnierSmBoxBundle::layout.html.twig" %}
 
 {% block body %}
-<h1>Day list</h1>
+<h1>{% trans %}day_entity.list{% endtrans %}</h1>
 
 <table class="records_list day-list">
     <thead>
         <tr>
-            <th>Project</th>
-            <th>Sprint</th>
-            <th>Id</th>
-            <th>Date</th>
-            <th>MD</th>
-            <th>SP</th>
-            <th>BV</th>
-            <th>Actions</th>
+            <th>{% trans %}project{% endtrans %}</th>
+            <th>{% trans %}sprint{% endtrans %}</th>
+            <th>{% trans %}id{% endtrans %}</th>
+            <th>{% trans %}date{% endtrans %}</th>
+            <th>{% trans %}MD{% endtrans %}</th>
+            <th>{% trans %}SP{% endtrans %}</th>
+            <th>{% trans %}BV{% endtrans %}</th>
+            <th>{% trans %}actions{% endtrans %}</th>
         </tr>
     </thead>
     <tbody>

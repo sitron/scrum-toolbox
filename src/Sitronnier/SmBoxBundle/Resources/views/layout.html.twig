@@ -1,24 +1,23 @@
 {% extends '::base.html.twig' %}
 
 {% block top %}
-<div class="top">
-    <div class="login-state">
-        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-            <a href="{{ path('fos_user_profile_show') }}">{{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}</a> |
-            <a href="{{ path('fos_user_security_logout') }}">
-                {{ 'layout.logout'|trans([], 'FOSUserBundle') }}
-            </a>
-        {% else %}
-            <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans([], 'FOSUserBundle') }}</a> |
-            <a href="{{ path('fos_user_registration_register') }}">{{ 'layout.register'|trans([], 'FOSUserBundle') }}</a>
-        {% endif %}
+    <div class="top">
+        <div class="login-state">
+            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                <a href="{{ path('fos_user_profile_show') }}">{{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}</a> |
+                <a href="{{ path('fos_user_security_logout') }}">{{ 'layout.logout'|trans([], 'FOSUserBundle') }}</a>
+            {% else %}
+                <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans([], 'FOSUserBundle') }}</a> |
+                <a href="{{ path('fos_user_registration_register') }}">{{ 'layout.register'|trans([], 'FOSUserBundle') }}</a>
+            {% endif %}
+        </div>
+        <h1 class="logo">{% trans %}scrummaster.toolbox{% endtrans %}</h1>
     </div>
-    <h1 class="logo">Scrum master toolbox</h1>
-</div>
 
-{% for key, flash in app.session.getFlashes() %}
-<div class="{{ flash }}">
-    {{ key|trans([], 'FOSUserBundle') }}
-</div>
-{% endfor %}
+    {% for key, flash in app.session.getFlashes() %}
+        <div class="{{ flash }}">
+            {{ key|trans([], 'FOSUserBundle') }}
+        </div>
+    {% endfor %}
 {% endblock %}
+

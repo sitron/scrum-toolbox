@@ -1,16 +1,16 @@
 {% extends 'SitronnierSmBoxBundle::layout.html.twig' %}
 
 {% block body %}
-<p>Welcome!</p>
+<p>{% trans %}welcome{% endtrans %}!</p>
 
 {% if is_granted('role_user') %}
 <ul>
-    <li><a href="{{ path('project') }}">See all your projects</a></li>
-    <li><a href="{{ path('project') }}">See all your sprints</a></li>
-    <li><a href="{{ path('project') }}">See all your days</a></li>
+    <li><a href="{{ path('project') }}">{% trans %}see.all.your.project{% endtrans %}</a></li>
+    <li><a href="{{ path('project') }}">{% trans %}see.all.your.sprint{% endtrans %}</a></li>
+    <li><a href="{{ path('project') }}">{% trans %}see.all.your.day{% endtrans %}</a></li>
 </ul>
 {% else %}
-<p>You're not logged in. <a href="{{ path('fos_user_security_login') }}">Login</a> or <a href="{{ path('fos_user_registration_register') }}">register</a>.</p>
+<p>{% trans %}not_logged_in{% endtrans %}. <a href="{{ path('fos_user_security_login') }}">{% trans %}login{% endtrans %}</a> {% trans %}or{% endtrans %} <a href="{{ path('fos_user_registration_register') }}">{% trans %}register{% endtrans %}</a>.</p>
 {% endif %}
 
 {% endblock %}

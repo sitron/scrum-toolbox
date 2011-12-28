@@ -1,28 +1,28 @@
 {% extends "SitronnierSmBoxBundle::layout.html.twig" %}
 
 {% block body %}
-<h1>Day</h1>
+<h1>{% trans %}day{% endtrans %}</h1>
 
 <table class="record_properties">
     <tbody>
         <tr>
-            <th>Id</th>
+            <th>{% trans %}id{% endtrans %}</th>
             <td>{{ entity.id }}</td>
         </tr>
         <tr>
-            <th>Date</th>
+            <th>{% trans %}date{% endtrans %}</th>
             <td>{{ entity.date|date('d-m-Y') }}</td>
         </tr>
         <tr>
-            <th>Nb hours</th>
+            <th>{% trans %}nb.hours{% endtrans %}</th>
             <td>{{ entity.nbhours }}</td>
         </tr>
         <tr>
-            <th>Business value</th>
+            <th>{% trans %}business_value{% endtrans %}</th>
             <td>{{ entity.nbbusinessvalue }}</td>
         </tr>
         <tr>
-            <th>Story points</th>
+            <th>{% trans %}story_points{% endtrans %}</th>
             <td>{{ entity.nbstorypoints }}</td>
         </tr>
     </tbody>
@@ -30,19 +30,15 @@
 
 <ul class="record_actions">
     <li>
-        <a href="{{ path('day') }}">
-            Back to the list
-        </a>
+        <a href="{{ path('day') }}">{% trans %}see.all.days{% endtrans %}</a>
     </li>
     <li>
-        <a href="{{ path('day_edit', { 'id': entity.id }) }}">
-            Edit
-        </a>
+        <a href="{{ path('day_edit', { 'id': entity.id }) }}">{% trans %}edit{% endtrans %}</a>
     </li>
     <li>
         <form action="{{ path('day_delete', { 'id': entity.id }) }}" method="post">
             {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
+            <button type="submit">{% trans %}delete{% endtrans %}</button>
         </form>
     </li>
 </ul>

@@ -1,34 +1,29 @@
 {% extends "SitronnierSmBoxBundle::layout.html.twig" %}
 
 {% block body %}
-<h1>Day edit</h1>
+<h1>{% trans %}day_entity.edit{% endtrans %}</h1>
 
 <p class="helpers">
     {% if project.zebraUrl %}
-        <a href="{{ project.zebraUrl|zebraDay(entity.date) }}">zebra url for this day</a>
+        <a href="{{ project.zebraUrl|zebraDay(entity.date) }}">{% trans %}zebra.url.date{% endtrans %}</a>
     {% endif %}
     {% if project.jiraUrl %}
-        <a href="{{ project.jiraUrl }}">jira url</a>
+        <a href="{{ project.jiraUrl }}">{% trans %}jira.url{% endtrans %}</a>
     {% endif %}
 </p>
 
 <form action="{{ path('day_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
     {{ form_widget(edit_form) }}
     <p>
-        <button type="submit">Edit</button>
+        <button type="submit">{% trans %}edit{% endtrans %}</button>
     </p>
 </form>
 
 <ul class="record_actions">
     <li>
-        <a href="{{ path('day') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
         <form action="{{ path('day_delete', { 'id': entity.id }) }}" method="post">
             {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
+            <button type="submit">{% trans %}delete{% endtrans %}</button>
         </form>
     </li>
 </ul>

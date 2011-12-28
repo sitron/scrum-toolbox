@@ -1,14 +1,14 @@
 {% extends "SitronnierSmBoxBundle::layout.html.twig" %}
 
 {% block body %}
-<h1>Project list</h1>
+<h1>{% trans %}project_entity.list{% endtrans %}</h1>
 
 <table class="records_list">
     <thead>
         <tr>
-            <th>Id</th>
-            <th>Title</th>
-            <th>Actions</th>
+            <th>{% trans %}id{% endtrans %}</th>
+            <th>{% trans %}title{% endtrans %}</th>
+            <th>{% trans %}actions{% endtrans %}</th>
         </tr>
     </thead>
     <tbody>
@@ -19,10 +19,10 @@
             <td>
                 <ul>
                     <li>
-                        <a href="{{ path('project_show', { 'id': entity.id }) }}">show</a>
+                        <a href="{{ path('project_show', { 'id': entity.id }) }}">{% trans %}show{% endtrans %}</a>
                     </li>
                     <li>
-                        <a href="{{ path('project_edit', { 'id': entity.id }) }}">edit</a>
+                        <a href="{{ path('project_edit', { 'id': entity.id }) }}">{% trans %}edit{% endtrans %}</a>
                     </li>
                 </ul>
             </td>
@@ -33,7 +33,8 @@
 
 <ul>
     <li>
-        <a href="{{ path('project_new') }}">Add a new project</a>
+        <a href="{{ path('project_new') }}">{% trans %}add.project{% endtrans %}</a>
     </li>
 </ul>
 {% endblock %}
+
