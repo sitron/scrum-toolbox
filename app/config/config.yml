@@ -63,6 +63,12 @@ fos_user:
     firewall_name: main
     use_listener: false
     user_class:   Sitronnier\MyUserBundle\Entity\MyUser
+    registration:
+        confirmation:
+            enabled: true
+    from_email:
+        address:        noreply@sitronnier.com
+        sender_name:    ScrumMaster Toolbox
 
 services:
     zebra.twig.extension:
