@@ -68,7 +68,7 @@ fos_user:
             enabled: true
     from_email:
         address:        noreply@sitronnier.com
-        sender_name:    ScrumMaster Toolbox
+        sender_name:    Scrum Toolbox
 
 services:
     zebra.twig.extension:
