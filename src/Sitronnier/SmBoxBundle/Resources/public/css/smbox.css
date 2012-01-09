@@ -65,3 +65,13 @@ input.large {
     display: block;
 }
 
+p.explanation {
+    color: #666;
+    font-size: 0.8em;
+    margin-top: 0;
+    padding-top: 0;
+    margin-left: 160px;
+    margin-bottom: .4em;
+    font-style: italic;
+}
+

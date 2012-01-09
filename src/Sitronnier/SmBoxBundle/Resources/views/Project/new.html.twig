@@ -4,7 +4,14 @@
 <h1>{% trans %}project_entity.create{% endtrans %}</h1>
 
 <form action="{{ path('project_create') }}" method="post" {{ form_enctype(form) }}>
-    {{ form_widget(form) }}
+    {{ form_errors(form) }}
+
+    {{ form_row(form.title) }}
+    {{ form_row(form.zebra_url) }}
+    <p class="explanation">Use full Zebra URL including people filter and day filter</p>
+    {{ form_row(form.jira_url) }}
+
+    {{ form_rest(form) }}
     <p>
         <button type="submit">{% trans %}create{% endtrans %}</button>
     </p>
