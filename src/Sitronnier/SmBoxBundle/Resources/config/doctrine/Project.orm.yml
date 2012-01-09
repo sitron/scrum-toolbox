@@ -14,9 +14,11 @@ Sitronnier\SmBoxBundle\Entity\Project:
     zebra_url:
       type: string
       length: 255
+      nullable: true
     jira_url:
       type: string
       length: 255
+      nullable: true
 
   manyToOne:
     owner:
