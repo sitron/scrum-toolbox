@@ -5,3 +5,19 @@
     background: #ffffff;
 }
 
+th.md-title {
+    color: #000000;
+}
+
+th.sp-title {
+    color: #F64227;
+}
+
+th.bv-title {
+    color: #26BCD6;
+}
+
+.key-figures td {
+    background-color: #f2f2f2;
+}
+

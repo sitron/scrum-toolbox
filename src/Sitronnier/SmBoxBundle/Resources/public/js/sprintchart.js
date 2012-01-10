@@ -192,9 +192,9 @@ YUI.add('SprintChart', function(Y) {
         Y.one('.sprint-burnt-md').setContent(Math.round(last.MD * 10) / 10);
         Y.one('.sprint-burnt-sp').setContent(Math.round(last.SP * 10) / 10);
         Y.one('.sprint-burnt-bv').setContent(Math.round(last.BV * 10) / 10);
-        Y.one('.sprint-burnt-md-ratio').setContent(Math.round((last.MD / sprint.nbMD) * 100));
-        Y.one('.sprint-burnt-sp-ratio').setContent(Math.round((last.SP / sprint.nbSP) * 100));
-        Y.one('.sprint-burnt-bv-ratio').setContent(Math.round((last.BV / sprint.nbBV) * 100));
+        Y.one('.sprint-burnt-md-ratio').setContent(Math.round((last.MD / sprint.nbMD) * 100) + '%');
+        Y.one('.sprint-burnt-sp-ratio').setContent(Math.round((last.SP / sprint.nbSP) * 100) + '%');
+        Y.one('.sprint-burnt-bv-ratio').setContent(Math.round((last.BV / sprint.nbBV) * 100) + '%');
     };
 
     // update axes max values
