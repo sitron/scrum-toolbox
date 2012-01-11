@@ -61,10 +61,6 @@ input.large {
     width: 400px;
 }
 
-.helpers a {
-    display: block;
-}
-
 p.explanation {
     color: #666;
     font-size: 0.8em;
@@ -75,3 +71,11 @@ p.explanation {
     font-style: italic;
 }
 
+p.helpers {
+    color: #666;
+    font-size: 0.8em;
+    margin-top: 0.2em;
+    padding-top: 0;
+    margin-left: 160px;
+    margin-bottom: .5em;
+}

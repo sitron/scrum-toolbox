@@ -22,7 +22,9 @@ class DayType extends AbstractType
         $project = $this->project;
 
         $builder
-            ->add('date')
+            ->add('date', null, array(
+                'attr' => array('class' => 'day-date'),
+            ))
             ->add('nb_hours')
             ->add('nb_business_value')
             ->add('nb_story_points')
