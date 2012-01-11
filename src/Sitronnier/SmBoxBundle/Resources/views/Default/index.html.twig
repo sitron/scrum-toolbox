@@ -3,14 +3,14 @@
 {% block body %}
 <p>{% trans %}welcome{% endtrans %}!</p>
 
-{% if is_granted('role_user') %}
-<ul>
-    <li><a href="{{ path('project') }}">{% trans %}see.all.your.project{% endtrans %}</a></li>
-    <li><a href="{{ path('project') }}">{% trans %}see.all.your.sprint{% endtrans %}</a></li>
-    <li><a href="{{ path('project') }}">{% trans %}see.all.your.day{% endtrans %}</a></li>
-</ul>
+{% if is_granted('ROLE_USER') %}
+    <ul>
+        <li><a href="{{ path('project') }}">{% trans %}see.all.your.project{% endtrans %}</a></li>
+        <li><a href="{{ path('project') }}">{% trans %}see.all.your.sprint{% endtrans %}</a></li>
+        <li><a href="{{ path('project') }}">{% trans %}see.all.your.day{% endtrans %}</a></li>
+    </ul>
 {% else %}
-<p>{% trans %}not_logged_in{% endtrans %}. <a href="{{ path('fos_user_security_login') }}">{% trans %}login{% endtrans %}</a> {% trans %}or{% endtrans %} <a href="{{ path('fos_user_registration_register') }}">{% trans %}register{% endtrans %}</a>.</p>
+    <p>{% trans %}not_logged_in{% endtrans %}. <a href="{{ path('fos_user_security_login') }}">{% trans %}login{% endtrans %}</a> {% trans %}or{% endtrans %} <a href="{{ path('fos_user_registration_register') }}">{% trans %}register{% endtrans %}</a>.</p>
 {% endif %}
 
 {% endblock %}
