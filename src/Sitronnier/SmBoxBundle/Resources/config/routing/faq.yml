@@ -1,0 +1,4 @@
+faq:
+    pattern:  /
+    defaults: { _controller: "SitronnierSmBoxBundle:Faq:index" }
+

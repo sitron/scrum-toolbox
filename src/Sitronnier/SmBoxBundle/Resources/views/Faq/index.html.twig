@@ -1,0 +1,21 @@
+{% extends 'SitronnierSmBoxBundle::layout.html.twig' %}
+
+{% block body %}
+    <h3>{% trans %}FAQ{% endtrans %}</h3>
+
+    <div class="faq">
+        <div class="item">
+            <p class="question">{% trans %}faq_text.question.purpose{% endtrans %}</p>
+            <p class="answer">{% trans %}faq_text.answer.purpose{% endtrans %}</p>
+        </div>
+        <div class="item">
+            <p class="question">{% trans %}faq_text.question.structure{% endtrans %}</p>
+            <p class="answer">{% trans %}faq_text.answer.structure{% endtrans %}</p>
+        </div>
+        <div class="item">
+            <p class="question">{% trans %}faq_text.question.zebra_url{% endtrans %}</p>
+            <p class="answer">{% trans %}faq_text.answer.zebra_url{% endtrans %}</p>
+        </div>
+    </div>
+{% endblock %}
+

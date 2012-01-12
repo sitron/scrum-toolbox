@@ -24,8 +24,9 @@
 {% block menu %}
     <div class="menu">
         <ul>
-            <li><a href="{{ path('project') }}">projects</a></li>
-            <li><a href="{{ path('sprint') }}">sprints</a></li>
+            <li><a href="{{ path('project') }}">{% trans %}projects{% endtrans %}</a></li>
+            <li><a href="{{ path('sprint') }}">{% trans %}sprints{% endtrans %}</a></li>
+            <li><a href="{{ path('faq') }}">{% trans %}faq{% endtrans %}</a></li>
         </ul>
         <div class="clearer"></div>
     </div>

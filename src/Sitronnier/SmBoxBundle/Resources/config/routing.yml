@@ -18,6 +18,10 @@ SitronnierSmBoxBundle_stats:
     resource: "@SitronnierSmBoxBundle/Resources/config/routing/stats.yml"
     prefix: /stats
 
+SitronnierSmBoxBundle_faq:
+    resource: "@SitronnierSmBoxBundle/Resources/config/routing/faq.yml"
+    prefix: /faq
+
 fos_user_security:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"
     prefix: /
