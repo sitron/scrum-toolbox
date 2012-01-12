@@ -50,7 +50,7 @@ class SprintRepository extends EntityRepository
 
     public function findAllOwned($owner)
     {
-        $qb = $this->sprintsByOwner($owner);
+        $qb = $this->sprintsAndProjectByOwner($owner);
 
         $query = $qb->getQuery();
 
@@ -81,6 +81,20 @@ class SprintRepository extends EntityRepository
         $qb = $this->getEntityManager()->createQueryBuilder()
             ->from('SitronnierSmBoxBundle:Sprint', 's')
             ->select('s')
+            ->join('s.project', 'p')
+            ->where('p.owner = :owner')
+            ->orderBy('p.title', 'ASC')
+            ->addOrderBy('s.index', 'DESC')
+            ->setParameter('owner', $owner);
+
+        return $qb;
+    }
+
+    protected function sprintsAndProjectByOwner($owner)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder()
+            ->from('SitronnierSmBoxBundle:Sprint', 's')
+            ->select('s, p')
             ->join('s.project', 'p')
             ->where('p.owner = :owner')
             ->orderBy('p.title', 'ASC')

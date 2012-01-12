@@ -3,21 +3,28 @@
 {% block body %}
 <h1>{% trans %}sprint_entity.list{% endtrans %}</h1>
 
-<table class="records_list">
+<ul>
+    <li>
+        <a href="{{ path('sprint_new') }}">{% trans %}add.sprint{% endtrans %}</a>
+    </li>
+</ul>
+
+<table class="records_list sprint-list">
     <thead>
         <tr>
-            <th>{% trans %}id{% endtrans %}</th>
+            <th>{% trans %}project{% endtrans %}</th>
             <th>{% trans %}index{% endtrans %}</th>
-            <th>{% trans %}story_points{% endtrans %}</th>
-            <th>{% trans %}business_value{% endtrans %}</th>
+            <th>{% trans %}MD{% endtrans %}</th>
+            <th>{% trans %}SP{% endtrans %}</th>
+            <th>{% trans %}BV{% endtrans %}</th>
             <th>{% trans %}actions{% endtrans %}</th>
         </tr>
     </thead>
     <tbody>
-    {% for entity in entities %}
+    {% for entity in sprints %}
         <tr>
-            <td><a href="{{ path('sprint_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-            <td>{{ entity.index }}</td>
+            <td><a href="{{ path('project_show', { 'id': entity.project.id }) }}">{{ entity.project.title }}</a></td>
+            <td><a href="{{ path('sprint_show', { 'id': entity.id }) }}">{{ entity.index }}</a></td>
             <td>{{ entity.mandays }}</td>
             <td>{{ entity.storypoints }}</td>
             <td>{{ entity.businessvalue }}</td>
@@ -35,11 +42,5 @@
     {% endfor %}
     </tbody>
 </table>
-
-<ul>
-    <li>
-        <a href="{{ path('sprint_new') }}">{% trans %}add.sprint{% endtrans %}</a>
-    </li>
-</ul>
 {% endblock %}
 

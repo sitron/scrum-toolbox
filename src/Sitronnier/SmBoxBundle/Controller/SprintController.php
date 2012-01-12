@@ -34,7 +34,7 @@ class SprintController extends Controller
         }
 
         return $this->render('SitronnierSmBoxBundle:Sprint:index.html.twig', array(
-            'entities' => $sprints,
+            'sprints' => $sprints,
         ));
     }
 

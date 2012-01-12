@@ -40,7 +40,7 @@ table.record_properties th, table.records_list th {
     text-align: left;
 }
 
-table.day-list th {
+table.day-list th, table.sprint-list th {
     width: 80px;
 }
 
