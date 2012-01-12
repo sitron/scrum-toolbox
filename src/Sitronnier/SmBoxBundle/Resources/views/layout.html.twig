@@ -21,3 +21,13 @@
     {% endfor %}
 {% endblock %}
 
+{% block menu %}
+    <div class="menu">
+        <ul>
+            <li><a href="{{ path('project') }}">projects</a></li>
+            <li><a href="{{ path('sprint') }}">sprints</a></li>
+        </ul>
+        <div class="clearer"></div>
+    </div>
+{% endblock %}
+

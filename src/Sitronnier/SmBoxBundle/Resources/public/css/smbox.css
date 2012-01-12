@@ -79,3 +79,28 @@ p.helpers {
     margin-left: 160px;
     margin-bottom: .5em;
 }
+
+div.menu ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+div.menu ul li {
+   float: left;
+   margin-right: 20px;
+}
+
+div.menu ul li a {
+}
+
+div.menu {
+    background: #f9f9f9;
+    padding: 3px 0 6px 0;
+    margin-bottom: 10px;
+}
+
+div.clearer {
+    clear: both;
+}
+
