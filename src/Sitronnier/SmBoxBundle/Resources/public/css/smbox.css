@@ -3,6 +3,7 @@
     height: 400px;
     display: block;
     background: #f9f9f9;
+    position: relative;
 }
 
 .key-figures th {

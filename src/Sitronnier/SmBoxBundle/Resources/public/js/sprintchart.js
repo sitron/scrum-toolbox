@@ -173,6 +173,27 @@ YUI.add('SprintChart', function(Y) {
             seriesCollection: seriesCollection,
             styles: {graph: chartStyle}
         });
+
+        drawTopLine();
+    };
+
+    function drawTopLine() {
+        var topline, chartwidth, graphic;
+
+        graphic = new Y.Graphic({render:"#graph-canvas"});
+        chartwidth = Y.one('#graph-canvas').getComputedStyle('width');
+        topline = graphic.addShape({
+            type: "path",
+            stroke: {
+                weight: 2,
+                color: "#000",
+                opacity: 1,
+                dashstyle: [3, 4]
+            }
+        });
+        topline.moveTo(30, 0);
+        topline.lineTo(parseInt(chartwidth) - 50, 0);
+        topline.end();
     };
 
     function updateTitleIndex(index) {
@@ -239,5 +260,5 @@ YUI.add('SprintChart', function(Y) {
         chart.set('height', h);
     }
 
-}, '0.1', {requires: ['charts', 'io-base', 'json-parse', 'node']});
+}, '0.1', {requires: ['charts', 'io-base', 'json-parse', 'node', 'graphics']});
 
