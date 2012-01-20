@@ -93,9 +93,21 @@ faq_text:
     zebra_url:                                  Why should I insert a Zebra URL for my project?
     design:                                     Isn't the design a bit... hmmm... minimalist?
     code:                                       I like it, but there are things that i'd like to be different/better/.... Can I contribute?
+    example:                                    Ok, but how does it look like?
   answer:
     purpose:                                    After registering you'll be able to create interactive and printable sprint burn-up charts
     structure:                                  It follows a simple hierarchy: you create Project(s) with Sprint(s) which contains Day(s).<br/>For each day you insert how many hours were burnt and how many Story points and Business value was delivered in that special day. Those values will be compared to your sprint's goal in a nice interactive chart. 
     zebra_url:                                  Inserting a full Zebra URL (with the date filter) in your project's settings can help you: on new Day creation you'll get a helper link which gets updated to the selected date.<br/><span class="example">To get the needed URL log in Zebra, click on Projects, select your project, and click on the bottom right link ('Show all timesheets for this project'). From there choose your team members (optional). You should end up with a URL like: https://zebra.liip.ch/en/timesheet/report/?projects[]=YourProjectId&users[]=*&start=2012-01-11&end=2012-01-11</span>
     design:                                     Indeed! Do not hesitate to submit a push request to improve it!
     code:                                       Sure! The code is hosted on <a href="https://github.com/sitron/scrum-toolbox">github</a>, do not hesitate to contribute, any help apreciated!
+    example:
+      before:                                   This is an example of a sprint burn-up chart:
+      1:                                        Man/Days: this column indicates how many <strong>Man/Days</strong> are planned for the sprint (Total), how many were already used (Burnt), and what percentage it represents (Burnt/Total)
+      2:                                        Story Points: same as 1. but for the <strong>story points</strong> (planed, burnt, ratio)
+      3:                                        Business Value: same as 1. but for the <strong>business value</strong> (planed, burnt, ratio)
+      4:                                        <strong>Planed velocity</strong>. The velocity is defined by dividing the Story points by the number of Man/Days.
+      5:                                        <strong>Actual velocity</strong>: this is an up-to-date velocity of the current sprint.
+      6:                                        The <strong>black line</strong> represents the evolution of Man/Days during the sprint. A tooltip is shown on hover if you need to see the actual value.
+      7:                                        The <strong>blue line</strong> represents the evolution of the Story points during the sprint
+      8:                                        The <strong>red line</strong> represents the evolution of the Business Value during the sprint
+      9:                                        Use this link to get a <strong>printer friendly</strong> chart

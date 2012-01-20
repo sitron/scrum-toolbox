@@ -48,6 +48,8 @@ table.day-list th, table.sprint-list th {
 body {
     color: #333;
     font-family: "Trebuchet MS", arial, sans-serif;
+    max-width: 950px;
+    margin-bottom: 50px;
 }
 
 a {
@@ -122,5 +124,13 @@ div.faq div.item p.answer {
 div.faq div.item p.answer span.example {
     font-style: italic;
     color: #666666;
+}
+
+div.faq img {
+    margin: 10px 0;
+}
+
+div.faq li {
+    margin-bottom: 4px;
 }
 
