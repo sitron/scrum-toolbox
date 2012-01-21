@@ -1,3 +1,18 @@
+body {
+    color: #333;
+    font-family: "Trebuchet MS", arial, sans-serif;
+    max-width: 950px;
+    margin: 10px 10px 50px 20px;
+}
+
+a {
+    color: #333;
+}
+
+a:hover {
+    color: #000;
+}
+
 #graph-canvas {
     width: 600px;
     height: 400px;
@@ -43,21 +58,6 @@ table.record_properties th, table.records_list th {
 
 table.day-list th, table.sprint-list th {
     width: 80px;
-}
-
-body {
-    color: #333;
-    font-family: "Trebuchet MS", arial, sans-serif;
-    max-width: 950px;
-    margin: 10px 10px 10px 50px;
-}
-
-a {
-    color: #333;
-}
-
-a:hover {
-    color: #000;
 }
 
 input.large {
