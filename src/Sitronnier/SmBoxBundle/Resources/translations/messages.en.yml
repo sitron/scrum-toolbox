@@ -95,6 +95,7 @@ faq_text:
     code:                                       I like it, but there are things that i'd like to be different/better/.... Can I contribute?
     example:                                    Ok, but how does it look like?
     flow:                                       How should I use such a chart in my daily work?
+    delete:                                     Hmmm... i just deleted a project, are all the related sprints and days also deleted?
   answer:
     purpose:                                    After registering you'll be able to create interactive and printable sprint burn-up charts
     structure:                                  It follows a simple hierarchy: you create Project(s) with Sprint(s) which contains Day(s).<br/>For each day you insert how many hours were burnt and how many Story points and Business value was delivered in that special day. Those values will be compared to your sprint's goal in a nice interactive chart. 
@@ -113,4 +114,5 @@ faq_text:
       8:                                        The <strong>red line</strong> represents the evolution of the Business Value during the sprint
       9:                                        Use this link to get a <strong>printer friendly</strong> chart
     flow:                                       Basically when the black curve crosses the top dotted line the sprint is over (you consumed all the available Man/Days). At that moment the blue and red curves should hopefully also cross the top line.<br/>During the sprint you can easily track the delta between the black and the two others curves, which should prevent bad surprises!
+    delete:                                     Yes they are! You'd better click that 'Delete' button cautiously
 
