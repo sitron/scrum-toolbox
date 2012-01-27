@@ -59,6 +59,7 @@ class SprintController extends Controller
         $jsSprint = json_encode($sprint->toJson());
 
         return $this->render('SitronnierSmBoxBundle:Sprint:show.html.twig', array(
+            'token'       => $sprint->getHash($this->container->getParameter('secret')),
             'sprint'      => $sprint,
             'delete_form' => $deleteForm->createView(),
             'jsSprint'    => $jsSprint,
@@ -247,6 +248,35 @@ class SprintController extends Controller
             'project' => $project,
             'sprint' => $sprint,
             'jsSprint' => $jsSprint,
+        ));
+    }
+
+    /**
+     * Finds and displays a Sprint entity by token
+     */
+    public function showSecretAction($id)
+    {
+        $request = $this->get('request');
+        if (is_null($request->query->get('token'))) {
+            throw $this->createNotFoundException('Unable to find matching Sprint');
+        }
+
+        $secret = $this->container->getParameter('secret');
+
+        $sprint = $this->getDoctrine()->getRepository('SitronnierSmBoxBundle:Sprint')->findOneWithOrderedDays($id);
+        $hash = $sprint->getHash($secret);
+        if (!$sprint || $hash !== $request->query->get('token')) {
+            throw $this->createNotFoundException('Unable to find matching Sprint');
+        }
+
+        $project = $sprint->getProject();
+
+        $jsSprint = json_encode($sprint->toJson());
+
+        return $this->render('SitronnierSmBoxBundle:Sprint:showSecret.html.twig', array(
+            'project'     => $project,
+            'sprint'      => $sprint,
+            'jsSprint'    => $jsSprint,
         ));
     }
 }

@@ -33,3 +33,6 @@ security:
         - { path: ^/sprint, role: ROLE_USER }
         - { path: ^/day, role: ROLE_USER }
         - { path: ^/stats, role: ROLE_USER }
+        - { path: ^/public, role: IS_AUTHENTICATED_ANONYMOUSLY }
+
+

@@ -207,6 +207,14 @@ class Sprint
         $this->days[] = $day;
     }
 
+    public function getHash($secret)
+    {
+        if(!$this->getId()) {
+            return '';
+        }
+        return hash('sha256', $this->getId() . $secret);
+    }
+
     public function __toString()
     {
         return (string) $this->index;

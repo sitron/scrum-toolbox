@@ -16,6 +16,9 @@
     <li>
         <a href="{{ path('day', {'sprint': sprint.id}) }}">{% trans %}see.all.day_for_sprint{% endtrans %} {{ sprint.index }}</a>
     </li>
+    <li>
+        <a href="{{ path('sprint_show_shared', {'id': sprint.id, 'token': token}) }}">{% trans %}share.sprint.chart{% endtrans %}</a>
+    </li>
 </ul>
 
 {% include "SitronnierSmBoxBundle:Sprint:keyData.html.twig" with {'sprint': sprint} %}

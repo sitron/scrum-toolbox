@@ -1,0 +1,4 @@
+sprint_show_shared:
+    pattern: sprints/{id}
+    defaults: { _controller: "SitronnierSmBoxBundle:Sprint:showSecret" }
+

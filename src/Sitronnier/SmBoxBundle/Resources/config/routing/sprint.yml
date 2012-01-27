@@ -34,3 +34,4 @@ sprint_delete:
     pattern:  /{id}/delete
     defaults: { _controller: "SitronnierSmBoxBundle:Sprint:delete" }
     requirements: { _method: post }
+

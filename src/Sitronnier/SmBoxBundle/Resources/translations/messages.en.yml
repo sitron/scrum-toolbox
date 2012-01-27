@@ -35,6 +35,10 @@ see:
       sprint:                                   see all your sprints
       day:                                      see all your days
 
+share:
+  sprint:
+    chart:                                      share sprint chart (get a public URL)
+
 stats:
   for:
     sprint:                                     stats for sprint
