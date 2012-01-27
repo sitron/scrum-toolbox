@@ -1,7 +1,7 @@
 YUI.add('SprintChart', function(Y) {
     Y.namespace('SmbSprintChart');
 
-    var chart, chartValues, shownSeries, axes, seriesCollection, chartStyle;
+    var chart, chartValues, shownSeries, axes, seriesCollection, chartStyle, topLine;
 
     chartValues = [];
 
@@ -15,21 +15,24 @@ YUI.add('SprintChart', function(Y) {
             position: 'left',
             type: 'numeric',
             minimum: 0,
-            maximum: 9
+            maximum: 9,
+            labelFormat: {'decimalPlaces': 1}
         },
         bv: {
             keys: ['BV'],
             position: 'right',
             type: 'numeric',
             minimum: 0,
-            maximum: 50
+            maximum: 50,
+            labelFormat: {'decimalPlaces': 0}
         },
         sp: {
             keys: ['SP'],
             position: 'right',
             type: 'numeric',
             minimum: 0,
-            maximum: 20
+            maximum: 20,
+            labelFormat: {'decimalPlaces': 0}
         },
         dates: {
             keys: ['date'],
@@ -147,9 +150,12 @@ YUI.add('SprintChart', function(Y) {
     }
 
     function drawChart(sprint) {
+        var biggestRatio;
+
         // Transform data for chart
         chartValues = defineDataProvider(sprint);
-        updateAxes(sprint);
+        biggestRatio = getBiggestRatio(sprint);
+        updateAxes(sprint, biggestRatio);
 
         // Velocity
         updateVelocity(sprint);
@@ -174,25 +180,27 @@ YUI.add('SprintChart', function(Y) {
             styles: {graph: chartStyle}
         });
 
-        drawTopLine();
+        drawTopLine(biggestRatio);
     };
 
-    function drawTopLine() {
-        var topline, chartwidth, graphic;
+    function drawTopLine(biggestRatio) {
+        var topline, chartwidth, chartheight, topmargin;
 
-        graphic = new Y.Graphic({render:"#graph-canvas"});
+        topLine = new Y.Graphic({render:"#graph-canvas"});
         chartwidth = Y.one('#graph-canvas').getComputedStyle('width');
-        topline = graphic.addShape({
+        chartheight = parseInt(Y.one('#graph-canvas').getComputedStyle('height')) - 65;
+        topline = topLine.addShape({
             type: "path",
             stroke: {
-                weight: 2,
+                weight: 1,
                 color: "#000",
                 opacity: 1,
                 dashstyle: [3, 4]
             }
         });
-        topline.moveTo(30, 0);
-        topline.lineTo(parseInt(chartwidth) - 50, 0);
+        topmargin = Math.round(biggestRatio > 1 ? chartheight - (chartheight / biggestRatio) : 0);
+        topline.moveTo(30, topmargin);
+        topline.lineTo(parseInt(chartwidth) - 50, topmargin);
         topline.end();
     };
 
@@ -219,10 +227,18 @@ YUI.add('SprintChart', function(Y) {
     };
 
     // update axes max values
-    function updateAxes(result) {
-        axes.md.maximum = result.nbMD;
-        axes.bv.maximum = result.nbBV;
-        axes.sp.maximum = result.nbSP;
+    function updateAxes(result, biggestRatio) {
+        axes.md.maximum = biggestRatio > 1 ? biggestRatio * (result.nbMD) : result.nbMD;
+        axes.bv.maximum = biggestRatio > 1 ? biggestRatio * (result.nbBV) : result.nbBV;
+        axes.sp.maximum = biggestRatio > 1 ? biggestRatio * (result.nbSP) : result.nbSP;
+    };
+
+    function getBiggestRatio(result) {
+        var last, biggestRatio;
+
+        last = chartValues[chartValues.length - 1];
+        biggestRatio = Math.max(Math.max((last.MD/result.nbMD), (last.SP/result.nbSP)), (last.BV/result.nbBV));
+        return biggestRatio;
     };
 
     // update data with ajax call result
