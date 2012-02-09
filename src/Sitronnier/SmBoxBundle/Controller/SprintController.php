@@ -48,7 +48,7 @@ class SprintController extends Controller
         $securityContext = $this->get('security.context');
         $user = $securityContext->getToken()->getUser();
 
-        $sprint = $this->getDoctrine()->getRepository('SitronnierSmBoxBundle:Sprint')->findOneOwned($id, $user->getId());
+        $sprint = $this->getDoctrine()->getRepository('SitronnierSmBoxBundle:Sprint')->findOneWithOrderedDaysAndOwner($id, $user->getId());
 
         if (!$sprint) {
             throw $this->createNotFoundException('Unable to find Sprint entity.');
