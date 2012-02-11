@@ -23,6 +23,9 @@ sprint_entity:
   create:                                       create new sprint
   edit_data:                                    edit sprint data
 
+start_date_label:                               Start date (optional)
+end_date_label:                                 End date (optional)
+
 see:
   all:
     days:                                       see all days

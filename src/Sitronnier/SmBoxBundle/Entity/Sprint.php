@@ -48,6 +48,16 @@ class Sprint
 
     private $days;
 
+    /**
+     * @var date $start_date
+     */
+    private $start_date;
+
+    /**
+     * @var date $end_date
+     */
+    private $end_date;
+
     public function __construct()
     {
         $this->days = new ArrayCollection();
@@ -66,6 +76,8 @@ class Sprint
             'nbMD' => $this->man_days,
             'nbBV' => $this->business_value,
             'nbSP' => $this->story_points,
+            'startDate' => $this->start_date,
+            'endDate' => $this->end_date,
             'days' => $jsondays,
         );
 
@@ -205,6 +217,42 @@ class Sprint
     public function addDay($day)
     {
         $this->days[] = $day;
+    }
+
+    /**
+     * Set start date
+     * @param date $date
+     */
+    public function setStartDate($date)
+    {
+        $this->start_date = $date;
+    }
+
+    /**
+     * Get start date
+     * @return date
+     */
+    public function getStartDate()
+    {
+        return $this->start_date;
+    }
+
+    /**
+     * Set end date
+     * @param date $date
+     */
+    public function setEndDate($date)
+    {
+        $this->end_date = $date;
+    }
+
+    /**
+     * Get end date
+     * @return date
+     */
+    public function getEndDate()
+    {
+        return $this->end_date;
     }
 
     public function getHash($secret)

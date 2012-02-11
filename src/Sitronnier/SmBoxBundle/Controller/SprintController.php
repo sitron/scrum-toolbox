@@ -91,7 +91,10 @@ class SprintController extends Controller
             $sprint->setProject($project);
         };
 
+        // set default values
         $sprint->setIndex(isset($nb_sprints) ? $nb_sprints + 1 : 1);
+        $sprint->setStartDate(new \DateTime('today'));
+
         $form = $this->createForm(new SprintType($user->getId()), $sprint);
 
         return $this->render('SitronnierSmBoxBundle:Sprint:new.html.twig', array(

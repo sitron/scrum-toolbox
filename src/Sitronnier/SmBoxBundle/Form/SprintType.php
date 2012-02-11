@@ -37,6 +37,18 @@ class SprintType extends AbstractType
             ->add('man_days')
             ->add('story_points')
             ->add('business_value')
+            ->add('start_date', 'date', array(
+                'required' => false,
+                'widget' => 'single_text',
+                'format' => 'dd-MM-yyyy',
+                'label' => 'start_date_label',
+            ))
+            ->add('end_date', 'date', array(
+                'required' => false,
+                'widget' => 'single_text',
+                'format' => 'dd-MM-yyyy',
+                'label' => 'end_date_label',
+            ))
         ;
     }
 

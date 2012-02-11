@@ -18,6 +18,12 @@ Sitronnier\SmBoxBundle\Entity\Sprint:
       type: float
     status:
       type: string
+    start_date:
+      type: date
+      nullable: true
+    end_date:
+      type: date
+      nullable: true
   manyToOne:
     project:
       targetEntity: Project 
