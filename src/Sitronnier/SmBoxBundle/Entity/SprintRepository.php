@@ -109,7 +109,7 @@ class SprintRepository extends EntityRepository
         $qb = $this->getEntityManager()->createQueryBuilder()
             ->from('SitronnierSmBoxBundle:Sprint', 's')
             ->select('s, d')
-            ->join('s.days', 'd')
+            ->leftjoin('s.days', 'd')
             ->where('s.id = :id')
             ->orderBy('d.date', 'ASC')
             ->setParameter('id', $id);
