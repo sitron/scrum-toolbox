@@ -5,7 +5,11 @@ namespace Sitronnier\SmBoxBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use Sitronnier\SmBoxBundle\Entity\Sprint;
+use Sitronnier\SmBoxBundle\Entity\Day;
 use Sitronnier\SmBoxBundle\Form\SprintType;
+use \DatePeriod;
+use \DateTime;
+use \DateInterval;
 
 /**
  * Sprint controller.
@@ -119,6 +123,29 @@ class SprintController extends Controller
 
         if ($form->isValid()) {
             $entity->setStatus('CREATED');
+            // if start and end date is specified, generate days
+            if (!is_null($entity->getStartDate()) && !is_null($entity->getEndDate())) {
+                $dates = new DatePeriod(
+                    $entity->getStartDate(),
+                    new DateInterval('P1D'),
+                    // add 1 day as last day is not included in period
+                    $entity->getEndDate()->add(new DateInterval('P1D'))
+                );
+                foreach($dates as $dt) {
+                    // don't create days for the weekends
+                    if ($dt->format('N') == 6 || $dt->format('N') == 7) {
+                        continue;
+                    }
+                    $day = new Day();
+                    $day->setCreatedBy('machine');
+                    $day->setNbHours(0);
+                    $day->setNbBusinessValue(0);
+                    $day->setNbStoryPoints(0);
+                    $day->setDate($dt);
+                    $day->setSprint($entity);
+                    $entity->addDay($day);
+                }
+            }
             $em = $this->getDoctrine()->getEntityManager();
             $em->persist($entity);
             $em->flush();

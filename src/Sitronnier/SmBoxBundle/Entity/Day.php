@@ -39,6 +39,10 @@ class Day
      */
     private $date;
 
+    /**
+     * @var string $created_by
+     */
+    private $created_by = 'user';
 
     public function toJson()
     {
@@ -47,6 +51,7 @@ class Day
             'nbBV' => $this->nb_business_value,
             'nbSP' => $this->nb_story_points,
             'date' => $this->date->format('D d/m'),
+            'createdBy' => $this->created_by,
         );
         return $json;
     }
@@ -159,5 +164,23 @@ class Day
     public function getDate()
     {
         return $this->date;
+    }
+
+    /**
+     * Set created_by
+     * @param string $created_by
+     */
+    public function setCreatedBy($created_by)
+    {
+        $this->created_by = $created_by;
+    }
+
+    /**
+     * Get created_by
+     * @return created_by
+     */
+    public function getCreatedBy()
+    {
+        return $this->created_by;
     }
 }

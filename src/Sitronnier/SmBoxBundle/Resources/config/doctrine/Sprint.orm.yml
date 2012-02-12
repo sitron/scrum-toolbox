@@ -31,5 +31,5 @@ Sitronnier\SmBoxBundle\Entity\Sprint:
     days:
       targetEntity: Day
       mappedBy: sprint
-      cascade: [ 'remove' ]
+      cascade: [ 'remove', 'persist' ]
   lifecycleCallbacks: {  }
