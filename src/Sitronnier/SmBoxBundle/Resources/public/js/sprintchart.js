@@ -1,9 +1,9 @@
 YUI.add('SprintChart', function(Y) {
     Y.namespace('SmbSprintChart');
 
-    var chart, chartValues, shownSeries, axes, seriesCollection, chartStyle, topLine;
+    var chart, shownSeries, axes, seriesCollection, chartStyle, topLine, chartData, chartDataAll, sprintData;
 
-    chartValues = [];
+    chartData = [];
 
     // decide what serie to show
     shownSeries = ['MD', 'BV', 'SP'];
@@ -150,10 +150,11 @@ YUI.add('SprintChart', function(Y) {
     }
 
     function drawChart(sprint) {
-        var biggestRatio;
+        var biggestRatio, chartDataExtended;
 
         // Transform data for chart
-        chartValues = defineDataProvider(sprint);
+        sprintData = sprint;
+        defineDataProvider(sprint);
         biggestRatio = getBiggestRatio(sprint);
         updateAxes(sprint, biggestRatio);
 
@@ -166,10 +167,13 @@ YUI.add('SprintChart', function(Y) {
         // Title
         updateTitleIndex(sprint.index);
 
+        // Show at least 10 dates or use end date
+        chartDataExtended = fillDates();
+
         // Instantiate and render the chart
         Y.one('#graph-canvas').setContent('');
         chart = new Y.Chart({
-            dataProvider: fillDates(chartValues),
+            dataProvider: chartDataExtended,
             render: '#graph-canvas',
             categoryKey: 'date',
             seriesKeys: shownSeries,
@@ -209,15 +213,19 @@ YUI.add('SprintChart', function(Y) {
     };
 
     function updateVelocity(sprint) {
-        var planned = Math.round(sprint.nbSP / sprint.nbMD * 10) / 10;
-        var last = chartValues[chartValues.length - 1];
-        var actual = Math.round(last.SP / last.MD * 10) / 10;
+        var planned, last, actual;
+
+        planned = Math.round(sprint.nbSP / sprint.nbMD * 10) / 10;
+        last = chartData[chartData.length - 1];
+        actual = Math.round(last.SP / last.MD * 10) / 10;
+        actual = isNaN(actual) ? 0 : actual;
+
         Y.one('.sprint-velocity-planned').setContent(planned);
         Y.one('.sprint-velocity-actual').setContent(actual);
     };
 
     function updateBurnt(sprint) {
-        var last = chartValues[chartValues.length - 1];
+        var last = chartData[chartData.length - 1];
         Y.one('.sprint-burnt-md').setContent(Math.round(last.MD * 10) / 10);
         Y.one('.sprint-burnt-sp').setContent(Math.round(last.SP * 10) / 10);
         Y.one('.sprint-burnt-bv').setContent(Math.round(last.BV * 10) / 10);
@@ -236,30 +244,44 @@ YUI.add('SprintChart', function(Y) {
     function getBiggestRatio(result) {
         var last, biggestRatio;
 
-        last = chartValues[chartValues.length - 1];
+        last = chartData[chartData.length - 1];
         biggestRatio = Math.max(Math.max((last.MD/result.nbMD), (last.SP/result.nbSP)), (last.BV/result.nbBV));
         return biggestRatio;
     };
 
     // update data with ajax call result
     function defineDataProvider(result) {
-        var data = [{'date': '', 'MD': 0, 'BV': 0, 'SP': 0}];
+        chartData = [{'date': '', 'MD': 0, 'BV': 0, 'SP': 0}];
+        chartDataAll = [{'date': '', 'MD': 0, 'BV': 0, 'SP': 0}];
+
         var cSP = 0;
         var cBV = 0;
         var cMD = 0;
+
         Y.each(result.days, function(day) {
             cSP += day.nbSP;
             cBV += day.nbBV;
             cMD += day.nbHours;
-            data.push({'date': day.date, 'MD': cMD / 8, 'BV': cBV, 'SP': cSP});
+            if (day.createdBy !== 'machine') {
+                chartData.push({'date': day.date, 'MD': cMD / 8, 'BV': cBV, 'SP': cSP});
+                chartDataAll.push({'date': day.date, 'MD': cMD / 8, 'BV': cBV, 'SP': cSP});
+            } else {
+                chartDataAll.push({'date': day.date, 'MD': '', 'BV': '', 'SP': ''});
+            }
         });
-        return data;
     };
 
-    // show at least 10 dates
-    var fillDates = function(dates) {
-        while (dates.length < 10) {
-            dates.push({'date': '', 'MD': '', 'BV': '', 'SP': ''});
+    // if end date is specified take it into account, else show at least 10 dates
+    var fillDates = function() {
+        var dates = [];
+
+        if (sprintData.endDate) {
+            dates = chartDataAll;
+        } else {
+            dates = chartData;
+            while (dates.length < 10) {
+                dates.push({'date': '', 'MD': '', 'BV': '', 'SP': ''});
+            }
         }
         return dates;
     }
