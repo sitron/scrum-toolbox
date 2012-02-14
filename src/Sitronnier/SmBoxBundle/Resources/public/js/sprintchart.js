@@ -209,10 +209,10 @@ YUI.add('SprintChart', function(Y) {
     };
 
     function updateVelocity(sprint) {
-        var planed = Math.round(sprint.nbSP / sprint.nbMD * 10) / 10;
+        var planned = Math.round(sprint.nbSP / sprint.nbMD * 10) / 10;
         var last = chartValues[chartValues.length - 1];
         var actual = Math.round(last.SP / last.MD * 10) / 10;
-        Y.one('.sprint-velocity-planed').setContent(planed);
+        Y.one('.sprint-velocity-planned').setContent(planned);
         Y.one('.sprint-velocity-actual').setContent(actual);
     };
 

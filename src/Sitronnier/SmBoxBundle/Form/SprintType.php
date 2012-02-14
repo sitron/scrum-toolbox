@@ -34,20 +34,26 @@ class SprintType extends AbstractType
                      }
             ))
             ->add('index')
-            ->add('man_days')
-            ->add('story_points')
-            ->add('business_value')
+            ->add('man_days', null, array(
+                'label' => 'sprint_form.label.md',
+            ))
+            ->add('story_points', null, array(
+                'label' => 'sprint_form.label.sp',
+            ))
+            ->add('business_value', null, array(
+                'label' => 'sprint_form.label.bv',
+            ))
             ->add('start_date', 'date', array(
                 'required' => false,
                 'widget' => 'single_text',
                 'format' => 'dd-MM-yyyy',
-                'label' => 'start_date_label',
+                'label' => 'sprint_form.label.start_date',
             ))
             ->add('end_date', 'date', array(
                 'required' => false,
                 'widget' => 'single_text',
                 'format' => 'dd-MM-yyyy',
-                'label' => 'end_date_label',
+                'label' => 'sprint_form.label.end_date',
             ))
         ;
     }

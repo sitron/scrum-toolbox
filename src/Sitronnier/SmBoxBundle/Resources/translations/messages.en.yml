@@ -23,8 +23,13 @@ sprint_entity:
   create:                                       create new sprint
   edit_data:                                    edit sprint data
 
-start_date_label:                               Start date (optional)
-end_date_label:                                 End date (optional)
+sprint_form:
+  label:
+    md:                                         Commited man days
+    sp:                                         Commited story points
+    bv:                                         Commited business value
+    start_date:                                 Start date (optional)
+    end_date:                                   End date (optional)
 
 see:
   all:
@@ -78,7 +83,7 @@ total:                                          total
 burnt:
   data:                                         burnt
   ratio:                                        burnt ratio
-planed:                                         planed
+planned:                                        planned
 actual:                                         actual
 velocity:                                       velocity
 
@@ -112,9 +117,9 @@ faq_text:
     example:
       before:                                   This is an example of a sprint burn-up chart:
       1:                                        Man/Days: this column indicates how many <strong>Man/Days</strong> are planned for the sprint (Total), how many were already used (Burnt), and what percentage it represents (Burnt/Total)
-      2:                                        Story Points: same as 1. but for the <strong>story points</strong> (planed, burnt, ratio)
-      3:                                        Business Value: same as 1. but for the <strong>business value</strong> (planed, burnt, ratio)
-      4:                                        <strong>Planed velocity</strong>. The velocity is defined by dividing the Story points by the number of Man/Days.
+      2:                                        Story Points: same as 1. but for the <strong>story points</strong> (planned, burnt, ratio)
+      3:                                        Business Value: same as 1. but for the <strong>business value</strong> (planned, burnt, ratio)
+      4:                                        <strong>Planned velocity</strong>. The velocity is defined by dividing the Story points by the number of Man/Days.
       5:                                        <strong>Actual velocity</strong>: this is an up-to-date velocity of the current sprint.
       6:                                        The <strong>black line</strong> represents the evolution of Man/Days during the sprint. A tooltip is shown on hover if you need to see the actual value.
       7:                                        The <strong>blue line</strong> represents the evolution of the Story points during the sprint

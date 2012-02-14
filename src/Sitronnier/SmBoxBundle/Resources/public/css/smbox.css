@@ -48,6 +48,10 @@ label, #fos_user_registration_form label {
     display: inline-block;
 }
 
+div#sitronnier_smboxbundle_sprinttype label {
+    width: 190px;
+}
+
 #sitronnier_smboxbundle_daytype_date {
     display: inline-block;
 }
