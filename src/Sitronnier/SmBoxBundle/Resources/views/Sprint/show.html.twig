@@ -44,6 +44,10 @@
         </form>
     </li>
 </ul>
+
+<h5>Days for this sprint</h5>
+{% include "SitronnierSmBoxBundle:Day:sprintDays.html.twig" with {'sprint': sprint} %}
+
 {% endblock %}
 
 {% block javascripts %}
@@ -57,6 +61,8 @@
             Y.SmbSprintChart.createChart('{{ jsSprint }}');
         });
     </script>
+
+    <script src="{{ asset('/bundles/sitronniersmbox/js/sprintdays.js') }}" type="text/javascript"></script>
 {% endif %}
 {% endblock %}
 
