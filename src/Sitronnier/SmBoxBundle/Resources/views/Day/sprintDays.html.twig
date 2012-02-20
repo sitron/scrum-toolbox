@@ -1,24 +1,18 @@
-<table class="records_list day-list">
-    <thead>
-        <tr>
-            <div>{% trans %}id{% endtrans %}</div>
-            <div>{% trans %}date{% endtrans %}</div>
-            <div>{% trans %}MD{% endtrans %}</div>
-            <div>{% trans %}SP{% endtrans %}</div>
-            <div>{% trans %}BV{% endtrans %}</div>
-        </tr>
-    </thead>
-    <tbody>
-    </tbody>
-</table>
-        {% for day in sprint.days %}
-            <div><a href="{{ path('day_show', { 'id': day.id }) }}">{{ day.id }}</a></td>
-            <div>{{ day.date|date('d.m.Y') }}</div>
-            <div class="change-me">{{ day.nbHours }}</div>
-            <div class="change-me">{{ day.nbStoryPoints }}</div>
-            <div class="change-me">{{ day.nbBusinessValue }}</div>
-        {% endfor %}
+<div id="sprint-days-container"></div>
 
-{% if sprint.days.count > 0 %}
-{% endif %}
+<script type="text/x-template" id="sprint-day-template">
+    <div>{ date }</div>
+    <div class="inline-updatable">
+        <span class="">{ nbHours }</span>
+        <input class="nbHours" type="text" value="{ nbHours }" />
+    </div>
+    <div class="inline-updatable">
+        <span class="">{ nbSP }</span>
+        <input class="nbSP" type="text" value="{ nbSP }" />
+    </div>
+    <div class="inline-updatable">
+        <span class="">{ nbBV }</span>
+        <input class="nbBV" type="text" value="{ nbBV }" />
+    </div>
+</script>
 

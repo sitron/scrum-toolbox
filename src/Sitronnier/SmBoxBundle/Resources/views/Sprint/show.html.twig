@@ -62,7 +62,13 @@
         });
     </script>
 
+    {# list of days #}
     <script src="{{ asset('/bundles/sitronniersmbox/js/sprintdays.js') }}" type="text/javascript"></script>
+    <script type="text/javascript">
+        YUI().use('SprintDays', function (Y) {
+            Y.SmbSprintDays.populate('{{ jsSprint }}');
+        });
+    </script>
 {% endif %}
 {% endblock %}
 

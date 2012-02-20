@@ -47,6 +47,7 @@ class Day
     public function toJson()
     {
         $json = array(
+            'id' => $this->id,
             'nbHours' => $this->nb_hours,
             'nbBV' => $this->nb_business_value,
             'nbSP' => $this->nb_story_points,
