@@ -43,6 +43,9 @@ see:
       sprint:                                   see all your sprints
       day:                                      see all your days
 
+sprint_days:                                    All days for this sprint
+sprint_days_inline_editing:                     Click on a value to edit it
+
 share:
   sprint:
     chart:                                      share sprint chart (get a public URL)

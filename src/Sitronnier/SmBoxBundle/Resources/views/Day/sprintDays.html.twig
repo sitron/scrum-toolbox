@@ -1,7 +1,17 @@
-<div id="sprint-days-container"></div>
+<h3>{% trans %}sprint_days{% endtrans %}</h3>
 
-<script type="text/x-template" id="sprint-day-template">
-    <div>{ date }</div>
+<p class="explanation">{% trans %}sprint_days_inline_editing{% endtrans %}</p>
+
+<div id="sprint-days-header">
+    <p>{% trans %}date{% endtrans %}</p>
+    <p>{% trans %}nb.hours{% endtrans %}</p>
+    <p>{% trans %}business_value{% endtrans %}</p>
+    <p>{% trans %}story_points{% endtrans %}</p>
+</div>
+<div id="sprint-days-container" class="clearer"></div>
+
+<script type="text/x-template" id="sprint-day-template" class="{ createdBy }-created">
+    <div class="date">{ date }</div>
     <div class="inline-updatable">
         <span class="">{ nbHours }</span>
         <input class="nbHours" type="text" value="{ nbHours }" />
@@ -14,5 +24,6 @@
         <span class="">{ nbBV }</span>
         <input class="nbBV" type="text" value="{ nbBV }" />
     </div>
+    <div class="clearer" />
 </script>
 

@@ -4,11 +4,13 @@ namespace Sitronnier\SmBoxBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 use Sitronnier\SmBoxBundle\Entity\Sprint;
 use Sitronnier\SmBoxBundle\Entity\Project;
 use Sitronnier\SmBoxBundle\Entity\Day;
+use Sitronnier\SmBoxBundle\Form\DayType;
 
 /**
  * Stats controller.
@@ -43,6 +45,39 @@ class StatsController extends Controller
             200,
             array('Content-Type' => 'application/json')
         );
+    }
+
+    /**
+     * Edits an existing Day entity.
+     */
+    public function updateDayAction(Request $request)
+    {
+        $securityContext = $this->get('security.context');
+        $user = $securityContext->getToken()->getUser();
+
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $jsonData = $request->getContent();
+        if (!$jsonData) {
+            return new Response(json_encode(array('error' => 'no day found')), 400);
+        }
+        $newDay = json_decode($jsonData);
+
+        $day = $this->getDoctrine()->getRepository('SitronnierSmBoxBundle:Day')->findOneWithOwner($newDay->id, $user->getId());
+
+        if (!$day) {
+            return new Response(json_encode(array('error' => 'no day found')), 400);
+        }
+
+        $day->setNbHours($newDay->nbHours);
+        $day->setNbStoryPoints($newDay->nbSP);
+        $day->setNbBusinessValue($newDay->nbBV);
+        $day->setCreatedBy('user');
+
+        $em->persist($day);
+        $em->flush();
+
+        return new Response(json_encode($day->toJson()), 200);
     }
 }
 

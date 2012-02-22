@@ -45,8 +45,9 @@
     </li>
 </ul>
 
-<h5>Days for this sprint</h5>
-{% include "SitronnierSmBoxBundle:Day:sprintDays.html.twig" with {'sprint': sprint} %}
+{% if sprint.days.count > 0 %}
+    {% include "SitronnierSmBoxBundle:Day:sprintDays.html.twig" with {'sprint': sprint} %}
+{% endif %}
 
 {% endblock %}
 

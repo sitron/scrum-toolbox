@@ -6,9 +6,39 @@ YUI.add('SprintDays', function(Y) {
      */
     Y.DayModel = Y.Base.create('dayModel', Y.Model, [], {
 
+        initializer: function(o) {
+        },
+
         sync: function (action, options, callback) {
-            Y.log('sync now!' + action);
-        }
+            var data = this.toJSON();
+            var o = {
+                'method': 'POST',
+                'data': Y.JSON.stringify(data),
+                'timeout': 2000,
+                'headers': {
+                    'Content-Type': 'application/json',
+                },
+                context: this,
+                on: {
+                    success: this.syncComplete,
+                    failure: this.syncFailure
+                }
+            };
+            Y.io(Routing.generate('smbox_stats_update_day'), o);
+        },
+
+        syncComplete: function(id, o, args) {
+            this.fire('sync:success', {
+                type: 'sync'
+            });
+        },
+
+        syncFailure: function(id, o, args) {
+            this.fire('error', {
+                type : 'sync',
+                error: 'sync error'
+            });
+        },
     }, {
         ATTRS: {
             date: {
@@ -85,7 +115,19 @@ YUI.add('SprintDays', function(Y) {
             var model = this.model;
 
             model.after('change', this.render, this);
+            model.after('createdByChange', this.updateCreated, this);
             model.after('destroy', this.destroy, this);
+            model.on('sync:success', this.syncSuccess, this);
+            model.on('error', this.error, this);
+        },
+
+        syncSuccess: function(o) {
+            this.model.set('createdBy', 'user');
+//            Y.log('sync success event');
+        },
+
+        error: function(o) {
+            Y.log('error: ' + o.error);
         },
 
         render: function () {
@@ -96,12 +138,19 @@ YUI.add('SprintDays', function(Y) {
             // Append the container element to the DOM if it's not on the page already.
             if (!this.container.inDoc()) {
                 Y.one('#sprint-days-container').append(this.container);
+
+                // for whatever reason this event cannot be attached using the usual 'events' hash
+                this.container.all('input').on('blur', this.replaceToValue, this);
+
+                this.container.addClass(this.model.get('createdBy') + '-created');
             }
 
-            // for whatever reason this event cannot be attached using the usual 'events' hash
-            this.container.all('input').on('blur', this.replaceToValue, this);
-
             this.container.all('input').hide();
+        },
+
+        updateCreated: function(e) {
+            this.container.removeClass(e.prevVal + '-created');
+            this.container.addClass(e.newVal + '-created');
         },
 
         onKeyPress: function(e) {
@@ -117,10 +166,18 @@ YUI.add('SprintDays', function(Y) {
         },
 
         replaceToValue: function(e) {
-            var classname = e.currentTarget.get('className');
-            this.model.set(classname, parseFloat(e.currentTarget.get('value')));
+            var property, value;
+
+            property = e.currentTarget.get('className');
+            value = parseFloat(e.currentTarget.get('value'));
+
             e.currentTarget.get('parentNode').one('input').hide();
             e.currentTarget.get('parentNode').one('span').show();
+
+            if (this.model.get(property) !== value) {
+                this.model.set(property, value);
+                this.model.save();
+            }
         }
     });
 
@@ -132,5 +189,5 @@ YUI.add('SprintDays', function(Y) {
         };
     }
 
-}, '0.1', {requires: ['app', 'model-list', 'model', 'view', 'json-parse', 'node']});
+}, '0.1', {requires: ['app', 'model-list', 'model', 'view', 'json-parse', 'node', 'io-base', 'querystring-stringify-simple', 'json']});
 

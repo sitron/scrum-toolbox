@@ -73,9 +73,12 @@ p.explanation {
     font-size: 0.8em;
     margin-top: 0;
     padding-top: 0;
-    margin-left: 160px;
     margin-bottom: .4em;
     font-style: italic;
+}
+
+form p.explanation {
+    margin-left: 160px;
 }
 
 p.helpers {
@@ -136,5 +139,40 @@ div.faq img {
 
 div.faq li {
     margin-bottom: 4px;
+}
+
+div#sprint-days-container div.sprint-day.machine-created {
+    color: #666;
+}
+
+div#sprint-days-container div.sprint-day.user-created {
+    color: #000;
+}
+
+div#sprint-days-container div.sprint-day div {
+    float: left;
+    width: 150px;
+    height: 20px;
+}
+
+div#sprint-days-container div.sprint-day div.clearer {
+    float: none;
+    clear: both;
+}
+
+div#sprint-days-container div.sprint-day div.inline-updatable span,
+div#sprint-days-container div.sprint-day div.inline-updatable input {
+    width: 80%;
+    display: block;
+}
+
+div#sprint-days-header p {
+    width: 150px;
+    float: left;
+    font-weight: bold;
+    text-transform: capitalize;
+    margin: 0;
+    padding: 0;
+    margin-bottom: .5em;
 }
 
