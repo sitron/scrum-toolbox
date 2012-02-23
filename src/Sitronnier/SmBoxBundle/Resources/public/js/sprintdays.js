@@ -10,8 +10,10 @@ YUI.add('SprintDays', function(Y) {
         },
 
         sync: function (action, options, callback) {
-            var data = this.toJSON();
-            var o = {
+            var data, o;
+
+            data = this.toJSON();
+            o = {
                 'method': 'POST',
                 'data': Y.JSON.stringify(data),
                 'timeout': 2000,
@@ -22,14 +24,25 @@ YUI.add('SprintDays', function(Y) {
                 on: {
                     success: this.syncComplete,
                     failure: this.syncFailure
+                },
+                arguments: {
+                    type: action
                 }
             };
-            Y.io(Routing.generate('smbox_stats_update_day'), o);
+
+            switch (action) {
+                case 'update':
+                    Y.io(Routing.generate('smbox_stats_update_day'), o);
+                    return;
+                case 'delete':
+                    Y.io(Routing.generate('smbox_stats_delete_day'), o);
+                    return;
+            }
         },
 
         syncComplete: function(id, o, args) {
             this.fire('sync:success', {
-                type: 'sync'
+                type: args.type
             });
         },
 
@@ -108,6 +121,9 @@ YUI.add('SprintDays', function(Y) {
             },
             '.inline-updatable input': {
                 keypress: 'onKeyPress'
+            },
+            'a.delete': {
+                click: 'deleteModel'
             }
         },
 
@@ -122,8 +138,16 @@ YUI.add('SprintDays', function(Y) {
         },
 
         syncSuccess: function(o) {
-            this.model.set('createdBy', 'user');
-//            Y.log('sync success event');
+            switch(o.type) {
+                case 'delete':
+                    // call destroy again but without arguments to delete the local model and view
+                    this.model.destroy();
+                    return;
+
+                case 'update':
+                    this.model.set('createdBy', 'user');
+                    return;
+            };
         },
 
         error: function(o) {
@@ -151,6 +175,13 @@ YUI.add('SprintDays', function(Y) {
         updateCreated: function(e) {
             this.container.removeClass(e.prevVal + '-created');
             this.container.addClass(e.newVal + '-created');
+        },
+
+        deleteModel: function(e) {
+            e.halt();
+            if (confirm('Are you sure?')) {
+                this.model.destroy({'delete': true});
+            }
         },
 
         onKeyPress: function(e) {

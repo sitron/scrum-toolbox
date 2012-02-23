@@ -79,5 +79,33 @@ class StatsController extends Controller
 
         return new Response(json_encode($day->toJson()), 200);
     }
+
+    /**
+     * Delete a Day entity.
+     */
+    public function deleteDayAction(Request $request)
+    {
+        $securityContext = $this->get('security.context');
+        $user = $securityContext->getToken()->getUser();
+
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $jsonData = $request->getContent();
+        if (!$jsonData) {
+            return new Response(json_encode(array('error' => 'no day found')), 400);
+        }
+        $newDay = json_decode($jsonData);
+
+        $day = $this->getDoctrine()->getRepository('SitronnierSmBoxBundle:Day')->findOneWithOwner($newDay->id, $user->getId());
+
+        if (!$day) {
+            return new Response(json_encode(array('error' => 'no day found')), 400);
+        }
+
+        $em->remove($day);
+        $em->flush();
+
+        return new Response(json_encode(array()), 200);
+    }
 }
 

@@ -11,3 +11,12 @@ smbox_stats_update_day:
         expose: true
     requirements:
         _method:  POST
+
+smbox_stats_delete_day:
+    pattern:  /day/delete
+    defaults: { _controller: SitronnierSmBoxBundle:Stats:deleteDay }
+    options:
+        expose: true
+    requirements:
+        _method:  POST
+
