@@ -9,6 +9,7 @@
     <p>{% trans %}story_points{% endtrans %}</p>
 </div>
 <div id="sprint-days-container" class="clearer"></div>
+<a href="{{ path('day_new') }}?sprint={{ sprint.id }}">{% trans %}add.day{% endtrans %}</a>
 
 <script type="text/x-template" id="sprint-day-template" class="{ createdBy }-created">
     <div class="date">{ date }</div>
