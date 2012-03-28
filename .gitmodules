@@ -49,3 +49,9 @@
 [submodule "vendor/bundles/FOS/UserBundle"]
 	path = vendor/bundles/FOS/UserBundle
 	url = git://github.com/FriendsOfSymfony/FOSUserBundle.git
+[submodule "vendor/migrations"]
+	path = vendor/migrations
+	url = http://github.com/doctrine/migrations.git
+[submodule "vendor/bundles/Symfony/Bundle/DoctrineMigrationsBundle"]
+	path = vendor/bundles/Symfony/Bundle/DoctrineMigrationsBundle
+	url = http://github.com/symfony/DoctrineMigrationsBundle.git
