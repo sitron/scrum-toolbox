@@ -137,7 +137,7 @@ class SprintController extends Controller
                         continue;
                     }
                     $day = new Day();
-                    $day->setCreatedBy('machine');
+                    $day->setVisible(false);
                     $day->setNbHours(0);
                     $day->setNbBusinessValue(0);
                     $day->setNbStoryPoints(0);

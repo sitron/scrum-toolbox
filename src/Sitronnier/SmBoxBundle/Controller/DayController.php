@@ -190,7 +190,7 @@ class DayController extends Controller
         $editForm->bindRequest($request);
 
         if ($editForm->isValid()) {
-            $day->setCreatedBy('user');
+            $day->setVisible(true);
             $em->persist($day);
             $em->flush();
 

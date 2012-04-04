@@ -16,8 +16,8 @@ Sitronnier\SmBoxBundle\Entity\Day:
       type: float
     date:
       type: date
-    created_by:
-      type: string
+    visible:
+      type: boolean
       nullable: true
   manyToOne:
     sprint:

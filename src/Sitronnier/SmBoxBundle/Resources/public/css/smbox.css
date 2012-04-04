@@ -141,11 +141,11 @@ div.faq li {
     margin-bottom: 4px;
 }
 
-div#sprint-days-container div.sprint-day.machine-created {
+div#sprint-days-container div.sprint-day.hidden {
     color: #666;
 }
 
-div#sprint-days-container div.sprint-day.user-created {
+div#sprint-days-container div.sprint-day.visible {
     color: #000;
 }
 

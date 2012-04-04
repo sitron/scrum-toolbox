@@ -40,9 +40,9 @@ class Day
     private $date;
 
     /**
-     * @var string $created_by
+     * @var boolean $visible
      */
-    private $created_by = 'user';
+    private $visible = true;
 
     public function toJson()
     {
@@ -52,7 +52,7 @@ class Day
             'nbBV' => $this->nb_business_value,
             'nbSP' => $this->nb_story_points,
             'date' => $this->date->format('D d/m'),
-            'createdBy' => $this->created_by,
+            'visible' => $this->visible,
         );
         return $json;
     }
@@ -168,20 +168,20 @@ class Day
     }
 
     /**
-     * Set created_by
-     * @param string $created_by
+     * Set visible
+     * @param boolean $visible
      */
-    public function setCreatedBy($created_by)
+    public function setVisible($visible)
     {
-        $this->created_by = $created_by;
+        $this->visible = $visible;
     }
 
     /**
-     * Get created_by
-     * @return created_by
+     * Get visible
+     * @return visible
      */
-    public function getCreatedBy()
+    public function getVisible()
     {
-        return $this->created_by;
+        return $this->visible;
     }
 }

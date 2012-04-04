@@ -72,7 +72,7 @@ class StatsController extends Controller
         $day->setNbHours($newDay->nbHours);
         $day->setNbStoryPoints($newDay->nbSP);
         $day->setNbBusinessValue($newDay->nbBV);
-        $day->setCreatedBy('user');
+        $day->setVisible(true);
 
         $em->persist($day);
         $em->flush();

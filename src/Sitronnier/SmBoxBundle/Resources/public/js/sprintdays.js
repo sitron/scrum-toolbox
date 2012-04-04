@@ -41,12 +41,14 @@ YUI.add('SprintDays', function(Y) {
         },
 
         syncComplete: function(id, o, args) {
+            console.log('success');
             this.fire('sync:success', {
                 type: args.type
             });
         },
 
         syncFailure: function(id, o, args) {
+            console.log('failure');
             this.fire('error', {
                 type : 'sync',
                 error: 'sync error'
@@ -56,10 +58,10 @@ YUI.add('SprintDays', function(Y) {
         ATTRS: {
             date: {
             },
-            createdBy: {
-                value: 'user',
+            visible: {
+                value: true,
                 validator: function (value) {
-                    return typeof value === 'string' && (value === 'user' || value === 'machine');
+                    return typeof value === 'boolean';
                 }
             },
             nbHours: {
@@ -131,7 +133,7 @@ YUI.add('SprintDays', function(Y) {
             var model = this.model;
 
             model.after('change', this.render, this);
-            model.after('createdByChange', this.updateCreated, this);
+            model.after('visibleChange', this.updateVisible, this);
             model.after('destroy', this.destroy, this);
             model.on('sync:success', this.syncSuccess, this);
             model.on('error', this.error, this);
@@ -145,7 +147,7 @@ YUI.add('SprintDays', function(Y) {
                     return;
 
                 case 'update':
-                    this.model.set('createdBy', 'user');
+                    this.model.set('visible', true);
                     return;
             };
         },
@@ -166,15 +168,19 @@ YUI.add('SprintDays', function(Y) {
                 // for whatever reason this event cannot be attached using the usual 'events' hash
                 this.container.all('input').on('blur', this.replaceToValue, this);
 
-                this.container.addClass(this.model.get('createdBy') + '-created');
+                this.container.addClass(this.getVisibleClass(this.model.get('visible')));
             }
 
             this.container.all('input').hide();
         },
 
-        updateCreated: function(e) {
-            this.container.removeClass(e.prevVal + '-created');
-            this.container.addClass(e.newVal + '-created');
+        getVisibleClass: function(visible) {
+            return visible? 'visible' : 'hidden';
+        },
+
+        updateVisible: function(e) {
+            this.container.removeClass(this.getVisibleClass(e.prevVal));
+            this.container.addClass(this.getVisibleClass(e.newVal));
         },
 
         deleteModel: function(e) {

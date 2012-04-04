@@ -28,6 +28,7 @@ class DayType extends AbstractType
             ->add('nb_hours')
             ->add('nb_business_value')
             ->add('nb_story_points')
+            ->add('visible')
             ->add('sprint',
               'entity',
                array(

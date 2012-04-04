@@ -11,19 +11,19 @@
 <div id="sprint-days-container" class="clearer"></div>
 <a href="{{ path('day_new') }}?sprint={{ sprint.id }}">{% trans %}add.day{% endtrans %}</a>
 
-<script type="text/x-template" id="sprint-day-template" class="{ createdBy }-created">
+<script type="text/x-template" id="sprint-day-template">
     <div class="date">{ date }</div>
     <div class="inline-updatable">
         <span class="">{ nbHours }</span>
         <input class="nbHours" type="text" value="{ nbHours }" />
     </div>
     <div class="inline-updatable">
-        <span class="">{ nbSP }</span>
-        <input class="nbSP" type="text" value="{ nbSP }" />
-    </div>
-    <div class="inline-updatable">
         <span class="">{ nbBV }</span>
         <input class="nbBV" type="text" value="{ nbBV }" />
+    </div>
+    <div class="inline-updatable">
+        <span class="">{ nbSP }</span>
+        <input class="nbSP" type="text" value="{ nbSP }" />
     </div>
     <div class="actions">
         <a href="#" class="delete">{% trans %}delete{% endtrans %}</a>

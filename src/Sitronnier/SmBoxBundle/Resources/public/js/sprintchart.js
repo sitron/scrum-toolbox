@@ -262,7 +262,7 @@ YUI.add('SprintChart', function(Y) {
             cSP += day.nbSP;
             cBV += day.nbBV;
             cMD += day.nbHours;
-            if (day.createdBy !== 'machine') {
+            if (day.visible) {
                 chartData.push({'date': day.date, 'MD': cMD / 8, 'BV': cBV, 'SP': cSP});
                 chartDataAll.push({'date': day.date, 'MD': cMD / 8, 'BV': cBV, 'SP': cSP});
             } else {
