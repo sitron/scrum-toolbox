@@ -121,8 +121,11 @@ YUI.add('SprintDays', function(Y) {
             '.inline-updatable span': {
                 click: 'replaceToInput'
             },
-            '.inline-updatable input': {
+            '.inline-updatable input[type="text"]': {
                 keypress: 'onKeyPress'
+            },
+            '.inline-updatable input[type="checkbox"]': {
+                change: 'replaceToValueCheckbox'
             },
             'a.delete': {
                 click: 'deleteModel'
@@ -147,7 +150,6 @@ YUI.add('SprintDays', function(Y) {
                     return;
 
                 case 'update':
-                    this.model.set('visible', true);
                     return;
             };
         },
@@ -161,17 +163,20 @@ YUI.add('SprintDays', function(Y) {
                 this.model.getAttrs(['date', 'nbHours', 'nbSP', 'nbBV'])
             ));
 
+            this.container.one('input[type="checkbox"].visible').set('checked', this.model.get('visible') == 1);
+
             // Append the container element to the DOM if it's not on the page already.
             if (!this.container.inDoc()) {
                 Y.one('#sprint-days-container').append(this.container);
 
                 // for whatever reason this event cannot be attached using the usual 'events' hash
-                this.container.all('input').on('blur', this.replaceToValue, this);
+                this.container.all('input[type="text"]').on('blur', this.replaceToValue, this);
 
                 this.container.addClass(this.getVisibleClass(this.model.get('visible')));
             }
 
-            this.container.all('input').hide();
+            // hide all text inputs (show on span click)
+            this.container.all('input[type="text"]').hide();
         },
 
         getVisibleClass: function(visible) {
@@ -202,6 +207,15 @@ YUI.add('SprintDays', function(Y) {
             e.currentTarget.get('parentNode').one('span').hide();
         },
 
+        replaceToValueCheckbox: function(e) {
+            var property, value;
+
+            property = e.currentTarget.get('className');
+            value = e.currentTarget.get('checked');
+
+            this.updateModel(property, value);
+        },
+
         replaceToValue: function(e) {
             var property, value;
 
@@ -211,6 +225,10 @@ YUI.add('SprintDays', function(Y) {
             e.currentTarget.get('parentNode').one('input').hide();
             e.currentTarget.get('parentNode').one('span').show();
 
+            this.updateModel(property, value);
+        },
+
+        updateModel: function(property, value) {
             if (this.model.get(property) !== value) {
                 this.model.set(property, value);
                 this.model.save();

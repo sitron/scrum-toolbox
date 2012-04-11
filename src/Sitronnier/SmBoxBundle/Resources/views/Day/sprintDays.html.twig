@@ -7,6 +7,7 @@
     <p>{% trans %}nb.hours{% endtrans %}</p>
     <p>{% trans %}business_value{% endtrans %}</p>
     <p>{% trans %}story_points{% endtrans %}</p>
+    <p>{% trans %}is_visible{% endtrans %}</p>
 </div>
 <div id="sprint-days-container" class="clearer"></div>
 <a href="{{ path('day_new') }}?sprint={{ sprint.id }}">{% trans %}add.day{% endtrans %}</a>
@@ -24,6 +25,9 @@
     <div class="inline-updatable">
         <span class="">{ nbSP }</span>
         <input class="nbSP" type="text" value="{ nbSP }" />
+    </div>
+    <div class="inline-updatable">
+        <input class="visible" type="checkbox" />
     </div>
     <div class="actions">
         <a href="#" class="delete">{% trans %}delete{% endtrans %}</a>

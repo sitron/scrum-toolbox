@@ -79,6 +79,7 @@ story_points:                                   story points
 SP:                                             SP
 business_value:                                 business value
 BV:                                             BV
+is_visible:                                     visible
 title:                                          title
 
 actions:                                        actions
