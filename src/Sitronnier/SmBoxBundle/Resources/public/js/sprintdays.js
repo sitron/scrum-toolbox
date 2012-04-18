@@ -183,7 +183,7 @@ YUI.add('SprintDays', function(Y) {
             }
 
             // hide all text inputs (show on span click)
-            this.get('container').all('input[type="text"]').hide();
+            this.get('container').all('input[type="text"]').setStyle('display', 'none');
         },
 
         getVisibleClass: function(visible) {
