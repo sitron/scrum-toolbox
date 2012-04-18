@@ -1,6 +1,6 @@
 /*
-YUI 3.4.1 (build 4118)
-Copyright 2011 Yahoo! Inc. All rights reserved.
+YUI 3.5.0 (build 5089)
+Copyright 2012 Yahoo! Inc. All rights reserved.
 Licensed under the BSD License.
 http://yuilibrary.com/license/
 */
@@ -155,7 +155,9 @@ ArrayListProto = {
  */
 ArrayListProto._item = ArrayListProto.item;
 
-ArrayList.prototype  = ArrayListProto;
+// Mixed onto existing proto to preserve constructor NOT being an own property.
+// This has bitten me when composing classes by enumerating, copying prototypes.
+Y.mix(ArrayList.prototype, ArrayListProto);
 
 Y.mix( ArrayList, {
 
@@ -215,4 +217,4 @@ Y.mix( ArrayList, {
 Y.ArrayList = ArrayList;
 
 
-}, '3.4.1' ,{requires:['yui-base']});
+}, '3.5.0' ,{requires:['yui-base']});

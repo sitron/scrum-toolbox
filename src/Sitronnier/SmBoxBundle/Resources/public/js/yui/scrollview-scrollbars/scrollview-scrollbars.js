@@ -1,6 +1,6 @@
 /*
-YUI 3.4.1 (build 4118)
-Copyright 2011 Yahoo! Inc. All rights reserved.
+YUI 3.5.0 (build 5089)
+Copyright 2012 Yahoo! Inc. All rights reserved.
 Licensed under the BSD License.
 http://yuilibrary.com/license/
 */
@@ -296,8 +296,8 @@ Y.namespace("Plugin").ScrollViewScrollbars = Y.extend(ScrollbarsPlugin, Y.Plugin
             dim = WIDTH;
             dimOffset = LEFT;
             dimCache = HORIZ_CACHE;
-            widgetSize = host.get(dim);
-            contentSize = host._scrollWidth || cb.get(SCROLL_WIDTH);
+            widgetSize = host._width;
+            contentSize = host._scrollWidth;
             translate = TRANSLATE_X;
             scale = SCALE_X;
             current = (current !== undefined) ? current : host.get(SCROLL_X);
@@ -305,8 +305,8 @@ Y.namespace("Plugin").ScrollViewScrollbars = Y.extend(ScrollbarsPlugin, Y.Plugin
             dim = HEIGHT;
             dimOffset = TOP;
             dimCache = VERT_CACHE;
-            widgetSize = host.get(dim);
-            contentSize = host._scrollHeight || cb.get(SCROLL_HEIGHT);
+            widgetSize = host._height;
+            contentSize = host._scrollHeight;
             translate = TRANSLATE_Y;
             scale = SCALE_Y;
             current = (current !== undefined) ? current : host.get(SCROLL_Y);
@@ -509,21 +509,10 @@ Y.namespace("Plugin").ScrollViewScrollbars = Y.extend(ScrollbarsPlugin, Y.Plugin
      * @method flash
      */
     flash: function() {
-        var shouldFlash = false,
-            host = this._host;
+        var host = this._host;
 
-        if (host._scrollsVertical && (host._scrollHeight > host.get(HEIGHT))) {
-            shouldFlash = true;
-        }
-
-        if (host._scrollsHorizontal && (host._scrollWidth > host.get(WIDTH))) {
-            shouldFlash = true;
-        }
-
-        if (shouldFlash) {
-            this.show(true);
-            this._flashTimer = Y.later(800, this, 'hide', true);
-        }
+        this.show(true);
+        this._flashTimer = Y.later(800, this, 'hide', true);
     },
 
     /**
@@ -567,4 +556,4 @@ Y.namespace("Plugin").ScrollViewScrollbars = Y.extend(ScrollbarsPlugin, Y.Plugin
 });
 
 
-}, '3.4.1' ,{requires:['classnamemanager', 'transition', 'plugin'], skinnable:true});
+}, '3.5.0' ,{requires:['classnamemanager', 'transition', 'plugin'], skinnable:true});

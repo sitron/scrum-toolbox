@@ -1,6 +1,6 @@
 /*
-YUI 3.4.1 (build 4118)
-Copyright 2011 Yahoo! Inc. All rights reserved.
+YUI 3.5.0 (build 5089)
+Copyright 2012 Yahoo! Inc. All rights reserved.
 Licensed under the BSD License.
 http://yuilibrary.com/license/
 */
@@ -26,7 +26,7 @@ http://yuilibrary.com/license/
     border:solid #a3a3a3;
     border-width: 1px 1px 0 1px;
     color:#000;
-    cursor:hand;
+    cursor:pointer;
     font-size:85%;
     padding:0.3em .75em;
     text-decoration:none;

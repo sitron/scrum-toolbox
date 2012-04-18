@@ -1,12 +1,13 @@
 /*
-YUI 3.4.1 (build 4118)
-Copyright 2011 Yahoo! Inc. All rights reserved.
+YUI 3.5.0 (build 5089)
+Copyright 2012 Yahoo! Inc. All rights reserved.
 Licensed under the BSD License.
 http://yuilibrary.com/license/
 */
 YUI.add('event-synthetic', function(Y) {
 
-/* Define new DOM events that can be subscribed to from Nodes.
+/**
+ * Define new DOM events that can be subscribed to from Nodes.
  *
  * @module event
  * @submodule event-synthetic
@@ -830,4 +831,4 @@ Y.Event.define = function (type, config, force) {
 };
 
 
-}, '3.4.1' ,{requires:['node-base', 'event-custom-complex']});
+}, '3.5.0' ,{requires:['node-base', 'event-custom-complex']});

@@ -1,6 +1,6 @@
 /*
-YUI 3.4.1 (build 4118)
-Copyright 2011 Yahoo! Inc. All rights reserved.
+YUI 3.5.0 (build 5089)
+Copyright 2012 Yahoo! Inc. All rights reserved.
 Licensed under the BSD License.
 http://yuilibrary.com/license/
 */
@@ -47,6 +47,28 @@ Y_DOM = {
     byId: function(id, doc) {
         // handle dupe IDs and IE name collision
         return Y_DOM.allById(id, doc)[0] || null;
+    },
+
+    getId: function(node) {
+        var id;
+        // HTMLElement returned from FORM when INPUT name === "id"
+        // IE < 8: HTMLCollection returned when INPUT id === "id"
+        // via both getAttribute and form.id 
+        if (node.id && !node.id.tagName && !node.id.item) {
+            id = node.id;
+        } else if (node.attributes && node.attributes.id) {
+            id = node.attributes.id.value;
+        }
+
+        return id;
+    },
+
+    setId: function(node, id) {
+        if (node.setAttribute) {
+            node.setAttribute('id', id);
+        } else {
+            node.id = id;
+        }
     },
 
     /*
@@ -338,42 +360,6 @@ Y_DOM = {
         return (typeof ret !== 'undefined') ? ret : nodes;
     },
 
-    wrap: function(node, html) {
-        var parent = Y.DOM.create(html),
-            nodes = parent.getElementsByTagName('*');
-
-        if (nodes.length) {
-            parent = nodes[nodes.length - 1];
-        }
-
-        if (node.parentNode) { 
-            node.parentNode.replaceChild(parent, node);
-        }
-        parent.appendChild(node);
-    },
-
-    unwrap: function(node) {
-        var parent = node.parentNode,
-            lastChild = parent.lastChild,
-            next = node,
-            grandparent;
-
-        if (parent) {
-            grandparent = parent.parentNode;
-            if (grandparent) {
-                node = parent.firstChild;
-                while (node !== lastChild) {
-                    next = node.nextSibling;
-                    grandparent.insertBefore(node, parent);
-                    node = next;
-                }
-                grandparent.replaceChild(lastChild, parent);
-            } else {
-                parent.removeChild(node);
-            }
-        }
-    },
-
     generateID: function(el) {
         var id = el.id;
 
@@ -390,4 +376,4 @@ Y_DOM = {
 Y.DOM = Y_DOM;
 
 
-}, '3.4.1' ,{requires:['oop','features']});
+}, '3.5.0' ,{requires:['oop','features']});

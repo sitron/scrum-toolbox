@@ -1,6 +1,6 @@
 /*
-YUI 3.4.1 (build 4118)
-Copyright 2011 Yahoo! Inc. All rights reserved.
+YUI 3.5.0 (build 5089)
+Copyright 2012 Yahoo! Inc. All rights reserved.
 Licensed under the BSD License.
 http://yuilibrary.com/license/
 */
@@ -13,47 +13,60 @@ YUI.add('node-style', function(Y) {
  * @submodule node-style
  */
 
-var methods = [
+Y.mix(Y.Node.prototype, {
     /**
-     * Returns the style's current value.
-     * @method getStyle
-     * @for Node
-     * @param {String} attr The style attribute to retrieve. 
-     * @return {String} The current value of the style property for the element.
-     */
-    'getStyle',
-
-    /**
-     * Returns the computed value for the given style property.
-     * Use CSS case (e.g. 'background-color') for multi-word properties.
-
-     * @method getComputedStyle
-     * @param {String} attr The style attribute to retrieve. 
-     * @return {String} The computed value of the style property for the element.
-     */
-    'getComputedStyle',
-
-    /**
-     * Sets a style property of the node. Use CSS case (e.g. 'background-color')
-     * for multi-word properties.
+     * Sets a style property of the node.
+     * Use camelCase (e.g. 'backgroundColor') for multi-word properties.
      * @method setStyle
      * @param {String} attr The style attribute to set. 
      * @param {String|Number} val The value. 
      * @chainable
      */
-    'setStyle',
+    setStyle: function(attr, val) {
+        Y.DOM.setStyle(this._node, attr, val);
+        return this;
+    },
 
     /**
      * Sets multiple style properties on the node.
+     * Use camelCase (e.g. 'backgroundColor') for multi-word properties.
      * @method setStyles
      * @param {Object} hash An object literal of property:value pairs. 
      * @chainable
      */
-    'setStyles'
-];
-Y.Node.importMethod(Y.DOM, methods);
+    setStyles: function(hash) {
+        Y.DOM.setStyles(this._node, hash);
+        return this;
+    },
+
+    /**
+     * Returns the style's current value.
+     * Use camelCase (e.g. 'backgroundColor') for multi-word properties.
+     * @method getStyle
+     * @for Node
+     * @param {String} attr The style attribute to retrieve. 
+     * @return {String} The current value of the style property for the element.
+     */
+
+     getStyle: function(attr) {
+        return Y.DOM.getStyle(this._node, attr);
+     },
+
+    /**
+     * Returns the computed value for the given style property.
+     * Use camelCase (e.g. 'backgroundColor') for multi-word properties.
+     * @method getComputedStyle
+     * @param {String} attr The style attribute to retrieve. 
+     * @return {String} The computed value of the style property for the element.
+     */
+     getComputedStyle: function(attr) {
+        return Y.DOM.getComputedStyle(this._node, attr);
+     }
+});
+
 /**
  * Returns an array of values for each node.
+ * Use camelCase (e.g. 'backgroundColor') for multi-word properties.
  * @method getStyle
  * @for NodeList
  * @see Node.getStyle
@@ -63,6 +76,7 @@ Y.Node.importMethod(Y.DOM, methods);
 
 /**
  * Returns an array of the computed value for each node.
+ * Use camelCase (e.g. 'backgroundColor') for multi-word properties.
  * @method getComputedStyle
  * @see Node.getComputedStyle
  * @param {String} attr The style attribute to retrieve. 
@@ -71,6 +85,7 @@ Y.Node.importMethod(Y.DOM, methods);
 
 /**
  * Sets a style property on each node.
+ * Use camelCase (e.g. 'backgroundColor') for multi-word properties.
  * @method setStyle
  * @see Node.setStyle
  * @param {String} attr The style attribute to set. 
@@ -80,13 +95,18 @@ Y.Node.importMethod(Y.DOM, methods);
 
 /**
  * Sets multiple style properties on each node.
+ * Use camelCase (e.g. 'backgroundColor') for multi-word properties.
  * @method setStyles
  * @see Node.setStyles
  * @param {Object} hash An object literal of property:value pairs. 
  * @chainable
  */
-Y.NodeList.importMethod(Y.Node.prototype, methods);
+
+// These are broken out to handle undefined return (avoid false positive for
+// chainable)
+
+Y.NodeList.importMethod(Y.Node.prototype, ['getStyle', 'getComputedStyle', 'setStyle', 'setStyles']);
 })(Y);
 
 
-}, '3.4.1' ,{requires:['dom-style', 'node-base']});
+}, '3.5.0' ,{requires:['dom-style', 'node-base']});

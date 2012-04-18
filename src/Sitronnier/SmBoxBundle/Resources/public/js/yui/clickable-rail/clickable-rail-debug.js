@@ -1,6 +1,6 @@
 /*
-YUI 3.4.1 (build 4118)
-Copyright 2011 Yahoo! Inc. All rights reserved.
+YUI 3.5.0 (build 5089)
+Copyright 2012 Yahoo! Inc. All rights reserved.
 Licensed under the BSD License.
 http://yuilibrary.com/license/
 */
@@ -94,6 +94,7 @@ Y.ClickableRail = Y.mix(ClickableRail, {
         _onRailMouseDown: function (e) {
             if (this.get('clickableRail') && !this.get('disabled')) {
                 this.fire('railMouseDown', { ev: e });
+                this.thumb.focus();
             }
         },
 
@@ -134,7 +135,7 @@ Y.ClickableRail = Y.mix(ClickableRail, {
                         Math.max(xy, 0),
                         (length - thumbSize));
 
-                this._uiMoveThumb(xy);
+                this._uiMoveThumb(xy, { source: 'rail' });
 
                 // Set e.target for DD's IE9 patch which calls
                 // e.target._node.setCapture() to allow imgs to be dragged.
@@ -214,4 +215,5 @@ Y.ClickableRail = Y.mix(ClickableRail, {
 }, true);
 
 
-}, '3.4.1' ,{requires:['slider-base']});
+
+}, '3.5.0' ,{requires:['slider-base']});

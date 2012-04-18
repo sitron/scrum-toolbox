@@ -1,6 +1,6 @@
 /*
-YUI 3.4.1 (build 4118)
-Copyright 2011 Yahoo! Inc. All rights reserved.
+YUI 3.5.0 (build 5089)
+Copyright 2012 Yahoo! Inc. All rights reserved.
 Licensed under the BSD License.
 http://yuilibrary.com/license/
 */
@@ -56,6 +56,9 @@ YUI.add('dd-ddm', function(Y) {
         * @description Activates the shim
         */
         _pg_activate: function() {
+            if (!this._pg) {
+                this._createPG();
+            }
             var ah = this.activeDrag.get('activeHandle'), cur = 'auto';
             if (ah) {
                 cur = ah.getStyle('cursor');
@@ -124,4 +127,4 @@ YUI.add('dd-ddm', function(Y) {
 
 
 
-}, '3.4.1' ,{skinnable:false, requires:['dd-ddm-base', 'event-resize']});
+}, '3.5.0' ,{skinnable:false, requires:['dd-ddm-base', 'event-resize']});
