@@ -1,10 +1,17 @@
 /*
-YUI 3.4.1 (build 4118)
-Copyright 2011 Yahoo! Inc. All rights reserved.
+YUI 3.5.0 (build 5089)
+Copyright 2012 Yahoo! Inc. All rights reserved.
 Licensed under the BSD License.
 http://yuilibrary.com/license/
 */
 YUI.add('node-event-html5', function(Y) {
+
+/**
+ * Adds HTML5 event support to Node.
+ *
+ * @module node
+ * @submodule node-event-html5
+ **/
 
 Y.mix(Y.Node.DOM_EVENTS, {
     DOMActivate: 1,
@@ -42,10 +49,10 @@ Y.mix(Y.Node.DOM_EVENTS, {
     stalled: 1,
     suspend: 1,
     timeupdate: 1,
-    undeo: 1,
+    undo: 1,
     volumechange: 1,
     waiting: 1
 });
 
 
-}, '3.4.1' ,{requires:['node-base']});
+}, '3.5.0' ,{requires:['node-base']});

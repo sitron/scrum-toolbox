@@ -119,7 +119,7 @@ YUI.add('SprintDays', function(Y) {
      */
     Y.DayView = Y.Base.create('dayView', Y.View, [], {
 
-        container: '<div class="sprint-day" />',
+        container: Y.Node.create('<div class="sprint-day" />'),
 
         template: Y.one('#sprint-day-template').getContent(),
 
@@ -139,7 +139,7 @@ YUI.add('SprintDays', function(Y) {
         },
 
         initializer: function () {
-            var model = this.model;
+            var model = this.get('model');
 
             model.after('change', this.render, this);
             model.after('visibleChange', this.updateVisible, this);
@@ -152,7 +152,7 @@ YUI.add('SprintDays', function(Y) {
             switch(o.type) {
                 case 'delete':
                     // call destroy again but without arguments to delete the local model and view
-                    this.model.destroy();
+                    this.get('model').destroy();
                     return;
 
                 case 'update':
@@ -165,24 +165,25 @@ YUI.add('SprintDays', function(Y) {
         },
 
         render: function () {
-            this.container.setContent(Y.Lang.sub(this.template,
-                this.model.getAttrs(['date', 'nbHoursEstimate', 'nbHours', 'nbSP', 'nbBV'])
+            this.get('container').setContent(Y.Lang.sub(this.template,
+                this.get('model').getAttrs(['date', 'nbHoursEstimate', 'nbHours', 'nbSP', 'nbBV'])
             ));
 
-            this.container.one('input[type="checkbox"].visible').set('checked', this.model.get('visible') == 1);
+            this.get('container').one('input[type="checkbox"].visible').set('checked', this.get('model').get('visible') == 1);
 
             // Append the container element to the DOM if it's not on the page already.
-            if (!this.container.inDoc()) {
-                Y.one('#sprint-days-container').append(this.container);
+            if (!this.get('container').inDoc()) {
+                Y.one('#sprint-days-container').append(this.get('container'));
 
                 // for whatever reason this event cannot be attached using the usual 'events' hash
-                this.container.all('input[type="text"]').on('blur', this.replaceToValue, this);
+                this.get('container').all('input[type="text"]').on('blur', this.replaceToValue, this);
 
-                this.container.addClass(this.getVisibleClass(this.model.get('visible')));
+                this.get('container').addClass(this.getVisibleClass(this.get('model').get('visible')));
+                this.get('container').addClass('sprint-day');
             }
 
             // hide all text inputs (show on span click)
-            this.container.all('input[type="text"]').hide();
+            this.get('container').all('input[type="text"]').hide();
         },
 
         getVisibleClass: function(visible) {
@@ -190,14 +191,14 @@ YUI.add('SprintDays', function(Y) {
         },
 
         updateVisible: function(e) {
-            this.container.removeClass(this.getVisibleClass(e.prevVal));
-            this.container.addClass(this.getVisibleClass(e.newVal));
+            this.get('container').removeClass(this.getVisibleClass(e.prevVal));
+            this.get('container').addClass(this.getVisibleClass(e.newVal));
         },
 
         deleteModel: function(e) {
             e.halt();
             if (confirm('Are you sure?')) {
-                this.model.destroy({'delete': true});
+                this.get('model').destroy({'delete': true});
             }
         },
 
@@ -235,9 +236,9 @@ YUI.add('SprintDays', function(Y) {
         },
 
         updateModel: function(property, value) {
-            if (this.model.get(property) !== value) {
-                this.model.set(property, value);
-                this.model.save();
+            if (this.get('model').get(property) !== value) {
+                this.get('model').set(property, value);
+                this.get('model').save();
             }
         }
     });

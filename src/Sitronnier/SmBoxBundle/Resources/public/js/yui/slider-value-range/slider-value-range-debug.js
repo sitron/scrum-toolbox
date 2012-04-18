@@ -1,6 +1,6 @@
 /*
-YUI 3.4.1 (build 4118)
-Copyright 2011 Yahoo! Inc. All rights reserved.
+YUI 3.5.0 (build 5089)
+Copyright 2012 Yahoo! Inc. All rights reserved.
 Licensed under the BSD License.
 http://yuilibrary.com/license/
 */
@@ -19,6 +19,8 @@ YUI.add('slider-value-range', function(Y) {
 var MIN       = 'min',
     MAX       = 'max',
     VALUE     = 'value',
+//     MINORSTEP = 'minorStep',
+//     MAJORSTEP = 'majorStep',
 
     round = Math.round;
 
@@ -123,15 +125,9 @@ Y.SliderValueRange = Y.mix( SliderValueRange, {
          * @protected
          */
         _defThumbMoveFn: function ( e ) {
-            var previous = this.get( VALUE ),
-                value    = this._offsetToValue( e.offset );
-
-            // This test avoids duplication of this.set(..) if the origin
-            // of this thumbMove is from slider.set('value',x);
-            // slider.set() -> afterValueChange -> uiMoveThumb ->
-            // fire(thumbMove) -> _defThumbMoveFn -> this.set()
-            if ( previous !== value ) {
-                this.set( VALUE, value, { positioned: true } );
+            // To prevent set('value', x) from looping back around
+            if (e.source !== 'set') {
+                this.set(VALUE, this._offsetToValue(e.offset));
             }
         },
 
@@ -257,20 +253,23 @@ Y.SliderValueRange = Y.mix( SliderValueRange, {
          * @protected
          */
         _afterValueChange: function ( e ) {
-            if ( !e.positioned ) {
-                Y.log("Positioning thumb after set('value',x)","info","slider");
-                this._setPosition( e.newVal );
-            }
+            var val = e.newVal;
+            Y.log("Positioning thumb after set('value',x)","info","slider");
+            this._setPosition( val, { source: 'set' } );
+            this.thumb.set('aria-valuenow', val);
+            this.thumb.set('aria-valuetext', val);
         },
 
         /**
          * Positions the thumb in accordance with the translated value.
          *
          * @method _setPosition
+         * @param value {Number} Value to translate to a pixel position
+         * @param [options] {Object} Details object to pass to `_uiMoveThumb`
          * @protected
          */
-        _setPosition: function ( value ) {
-            this._uiMoveThumb( this._valueToOffset( value ) );
+        _setPosition: function ( value, options ) {
+            this._uiMoveThumb( this._valueToOffset( value ), options );
         },
 
         /**
@@ -278,8 +277,8 @@ Y.SliderValueRange = Y.mix( SliderValueRange, {
          * are acceptable.  Override this to enforce different rules.
          *
          * @method _validateNewMin
-         * @param value { mixed } Value assigned to <code>min</code> attribute.
-         * @return { Boolean } True for numbers.  False otherwise.
+         * @param value {Any} Value assigned to <code>min</code> attribute.
+         * @return {Boolean} True for numbers.  False otherwise.
          * @protected
          */
         _validateNewMin: function ( value ) {
@@ -379,6 +378,30 @@ Y.SliderValueRange = Y.mix( SliderValueRange, {
             value    : 100,
             validator: '_validateNewMax'
         },
+        
+        /**
+         * amount to increment/decrement the Slider value
+         * when the arrow up/down/left/right keys are pressed
+         *
+         * @attribute minorStep
+         * @type {Number}
+         * @default 1
+         */
+        minorStep : {
+            value: 1
+        },
+
+        /**
+         * amount to increment/decrement the Slider value
+         * when the page up/down keys are pressed
+         *
+         * @attribute majorStep
+         * @type {Number}
+         * @default 10
+         */
+        majorStep : {
+            value: 10
+        },
 
         /**
          * The value associated with the thumb's current position on the
@@ -398,4 +421,5 @@ Y.SliderValueRange = Y.mix( SliderValueRange, {
 }, true );
 
 
-}, '3.4.1' ,{requires:['slider-base']});
+
+}, '3.5.0' ,{requires:['slider-base']});

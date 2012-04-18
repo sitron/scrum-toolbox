@@ -1,6 +1,6 @@
 /*
-YUI 3.4.1 (build 4118)
-Copyright 2011 Yahoo! Inc. All rights reserved.
+YUI 3.5.0 (build 5089)
+Copyright 2012 Yahoo! Inc. All rights reserved.
 Licensed under the BSD License.
 http://yuilibrary.com/license/
 */
@@ -975,6 +975,7 @@ YUI.add('dd-drag', function(Y) {
         * @description Internal init handler
         */
         initializer: function(cfg) {
+
             this.get(NODE).dd = this;
 
             if (!this.get(NODE).get('id')) {
@@ -1020,7 +1021,16 @@ YUI.add('dd-drag', function(Y) {
         _unprep: function() {
             var node = this.get(NODE);
             node.removeClass(DDM.CSS_PREFIX + '-draggable');
-            node.detachAll();
+            node.detachAll('mouseup');
+            node.detachAll('dragstart');
+            node.detachAll(Drag.START_EVENT);
+            this.mouseXY = [];
+            this.deltaXY = [0,0];
+            this.startXY = [];
+            this.nodeXY = [];
+            this.lastXY = [];
+            this.actXY = [];
+            this.realXY = [];
         },
         /**
         * @method start
@@ -1244,7 +1254,6 @@ YUI.add('dd-drag', function(Y) {
         */
         destructor: function() {
             this._unprep();
-            this.detachAll();
             if (this.target) {
                 this.target.destroy();
             }
@@ -1257,4 +1266,4 @@ YUI.add('dd-drag', function(Y) {
 
 
 
-}, '3.4.1' ,{skinnable:false, requires:['dd-ddm-base']});
+}, '3.5.0' ,{skinnable:false, requires:['dd-ddm-base']});

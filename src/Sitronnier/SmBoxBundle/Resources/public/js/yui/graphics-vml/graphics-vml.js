@@ -1,6 +1,6 @@
 /*
-YUI 3.4.1 (build 4118)
-Copyright 2011 Yahoo! Inc. All rights reserved.
+YUI 3.5.0 (build 5089)
+Copyright 2012 Yahoo! Inc. All rights reserved.
 Licensed under the BSD License.
 http://yuilibrary.com/license/
 */
@@ -145,6 +145,70 @@ VMLDrawing.prototype = {
     },
 
     /**
+     * Draws a circle. Used internally by `CanvasCircle` class.
+     *
+     * @method drawCircle
+     * @param {Number} x y-coordinate
+     * @param {Number} y x-coordinate
+     * @param {Number} r radius
+     * @protected
+     */
+	drawCircle: function(x, y, radius) {
+        var startAngle = 0,
+            endAngle = 360,
+            circum = radius * 2;
+        endAngle *= 65535;
+        this._drawingComplete = false;
+        this._trackSize(x + circum, y + circum);
+        this._path += " m " + (x + circum) + " " + (y + radius) + " ae " + (x + radius) + " " + (y + radius) + " " + radius + " " + radius + " " + startAngle + " " + endAngle;
+        return this;
+    },
+    
+    /**
+     * Draws an ellipse.
+     *
+     * @method drawEllipse
+     * @param {Number} x x-coordinate
+     * @param {Number} y y-coordinate
+     * @param {Number} w width
+     * @param {Number} h height
+     * @protected
+     */
+	drawEllipse: function(x, y, w, h) {
+        var startAngle = 0,
+            endAngle = 360,
+            radius = w * 0.5,
+            yRadius = h * 0.5;
+        endAngle *= 65535;
+        this._drawingComplete = false;
+        this._trackSize(x + w, y + h);
+        this._path += " m " + (x + w) + " " + (y + yRadius) + " ae " + (x + radius) + " " + (y + yRadius) + " " + radius + " " + yRadius + " " + startAngle + " " + endAngle;
+        return this;
+    },
+    
+    /**
+     * Draws a diamond.     
+     * 
+     * @method drawDiamond
+     * @param {Number} x y-coordinate
+     * @param {Number} y x-coordinate
+     * @param {Number} width width
+     * @param {Number} height height
+     * @protected
+     */
+    drawDiamond: function(x, y, width, height)
+    {
+        var midWidth = width * 0.5,
+            midHeight = height * 0.5;
+        this.moveTo(x + midWidth, y);
+        this.lineTo(x + width, y + midHeight);
+        this.lineTo(x + midWidth, y + height);
+        this.lineTo(x, y + midHeight);
+        this.lineTo(x + midWidth, y);
+        return this;
+    },
+
+    /**
      * Draws a wedge.
      *
      * @method drawWedge
@@ -256,7 +320,7 @@ VMLDrawing.prototype = {
         {
             node.path = path + pathEnd;
         }
-        if(w && h)
+        if(!isNaN(w) && !isNaN(h))
         {
             node.coordSize =  w + ', ' + h;
             node.style.position = "absolute";
@@ -278,13 +342,29 @@ VMLDrawing.prototype = {
     },
 
     /**
+     * Ends a fill and stroke
+     *
+     * @method closePath
+     */
+    closePath: function()
+    {
+        this._path += ' x e ';
+    },
+
+    /**
      * Clears the path.
      *
      * @method clear
      */
     clear: function()
     {
-		this._path = "";
+		this._right = 0;
+        this._bottom = 0;
+        this._width = 0;
+        this._height = 0;
+        this._left = 0;
+        this._top = 0;
+        this._path = "";
     },
 
     /**
@@ -343,13 +423,13 @@ VMLShape = function()
 {
     this._transforms = [];
     this.matrix = new Y.Matrix();
-    this.rotationMatrix = new Y.Matrix();
+    this._normalizedMatrix = new Y.Matrix();
     VMLShape.superclass.constructor.apply(this, arguments);
 };
 
 VMLShape.NAME = "vmlShape";
 
-Y.extend(VMLShape, Y.BaseGraphic, Y.mix({
+Y.extend(VMLShape, Y.GraphicBase, Y.mix({
 	/**
 	 * Indicates the type of shape
 	 *
@@ -381,10 +461,39 @@ Y.extend(VMLShape, Y.BaseGraphic, Y.mix({
 	{
 		var host = this,
             graphic = cfg.graphic;
-        host._graphic = graphic;
 		host.createNode();
+        if(graphic)
+        {
+            this._setGraphic(graphic);
+        }
         this._updateHandler();
 	},
+ 
+    /**
+     * Set the Graphic instance for the shape.
+     *
+     * @method _setGraphic
+     * @param {Graphic | Node | HTMLElement | String} render This param is used to determine the graphic instance. If it is a `Graphic` instance, it will be assigned
+     * to the `graphic` attribute. Otherwise, a new Graphic instance will be created and rendered into the dom element that the render represents.
+     * @private
+     */
+    _setGraphic: function(render)
+    {
+        var graphic;
+        if(render instanceof Y.VMLGraphic)
+        {
+		    this._graphic = render;
+        }
+        else
+        {
+            render = Y.one(render);
+            graphic = new Y.VMLGraphic({
+                render: render
+            });
+            graphic._appendShape(this);
+            this._graphic = graphic;
+        }
+    },
 
 	/**
 	 * Creates the dom node for the shape.
@@ -403,6 +512,7 @@ Y.extend(VMLShape, Y.BaseGraphic, Y.mix({
 			id,
 			type,
 			nodestring,
+            visibility = this.get("visible") ? "visible" : "hidden",
 			strokestring,
 			classString,
 			stroke,
@@ -414,12 +524,12 @@ Y.extend(VMLShape, Y.BaseGraphic, Y.mix({
 			fill,
 			fillstring;
 			id = this.get("id");
-			type = this._type;
+			type = this._type == "path" ? "shape" : this._type;
 			classString = 'vml' + type + ' yui3-vmlShape yui3-' + this.constructor.NAME; 
 			stroke = this._getStrokeProps();
 			fill = this._getFillProps();
 			
-			nodestring  = '<' + type + '  xmlns="urn:schemas-microsft.com:vml" id="' + id + '" class="' + classString + '" style="behavior:url(#default#VML);display:inline-block;position:absolute;left:' + x + 'px;top:' + y + 'px;width:' + w + 'px;height:' + h + 'px;"';
+			nodestring  = '<' + type + '  xmlns="urn:schemas-microsft.com:vml" id="' + id + '" class="' + classString + '" style="behavior:url(#default#VML);display:inline-block;position:absolute;left:' + x + 'px;top:' + y + 'px;width:' + w + 'px;height:' + h + 'px;visibility:' + visibility + '"';
 
 		    if(stroke && stroke.weight && stroke.weight > 0)
 			{
@@ -484,7 +594,7 @@ Y.extend(VMLShape, Y.BaseGraphic, Y.mix({
 				node.appendChild(this._fillNode);
 			}
 
-			this.node = node;
+            this.node = node;
             this._strokeFlag = false;
             this._fillFlag = false;
 	},
@@ -818,7 +928,14 @@ Y.extend(VMLShape, Y.BaseGraphic, Y.mix({
                     {
                         if(gradient.hasOwnProperty(i))
                         {
-                            this._fillNode.setAttribute(i, gradient[i]);
+                            if(i == "colors")
+                            {
+                                this._fillNode.colors.value = gradient[i];
+                            }
+                            else
+                            {
+                                this._fillNode[i] = gradient[i];
+                            }
                         }
                     }
                 }
@@ -911,7 +1028,8 @@ Y.extend(VMLShape, Y.BaseGraphic, Y.mix({
 			fx = fill.fx,
 			fy = fill.fy,
 			r = fill.r,
-			pct,
+			actualPct,
+            pct,
 			rotation = fill.rotation || 0;
 		if(type === "linear")
 		{
@@ -951,17 +1069,12 @@ Y.extend(VMLShape, Y.BaseGraphic, Y.mix({
 			opacity = isNumber(opacity) ? opacity : 1;
 			pct = stop.offset || i/(len-1);
 			pct *= (r * 2);
-			if(pct <= 1)
-			{
-				pct = Math.round(100 * pct) + "%";
-				oi = i > 0 ? i + 1 : "";
-				gradientProps["opacity" + oi] = opacity + "";
-				colorstring += ", " + pct + " " + color;
-			}
+            pct = Math.round(100 * pct) + "%";
+            oi = i > 0 ? i + 1 : "";
+            gradientProps["opacity" + oi] = opacity + "";
+            colorstring += ", " + pct + " " + color;
 		}
-		pct = stops[1].offset || 0;
-		pct *= 100;
-		if(parseInt(pct, 10) < 100)
+		if(parseFloat(pct) < 100)
 		{
 			colorstring += ", 100% " + color;
 		}
@@ -1003,93 +1116,69 @@ Y.extend(VMLShape, Y.BaseGraphic, Y.mix({
 			transformOrigin,
             x = this.get("x"),
             y = this.get("y"),
-            w = this.get("width"),
-            h = this.get("height"),
-            cx,
-            cy,
-            dx,
-            dy,
-            originX,
-            originY,
-            translatedCenterX,
-            translatedCenterY,
-            oldBounds,
-            newBounds,
             tx,
             ty,
-            keys = [],
             matrix = this.matrix,
-            rotationMatrix = this.rotationMatrix,
+            normalizedMatrix = this._normalizedMatrix,
+            isPathShape = this instanceof Y.VMLPath,
             i = 0,
             len = this._transforms.length;
-
         if(this._transforms && this._transforms.length > 0)
 		{
             transformOrigin = this.get("transformOrigin");
+       
+            if(isPathShape)
+            {
+                normalizedMatrix.translate(this._left, this._top);
+            }
+            //vml skew matrix transformOrigin ranges from -0.5 to 0.5.
+            //subtract 0.5 from values
+            tx = transformOrigin[0] - 0.5;
+            ty = transformOrigin[1] - 0.5;
+            
+            //ensure the values are within the appropriate range to avoid errors
+            tx = Math.max(-0.5, Math.min(0.5, tx));
+            ty = Math.max(-0.5, Math.min(0.5, ty));
             for(; i < len; ++i)
             {
                 key = this._transforms[i].shift();
                 if(key)
                 {
-                    if(key == "rotate")
-                    {
-                        tx = transformOrigin[0];
-                        ty =  transformOrigin[1];
-                        oldBounds = this.getBounds(matrix);
-                        matrix[key].apply(matrix, this._transforms[i]);
-                        rotationMatrix[key].apply(rotationMatrix, this._transforms[i]);
-                        newBounds = this.getBounds(matrix);
-                        cx = w * 0.5;
-                        cy = h * 0.5;
-                        originX = w * (tx);
-                        originY = h * (ty);
-                        translatedCenterX = cx - originX;
-                        translatedCenterY = cy - originY;
-                        translatedCenterX = (matrix.a * translatedCenterX + matrix.b * translatedCenterY);
-                        translatedCenterY = (matrix.d * translatedCenterX + matrix.d * translatedCenterY);
-                        translatedCenterX += originX;
-                        translatedCenterY += originY;
-                        matrix.dx = rotationMatrix.dx + translatedCenterX - (newBounds.right - newBounds.left)/2;
-                        matrix.dy = rotationMatrix.dy + translatedCenterY - (newBounds.bottom - newBounds.top)/2;
-                    }
-                    else if(key == "scale")
-                    {
-				        transformOrigin = this.get("transformOrigin");
-                        tx = x + (transformOrigin[0] * this.get("width"));
-                        ty = y + (transformOrigin[1] * this.get("height")); 
-                        matrix.translate(tx, ty);
-                        matrix[key].apply(matrix, this._transforms[i]); 
-                        matrix.translate(0 - tx, 0 - ty);
-                    }
-                    else
-                    {
-                        matrix[key].apply(matrix, this._transforms[i]); 
-                        rotationMatrix[key].apply(rotationMatrix, this._transforms[i]); 
-                    }
-                    keys.push(key);
+                    normalizedMatrix[key].apply(normalizedMatrix, this._transforms[i]); 
+                    matrix[key].apply(matrix, this._transforms[i]); 
                 }
 			}
-            transform = matrix.toFilterText();
+            if(isPathShape)
+            {
+                normalizedMatrix.translate(-this._left, -this._top);
+            }
+            transform = normalizedMatrix.a + "," + 
+                        normalizedMatrix.c + "," + 
+                        normalizedMatrix.b + "," + 
+                        normalizedMatrix.d + "," + 
+                        0 + "," +
+                        0;
 		}
-        dx = matrix.dx;
-        dy = matrix.dy;
         this._graphic.addToRedrawQueue(this);    
-        //only apply the filter if necessary as it degrades image quality
-        if(Y.Array.indexOf(keys, "skew") > -1 || Y.Array.indexOf(keys, "scale") > -1)
-		{
-            node.style.filter = transform;
-        }
-        else if(Y.Array.indexOf(keys,"rotate") > -1)
+        if(transform)
         {
-            node.style.rotation = this._rotation;
-            dx = rotationMatrix.dx;
-            dy = rotationMatrix.dy;
+            if(!this._skew)
+            {
+                this._skew = DOCUMENT.createElement( '<skew class="vmlskew" xmlns="urn:schemas-microsft.com:vml" on="false" style="behavior:url(#default#VML);display:inline-block;" />');
+                this.node.appendChild(this._skew); 
+            }
+            this._skew.matrix = transform;
+            this._skew.on = true;
+            //use offset for translate
+            this._skew.offset = normalizedMatrix.dx + "px, " + normalizedMatrix.dy + "px";
+            this._skew.origin = tx + ", " + ty;
         }
-        this._transforms = [];
-        x += dx;
-        y += dy;
+        if(this._type != "path")
+        {
+            this._transforms = [];
+        }
         node.style.left = x + "px";
-		node.style.top = y + "px";
+        node.style.top =  y + "px";
     },
 	
 	/**
@@ -1193,16 +1282,6 @@ Y.extend(VMLShape, Y.BaseGraphic, Y.mix({
 		this._addTransform("skewY", arguments);
 	 },
 
-
-	/**
-     * Storage for `rotation` atribute.
-     *
-     * @property _rotation
-     * @type Number
-	 * @private
-	 */
-	_rotation: 0,
-
 	/**
 	 * Rotates the shape clockwise around it transformOrigin.
 	 *
@@ -1211,7 +1290,6 @@ Y.extend(VMLShape, Y.BaseGraphic, Y.mix({
 	 */
 	 rotate: function(deg)
 	 {
-		this._rotation += deg;
 		this._addTransform("rotate", arguments);
 	 },
 
@@ -1352,50 +1430,21 @@ Y.extend(VMLShape, Y.BaseGraphic, Y.mix({
 	 */
 	getBounds: function(cfg)
 	{
-	    var wt,
-            bounds = {},
-            matrix = cfg || this.matrix,
-            a = matrix.a,
-            b = matrix.b,
-            c = matrix.c,
-            d = matrix.d,
-            dx = matrix.dx,
-            dy = matrix.dy,
-            w = this.get("width"),
-            h = this.get("height"),
-            left = this.get("x"), 
-            top = this.get("y"), 
-            right = left + w,
-            bottom = top + h,
-			stroke = this.get("stroke"),
-            //[x1, y1]
-            x1 = (a * left + c * top + dx), 
-            y1 = (b * left + d * top + dy),
-            //[x2, y2]
-            x2 = (a * right + c * top + dx),
-            y2 = (b * right + d * top + dy),
-            //[x3, y3]
-            x3 = (a * left + c * bottom + dx),
-            y3 = (b * left + d * bottom + dy),
-            //[x4, y4]
-            x4 = (a * right + c * bottom + dx),
-            y4 = (b * right + d * bottom + dy);
-        bounds.left = Math.min(x3, Math.min(x1, Math.min(x2, x4)));
-        bounds.right = Math.max(x3, Math.max(x1, Math.max(x2, x4)));
-        bounds.top = Math.min(y2, Math.min(y4, Math.min(y3, y1)));
-        bounds.bottom = Math.max(y2, Math.max(y4, Math.max(y3, y1)));
-        //if there is a stroke, extend the bounds to accomodate
-        if(stroke && stroke.weight)
+		var stroke = this.get("stroke"),
+			w = this.get("width"),
+			h = this.get("height"),
+			x = this.get("x"),
+			y = this.get("y"),
+            wt = 0;
+		if(stroke && stroke.weight)
 		{
 			wt = stroke.weight;
-            bounds.left -= wt;
-            bounds.right += wt;
-            bounds.top -= wt;
-            bounds.bottom += wt;
 		}
-        bounds.width = bounds.right - bounds.left;
-        bounds.height = bounds.bottom - bounds.top;
-        return bounds;
+        w = (x + w + wt) - (x - wt); 
+        h = (y + h + wt) - (y - wt);
+        x -= wt;
+        y -= wt;
+		return this._normalizedMatrix.getContentRect(w, h, x, y);
 	},
 	
     /**
@@ -1405,22 +1454,38 @@ Y.extend(VMLShape, Y.BaseGraphic, Y.mix({
      */
     destroy: function()
     {
-        var parentNode = this._graphic && this._graphic._node ? this._graphic._node : null,
-            node = this.node;
+        var graphic = this.get("graphic");
+        if(graphic)
+        {
+            graphic.removeShape(this);
+        }
+        else
+        {
+            this._destroy();
+        }
+    },
+
+    /**
+     *  Implementation for shape destruction
+     *
+     *  @method destroy
+     *  @protected
+     */
+    _destroy: function()
+    {
         if(this.node)
         {   
             if(this._fillNode)
             {
-                node.removeChild(this._fillNode);
+                this.node.removeChild(this._fillNode);
+                this._fillNode = null;
             }
             if(this._strokeNode)
             {
-                node.removeChild(this._strokeNode);
+                this.node.removeChild(this._strokeNode);
+                this._strokeNode = null;
             }
-            if(parentNode)
-            {
-                parentNode.removeChild(node);
-            }
+            Y.one(this.node).remove(true);
         }
     }
 }, Y.VMLDrawing.prototype));
@@ -1452,6 +1517,7 @@ VMLShape.ATTRS = {
      *        <dt>translateY</dt><dd>Translates the shape along the y-axis.</dd>
      *        <dt>skewX</dt><dd>Skews the shape around the x-axis.</dd>
      *        <dt>skewY</dt><dd>Skews the shape around the y-axis.</dd>
+     *        <dt>matrix</dt><dd>Specifies a 2D transformation matrix comprised of the specified six values.</dd>      
      *    </dl>
      * </p>
      * <p>Applying transforms through the transform attribute will reset the transform matrix and apply a new transform. The shape class also contains corresponding methods for each transform
@@ -1474,17 +1540,13 @@ VMLShape.ATTRS = {
             var i = 0,
                 len,
                 transform;
-            this._rotation = 0;
             this.matrix.init();	
-		    this._transforms = this.matrix.getTransformArray(val);
+            this._normalizedMatrix.init();	
+            this._transforms = this.matrix.getTransformArray(val);
             len = this._transforms.length;
             for(;i < len; ++i)
             {
                 transform = this._transforms[i];
-                if(transform[0] == "rotate")  
-                {
-                    this._rotation += transform[1];
-                }
             }
             this._transform = val;
             if(this.initialized)
@@ -1783,37 +1845,18 @@ VMLPath = function()
 };
 
 VMLPath.NAME = "vmlPath";
-Y.extend(VMLPath, Y.VMLShape, {
-	/**
-     * Updates `Shape` based on attribute changes.
-     *
-     * @method _updateHandler
-	 * @private
-	 */
-    _updateHandler: function()
-    {   
-        var host = this;
-            host._fillChangeHandler();
-            host._strokeChangeHandler();
-        host._updateTransform();
-    }
-});
+Y.extend(VMLPath, Y.VMLShape);
 VMLPath.ATTRS = Y.merge(Y.VMLShape.ATTRS, {
 	/**
 	 * Indicates the width of the shape
 	 * 
-	 * @config width 
+	 * @config width
 	 * @type Number
 	 */
 	width: {
 		getter: function()
 		{
-			return this._width;
-		},
-
-		setter: function(val)
-		{
-			this._width = val;
+			var val = Math.max(this._right - this._left, 0);
 			return val;
 		}
 	},
@@ -1827,13 +1870,7 @@ VMLPath.ATTRS = Y.merge(Y.VMLShape.ATTRS, {
 	height: {
 		getter: function()
 		{
-			return this._height;
-		},
-
-		setter: function(val)
-		{
-			this._height = val;
-			return val;
+			return Math.max(this._bottom - this._top, 0);
 		}
 	},
 	
@@ -2281,7 +2318,10 @@ VMLGraphic.ATTRS = {
         setter: function(val)
         {
             this._resizeDown = val;
-            this._redraw();
+            if(this._node)
+            {
+                this._redraw();
+            }
             return val;
         }
     },
@@ -2356,7 +2396,7 @@ VMLGraphic.ATTRS = {
     }
 };
 
-Y.extend(VMLGraphic, Y.BaseGraphic, {
+Y.extend(VMLGraphic, Y.GraphicBase, {
     /**
      * Storage for `x` attribute.
      *
@@ -2449,7 +2489,7 @@ Y.extend(VMLGraphic, Y.BaseGraphic, {
     destroy: function()
     {
         this.clear();
-        this._node.parentNode.removeChild(this._node);
+        Y.one(this._node).remove(true);
     },
 
     /**
@@ -2506,7 +2546,8 @@ Y.extend(VMLGraphic, Y.BaseGraphic, {
         }
         if(shape && shape instanceof VMLShape)
         {
-            shape.destroy();
+            shape._destroy();
+            this._shapes[shape.get("id")] = null;
             delete this._shapes[shape.get("id")];
         }
         if(this.get("autoDraw"))
@@ -2561,7 +2602,7 @@ Y.extend(VMLGraphic, Y.BaseGraphic, {
      * @method clear
      */
     clear: function() {
-        this._removeAllShapes();
+        this.removeAllShapes();
         this._removeChildren(this._node);
     },
 
@@ -2736,7 +2777,7 @@ Y.extend(VMLGraphic, Y.BaseGraphic, {
         var shapeBox,
             box;
         this._shapes[shape.get("id")] = shape;
-        if(!this.get("resizeDown"))
+        if(!this._resizeDown)
         {
             shapeBox = shape.getBounds();
             box = this._contentBounds;
@@ -2762,7 +2803,7 @@ Y.extend(VMLGraphic, Y.BaseGraphic, {
      */
     _redraw: function()
     {
-        var box = this.get("resizeDown") ? this._getUpdatedContentBounds() : this._contentBounds;
+        var box = this._resizeDown ? this._getUpdatedContentBounds() : this._contentBounds;
         if(this.get("autoSize"))
         {
             this.setSize(box.right, box.bottom);
@@ -2815,4 +2856,4 @@ Y.VMLGraphic = VMLGraphic;
 
 
 
-}, '3.4.1' ,{requires:['graphics'], skinnable:false});
+}, '3.5.0' ,{skinnable:false, requires:['graphics']});

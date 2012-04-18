@@ -1,16 +1,16 @@
 /*
-YUI 3.4.1 (build 4118)
-Copyright 2011 Yahoo! Inc. All rights reserved.
+YUI 3.5.0 (build 5089)
+Copyright 2012 Yahoo! Inc. All rights reserved.
 Licensed under the BSD License.
 http://yuilibrary.com/license/
 */
 YUI.add('datatype-date-math', function(Y) {
 
 /**
- * Parse number submodule.
+ * Datatype Date Math submodule.
  *
  * @module datatype
- * @submodule datatype-date-parse
+ * @submodule datatype-date-math
  * @for DataType.Date
  */
 var LANG = Y.Lang;
@@ -32,19 +32,83 @@ Y.mix(Y.namespace("DataType.Date"), {
             return false;
         }
 	},
-	
+
+	/**
+	 * Checks whether two dates correspond to the same date and time.
+	 * @for DataType.Date
+	 * @method areEqual
+	 * @param aDate {Date} The first date to compare.
+	 * @param bDate {Date} The second date to compare.
+	 * @return {Boolean} True if the two dates correspond to the same
+	 * date and time.
+	 */	
 	areEqual : function (aDate, bDate) {
 		return (this.isValidDate(aDate) && this.isValidDate(bDate) && (aDate.getTime() == bDate.getTime()));	
 	},
 
+	/**
+	 * Checks whether the first date comes later than the second.
+	 * @for DataType.Date
+	 * @method isGreater
+	 * @param aDate {Date} The first date to compare.
+	 * @param bDate {Date} The second date to compare.
+	 * @return {Boolean} True if the first date is later than the second.
+	 */	
     isGreater : function (aDate, bDate) {
     	return (this.isValidDate(aDate) && this.isValidDate(bDate) && (aDate.getTime() > bDate.getTime()));
     },
 
+	/**
+	 * Checks whether the first date comes later than or is the same as
+	 * the second.
+	 * @for DataType.Date
+	 * @method isGreaterOrEqual
+	 * @param aDate {Date} The first date to compare.
+	 * @param bDate {Date} The second date to compare.
+	 * @return {Boolean} True if the first date is later than or 
+	 * the same as the second.
+	 */	
     isGreaterOrEqual : function (aDate, bDate) {
     	return (this.isValidDate(aDate) && this.isValidDate(bDate) && (aDate.getTime() >= bDate.getTime()));
     },
 
+
+    /**
+	 * Checks whether the date is between two other given dates.
+	 * @for DataType.Date
+	 * @method isInRange
+	 * @param aDate {Date} The date to check
+	 * @param bDate {Date} Lower bound of the range.
+	 * @param cDate {Date} Higher bound of the range.
+	 * @return {Boolean} True if the date is between the two other given dates.
+	 */	
+    isInRange : function (aDate, bDate, cDate) {
+    	return (this.isGreaterOrEqual(aDate, bDate) && this.isGreaterOrEqual(cDate, aDate));
+    },
+
+	/**
+	 * Adds a specified number of days to the given date.
+	 * @for DataType.Date
+	 * @method addDays
+	 * @param oDate {Date} The date to add days to.
+	 * @param numMonths {Number} The number of days to add (can be negative)
+	 * @return {Date} A new Date with the specified number of days
+	 * added to the original date.
+	 */	
+	addDays : function (oDate, numDays) {
+		return new Date(oDate.getTime() + 86400000*numDays);
+	},
+
+
+	/**
+	 * Adds a specified number of months to the given date.
+	 * @for DataType.Date
+	 * @method addMonths
+	 * @param oDate {Date} The date to add months to.
+	 * @param numMonths {Number} The number of months to add (can be negative)
+	 * @return {Date} A new Date with the specified number of months
+	 * added to the original date.
+	 */	
 	addMonths : function (oDate, numMonths) {
 		var newYear = oDate.getFullYear();
 		var newMonth = oDate.getMonth() + numMonths;		
@@ -58,7 +122,16 @@ Y.mix(Y.namespace("DataType.Date"), {
 		
 		return newDate;
 	},
-	
+
+	/**
+	 * Adds a specified number of years to the given date.
+	 * @for DataType.Date
+	 * @method addYears
+	 * @param oDate {Date} The date to add years to.
+	 * @param numYears {Number} The number of years to add (can be negative)
+	 * @return {Date} A new Date with the specified number of years
+	 * added to the original date.
+	 */	
 	addYears : function (oDate, numYears) {
 		var newYear = oDate.getFullYear() + numYears;
 		var newDate = new Date(oDate.getTime());
@@ -67,6 +140,14 @@ Y.mix(Y.namespace("DataType.Date"), {
 		return newDate;
 	},
 
+	/**
+	 * Lists all dates in a given month.
+	 * @for DataType.Date
+	 * @method listOfDatesInMonth
+	 * @param oDate {Date} The date corresponding to the month for
+	 * which a list of dates is required.
+	 * @return {Array} An `Array` of `Date`s from a given month.
+	 */	
     listOfDatesInMonth : function (oDate) {
        if (!this.isValidDate(oDate)) {
        	 return [];
@@ -85,11 +166,14 @@ Y.mix(Y.namespace("DataType.Date"), {
     },
 
 	/**
-	 * Takes a native JavaScript Date and returns the number of days in the month that the given date belongs to.
+	 * Takes a native JavaScript Date and returns the number of days
+	 * in the month that the given date belongs to.
 	 * @for DataType.Date
 	 * @method daysInMonth
-	 * @param oDate {Date} Date in the month for which the number of days is desired.
-	 * @return {Number} A number (either 28, 29, 30 or 31) of days in the given month.
+	 * @param oDate {Date} Date in the month for which the number 
+	 * of days is desired.
+	 * @return {Number} A number (either 28, 29, 30 or 31) of days 
+	 * in the given month.
 	 */
 	 daysInMonth : function (oDate) {
 		if (!this.isValidDate(oDate)) {
@@ -123,4 +207,4 @@ Y.mix(Y.namespace("DataType.Date"), {
 });
 
 
-}, '3.4.1' ,{requires:['yui-base']});
+}, '3.5.0' ,{requires:['yui-base']});
