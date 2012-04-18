@@ -64,6 +64,12 @@ YUI.add('SprintDays', function(Y) {
                     return typeof value === 'boolean';
                 }
             },
+            nbHoursEstimate: {
+                value: 0,
+                validator: function (value) {
+                    return typeof value === 'number' && value >= 0;
+                }
+            },
             nbHours: {
                 value: 0,
                 validator: function (value) {
@@ -160,7 +166,7 @@ YUI.add('SprintDays', function(Y) {
 
         render: function () {
             this.container.setContent(Y.Lang.sub(this.template,
-                this.model.getAttrs(['date', 'nbHours', 'nbSP', 'nbBV'])
+                this.model.getAttrs(['date', 'nbHoursEstimate', 'nbHours', 'nbSP', 'nbBV'])
             ));
 
             this.container.one('input[type="checkbox"].visible').set('checked', this.model.get('visible') == 1);

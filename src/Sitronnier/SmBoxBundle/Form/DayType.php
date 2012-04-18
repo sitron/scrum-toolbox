@@ -25,9 +25,18 @@ class DayType extends AbstractType
             ->add('date', null, array(
                 'attr' => array('class' => 'day-date'),
             ))
-            ->add('nb_hours')
-            ->add('nb_business_value')
-            ->add('nb_story_points')
+            ->add('nb_hours_estimate', null, array(
+                'label' => 'day_form.label.nb_hours_estimate'
+            ))
+            ->add('nb_hours', null, array(
+                'label' => 'day_form.label.nb_hours'
+            ))
+            ->add('nb_business_value', null, array(
+                'label' => 'day_form.label.nb_business_value'
+            ))
+            ->add('nb_story_points', null, array(
+                'label' => 'day_form.label.nb_story_points'
+            ))
             ->add('visible')
             ->add('sprint',
               'entity',

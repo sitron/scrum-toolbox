@@ -19,6 +19,9 @@ Sitronnier\SmBoxBundle\Entity\Day:
     visible:
       type: boolean
       nullable: true
+    nb_hours_estimate:
+      type: float
+      nullable: true
   manyToOne:
     sprint:
       targetEntity: Sprint 

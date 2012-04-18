@@ -69,6 +69,7 @@ class StatsController extends Controller
             return new Response(json_encode(array('error' => 'no day found')), 400);
         }
 
+        $day->setNbHoursEstimate($newDay->nbHoursEstimate);
         $day->setNbHours($newDay->nbHours);
         $day->setNbStoryPoints($newDay->nbSP);
         $day->setNbBusinessValue($newDay->nbBV);

@@ -5,13 +5,12 @@ YUI.add('SprintChart', function(Y) {
 
     chartData = [];
 
-    // decide what serie to show
-    shownSeries = ['MD', 'BV', 'SP'];
+    shownSeries = ['eMD', 'MD', 'BV', 'SP'];
 
     // define axes
     axes = {
         md: {
-            keys: ['MD'],
+            keys: ['MD', 'eMD'],
             position: 'left',
             type: 'numeric',
             minimum: 0,
@@ -56,6 +55,29 @@ YUI.add('SprintChart', function(Y) {
 
     // defines series (graphs)
     seriesCollection = [
+         {
+            type: 'combo',
+            xAxis: 'dates',
+            yAxis: 'md',
+            xKey: 'date',
+            yKey: 'eMD',
+            xDisplayName: 'Date',
+            yDisplayName: 'Estimated Man/Days',
+            line: {
+               'color': '#999',
+               'weight': 3
+            },
+            marker: {
+                'border': {
+                    'color': '#666'
+                },
+                'fill': {
+                    'color': '#fff'
+                },
+                'width': 7,
+                'height': 7
+            }
+        },
          {
             type: 'combo',
             xAxis: 'dates',
@@ -167,6 +189,9 @@ YUI.add('SprintChart', function(Y) {
         // Title
         updateTitleIndex(sprint.index);
 
+        // Get shown series
+        var mySeries = getShownSeries();
+
         // Show at least 10 dates or use end date
         chartDataExtended = fillDates();
 
@@ -176,15 +201,31 @@ YUI.add('SprintChart', function(Y) {
             dataProvider: chartDataExtended,
             render: '#graph-canvas',
             categoryKey: 'date',
-            seriesKeys: shownSeries,
             axes: axes,
             horizontalGridlines: true,
             verticalGridlines: true,
             seriesCollection: seriesCollection,
-            styles: {graph: chartStyle}
+            seriesKeys: mySeries.concat(),
+            styles: {graph: chartStyle},
         });
 
         drawTopLine(biggestRatio);
+    };
+
+    // decide what series to show
+    function getShownSeries() {
+        var last, myShownSeries;
+
+        last = chartData[chartData.length - 1];
+        myShownSeries = [];
+
+        Y.each(shownSeries, function(item, index) {
+            if (last[item] != 0) {
+                myShownSeries.push(String(item));
+            }
+        }, this);
+
+        return myShownSeries;
     };
 
     function drawTopLine(biggestRatio) {
@@ -251,22 +292,38 @@ YUI.add('SprintChart', function(Y) {
 
     // update data with ajax call result
     function defineDataProvider(result) {
-        chartData = [{'date': '', 'MD': 0, 'BV': 0, 'SP': 0}];
-        chartDataAll = [{'date': '', 'MD': 0, 'BV': 0, 'SP': 0}];
+        // data with only visible days
+        chartData = [{'date': '', 'eMD': 0, 'MD': 0, 'BV': 0, 'SP': 0}];
+        // data with all days
+        chartDataAll = [{'date': '', 'eMD': 0, 'MD': 0, 'BV': 0, 'SP': 0}];
 
         var cSP = 0;
         var cBV = 0;
+        var ceMD = 0;
         var cMD = 0;
 
         Y.each(result.days, function(day) {
             cSP += day.nbSP;
             cBV += day.nbBV;
+            ceMD += day.nbHoursEstimate;
             cMD += day.nbHours;
             if (day.visible) {
-                chartData.push({'date': day.date, 'MD': cMD / 8, 'BV': cBV, 'SP': cSP});
-                chartDataAll.push({'date': day.date, 'MD': cMD / 8, 'BV': cBV, 'SP': cSP});
+                chartData.push({
+                    'date': day.date,
+                    'eMD': ceMD / 8,
+                    'MD': cMD / 8,
+                    'BV': cBV,
+                    'SP': cSP
+                });
+                chartDataAll.push({
+                    'date': day.date,
+                    'eMD': ceMD / 8,
+                    'MD': cMD / 8,
+                    'BV': cBV,
+                    'SP': cSP
+                });
             } else {
-                chartDataAll.push({'date': day.date, 'MD': '', 'BV': '', 'SP': ''});
+                chartDataAll.push({'date': day.date, 'eMD': '', 'MD': '', 'BV': '', 'SP': ''});
             }
         });
     };
@@ -280,7 +337,7 @@ YUI.add('SprintChart', function(Y) {
         } else {
             dates = chartData;
             while (dates.length < 10) {
-                dates.push({'date': '', 'MD': '', 'BV': '', 'SP': ''});
+                dates.push({'date': '', 'eMD': '', 'MD': '', 'BV': '', 'SP': ''});
             }
         }
         return dates;

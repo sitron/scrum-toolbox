@@ -12,6 +12,13 @@ day_entity:
   edit:                                         edit day
   create:                                       create new day
 
+day_form:
+  label:
+    nb_hours:                                   Effective nb of hours
+    nb_hours_estimate:                          Estimated nb of hours
+    nb_business_value:                          Business value created
+    nb_story_points:                            Story points created
+
 project_entity:
   edit:                                         edit project
   list:                                         all projects
@@ -74,6 +81,7 @@ id:                                             id
 date:                                           date
 nb:
   hours:                                        nb of hours
+  hours_estimate:                               estimate nb of hours
 MD:                                             MD
 story_points:                                   story points
 SP:                                             SP

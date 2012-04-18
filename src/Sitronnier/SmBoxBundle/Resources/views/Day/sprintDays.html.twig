@@ -4,6 +4,7 @@
 
 <div id="sprint-days-header">
     <p>{% trans %}date{% endtrans %}</p>
+    <p>{% trans %}nb.hours_estimate{% endtrans %}</p>
     <p>{% trans %}nb.hours{% endtrans %}</p>
     <p>{% trans %}business_value{% endtrans %}</p>
     <p>{% trans %}story_points{% endtrans %}</p>
@@ -14,6 +15,10 @@
 
 <script type="text/x-template" id="sprint-day-template">
     <div class="date">{ date }</div>
+    <div class="inline-updatable">
+        <span class="">{ nbHoursEstimate }</span>
+        <input class="nbHoursEstimate" type="text" value="{ nbHoursEstimate }" />
+    </div>
     <div class="inline-updatable">
         <span class="">{ nbHours }</span>
         <input class="nbHours" type="text" value="{ nbHours }" />

@@ -20,6 +20,11 @@ class Day
     private $nb_hours;
 
     /**
+     * @var float $nb hours estimate
+     */
+    private $nb_hours_estimate;
+
+    /**
      * @var float $nb business value
      */
     private $nb_business_value;
@@ -49,6 +54,7 @@ class Day
         $json = array(
             'id' => $this->id,
             'nbHours' => $this->nb_hours,
+            'nbHoursEstimate' => $this->nb_hours_estimate,
             'nbBV' => $this->nb_business_value,
             'nbSP' => $this->nb_story_points,
             'date' => $this->date->format('D d/m'),
@@ -85,6 +91,26 @@ class Day
     public function getNbHours()
     {
         return $this->nb_hours;
+    }
+
+    /**
+     * Set nb hours estimate
+     *
+     * @param float $nbHours
+     */
+    public function setNbHoursEstimate($nbHours)
+    {
+        $this->nb_hours_estimate = $nbHours;
+    }
+
+    /**
+     * Get nb hours estimate
+     *
+     * @return float 
+     */
+    public function getNbHoursEstimate()
+    {
+        return $this->nb_hours_estimate;
     }
 
     /**
