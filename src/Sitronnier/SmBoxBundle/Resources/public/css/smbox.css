@@ -151,7 +151,7 @@ div#sprint-days-container div.sprint-day.visible {
 
 div#sprint-days-container div.sprint-day div {
     float: left;
-    width: 150px;
+    width: 120px;
     height: 20px;
 }
 
@@ -167,7 +167,7 @@ div#sprint-days-container div.sprint-day div.inline-updatable input {
 }
 
 div#sprint-days-header p {
-    width: 150px;
+    width: 120px;
     float: left;
     font-weight: bold;
     text-transform: capitalize;

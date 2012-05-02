@@ -3,12 +3,12 @@
 <p class="explanation">{% trans %}sprint_days_inline_editing{% endtrans %}</p>
 
 <div id="sprint-days-header">
-    <p>{% trans %}date{% endtrans %}</p>
-    <p>{% trans %}nb.hours_estimate{% endtrans %}</p>
-    <p>{% trans %}nb.hours{% endtrans %}</p>
-    <p>{% trans %}business_value{% endtrans %}</p>
-    <p>{% trans %}story_points{% endtrans %}</p>
-    <p>{% trans %}is_visible{% endtrans %}</p>
+    <p>{% trans %}day_list.date{% endtrans %}</p>
+    <p>{% trans %}day_list.nb.hours_estimate{% endtrans %}</p>
+    <p>{% trans %}day_list.nb.hours{% endtrans %}</p>
+    <p>{% trans %}day_list.business_value{% endtrans %}</p>
+    <p>{% trans %}day_list.story_points{% endtrans %}</p>
+    <p>{% trans %}day_list.is_visible{% endtrans %}</p>
 </div>
 <div id="sprint-days-container" class="clearer"></div>
 <a href="{{ path('day_new') }}?sprint={{ sprint.id }}">{% trans %}add.day{% endtrans %}</a>

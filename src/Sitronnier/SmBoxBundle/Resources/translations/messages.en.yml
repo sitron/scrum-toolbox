@@ -19,6 +19,15 @@ day_form:
     nb_business_value:                          Business value created
     nb_story_points:                            Story points created
 
+day_list:
+  date:                                         Date
+  nb:
+    hours_estimate:                             Nb of hours<br/>estimated
+    hours:                                      Nb of hours<br/>done
+  business_value:                               Business value done
+  story_points:                                 Story points done
+  is_visible:                                   Show day in chart
+
 project_entity:
   edit:                                         edit project
   list:                                         all projects
