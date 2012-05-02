@@ -18,6 +18,8 @@ day_create:
 day_edit:
     pattern:  /{id}/edit
     defaults: { _controller: "SitronnierSmBoxBundle:Day:edit" }
+    options:
+        expose: true
 
 day_update:
     pattern:  /{id}/update

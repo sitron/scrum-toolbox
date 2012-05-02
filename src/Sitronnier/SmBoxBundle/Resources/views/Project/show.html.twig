@@ -1,23 +1,16 @@
 {% extends "SitronnierSmBoxBundle::layout.html.twig" %}
 
-{% block body %}
-<h1>{% trans %}project{% endtrans %}</h1>
+{% block breadcrumb %}
+{% endblock %}
 
-<table class="record_properties">
-    <tbody>
-        <tr>
-            <th>{% trans %}id{% endtrans %}</th>
-            <td>{{ entity.id }}</td>
-        </tr>
-        <tr>
-            <th>{% trans %}title{% endtrans %}</th>
-            <td>{{ entity.title }}</td>
-        </tr>
-    </tbody>
-</table>
+{% block body %}
+<h1>{{ entity.title }}</h1>
 
 <div>
     <ul>
+        <li>
+            <a href="{{ path('sprint_new', {'project': entity.id}) }}">{% trans %}add.sprint{% endtrans %}</a>
+        </li>
         {% for sprint in sprints %}
         <li>
             <a href="{{ path('sprint_show', {'id': sprint.id}) }}">{% trans %}sprint{% endtrans %} {{ sprint.index }}</a>
@@ -28,10 +21,7 @@
 
 <ul class="record_actions">
     <li>
-        <a href="{{ path('sprint_new', {'project': entity.id}) }}">{% trans %}add.sprint{% endtrans %}</a>
-    </li>
-    <li>
-    <a href="{{ path('project_edit', { 'id': entity.id }) }}">{% trans %}edit{% endtrans %}</a>
+        <a href="{{ path('project_edit', { 'id': entity.id }) }}">{% trans %}edit{% endtrans %}</a>
     </li>
     <li>
         <form action="{{ path('project_delete', { 'id': entity.id }) }}" method="post">

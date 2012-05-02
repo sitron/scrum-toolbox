@@ -70,7 +70,6 @@ class DayController extends Controller
         return $this->render('SitronnierSmBoxBundle:Day:show.html.twig', array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
-
         ));
     }
 

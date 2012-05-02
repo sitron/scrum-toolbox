@@ -1,5 +1,9 @@
 {% extends "SitronnierSmBoxBundle::layout.html.twig" %}
 
+{% block breadcrumb %}
+    {% render "SitronnierSmBoxBundle:Default:breadcrumb" with {'day': entity.id } %}
+{% endblock %}
+
 {% block body %}
 <h1>{% trans %}day{% endtrans %}</h1>
 

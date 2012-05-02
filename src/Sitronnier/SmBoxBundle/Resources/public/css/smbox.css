@@ -155,6 +155,10 @@ div#sprint-days-container div.sprint-day div {
     height: 20px;
 }
 
+div#sprint-days-container div.sprint-day div.actions {
+    width: 80px;
+}
+
 div#sprint-days-container div.sprint-day div.clearer {
     float: none;
     clear: both;
@@ -174,5 +178,34 @@ div#sprint-days-header p {
     margin: 0;
     padding: 0;
     margin-bottom: .5em;
+}
+
+div.breadcrumb {
+    overflow: hidden;
+}
+
+div.breadcrumb ul {
+    padding: 0;
+    margin: 0;
+}
+
+div.breadcrumb ul li {
+    list-style-type: none;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    float: left;
+}
+
+div.breadcrumb span {
+    float:left;
+}
+
+div.breadcrumb ul li a {
+    text-decoration: none;
+}
+
+div.breadcrumb ul li a:hover {
+    text-decoration: underline;
 }
 

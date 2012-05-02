@@ -1,0 +1,10 @@
+<div class="breadcrumb">
+    <ul>
+        {% for item in items %}
+        <li>
+            <a href="{{ item.link }}">{{ item.title }}</a>&nbsp;>&nbsp;
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+

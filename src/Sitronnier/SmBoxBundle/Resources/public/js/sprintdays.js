@@ -135,6 +135,9 @@ YUI.add('SprintDays', function(Y) {
             },
             'a.delete': {
                 click: 'deleteModel'
+            },
+            'a.edit': {
+                click: 'goToEditPage'
             }
         },
 
@@ -200,6 +203,10 @@ YUI.add('SprintDays', function(Y) {
             if (confirm('Are you sure?')) {
                 this.get('model').destroy({'delete': true});
             }
+        },
+
+        goToEditPage: function() {
+            window.location.href = Routing.generate('day_edit', { id: this.get('model').get('id') });
         },
 
         onKeyPress: function(e) {

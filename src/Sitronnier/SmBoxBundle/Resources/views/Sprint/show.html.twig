@@ -1,7 +1,11 @@
 {% extends "SitronnierSmBoxBundle::layout.html.twig" %}
 
+{% block breadcrumb %}
+    {% render "SitronnierSmBoxBundle:Default:breadcrumb" with {'project': sprint.project.id, 'sprint': sprint.id } %}
+{% endblock %}
+
 {% block body %}
-<h1>{{ sprint.project.title }}</h1>
+
 <h3>{% trans %}sprint{% endtrans %} {{ sprint.index }}</h3>
 
 <ul>
@@ -10,12 +14,6 @@
         <a href="{{ path('day_new') }}?sprint={{ sprint.id }}">{% trans %}add.day{% endtrans %}</a>
     </li>
     {% endif %}
-    <li>
-        <a href="{{ path('sprint', {'project': sprint.project.id}) }}">{% trans %}see.all.sprint_for{% endtrans %} {{ sprint.project.title }}</a>
-    </li>
-    <li>
-        <a href="{{ path('day', {'sprint': sprint.id}) }}">{% trans %}see.all.day_for_sprint{% endtrans %} {{ sprint.index }}</a>
-    </li>
     <li>
         <a href="{{ path('sprint_show_shared', {'id': sprint.id, 'token': token}) }}">{% trans %}share.sprint.chart{% endtrans %}</a>
     </li>
