@@ -243,7 +243,7 @@ YUI.add('SprintChart', function(Y) {
                 dashstyle: [3, 4]
             }
         });
-        topmargin = Math.round(biggestRatio > 1 ? chartheight - (chartheight / biggestRatio) : 0);
+        topmargin = Math.round(biggestRatio > 1 ? chartheight - (chartheight / biggestRatio) + 9 : 9);
         topline.moveTo(30, topmargin);
         topline.lineTo(parseInt(chartwidth) - 50, topmargin);
         topline.end();
