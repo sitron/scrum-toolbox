@@ -6,6 +6,7 @@ not_logged_in:                                  You are not logged in
 login:                                          login
 or:                                             or
 register:                                       register
+submit:                                         submit
 
 day_entity:
   list:                                         all days
