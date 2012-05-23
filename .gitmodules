@@ -55,3 +55,9 @@
 [submodule "vendor/bundles/Symfony/Bundle/DoctrineMigrationsBundle"]
 	path = vendor/bundles/Symfony/Bundle/DoctrineMigrationsBundle
 	url = http://github.com/symfony/DoctrineMigrationsBundle.git
+[submodule "vendor/twitter/bootstrap"]
+	path = vendor/twitter/bootstrap
+	url = https://github.com/twitter/bootstrap.git
+[submodule "vendor/lessphp"]
+	path = vendor/lessphp
+	url = https://github.com/leafo/lessphp.git
