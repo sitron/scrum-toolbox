@@ -22,18 +22,6 @@
 {% endblock %}
 
 {% block menu %}
-    <div class="navbar menu">
-        <div class="navbar-inner">
-            <div class="container">
-                <ul class="nav">
-                    <li><a href="{{ path('project') }}">{% trans %}projects{% endtrans %}</a></li>
-                    <li><a href="{{ path('sprint') }}">{% trans %}sprints{% endtrans %}</a></li>
-                    <li class="divider-vertical"></li>
-                    <li><a href="{{ path('faq') }}">{% trans %}faq{% endtrans %}</a></li>
-                </ul>
-                <div class="clearer"></div>
-            </div>
-        </div>
-    </div>
+    {% include 'SitronnierSmBoxBundle:Default:menu.html.twig' %}
 {% endblock %}
 

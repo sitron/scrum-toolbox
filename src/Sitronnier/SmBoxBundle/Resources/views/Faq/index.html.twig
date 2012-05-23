@@ -1,7 +1,11 @@
 {% extends 'SitronnierSmBoxBundle::layout.html.twig' %}
 
+{% block menu %}
+    {% include 'SitronnierSmBoxBundle:Default:menu.html.twig' with {'active': 'faq'} %}
+{% endblock %}
+
 {% block body %}
-    <h3>{% trans %}FAQ{% endtrans %}</h3>
+    <h1>{% trans %}FAQ{% endtrans %}</h1>
 
     <div class="faq">
         <div class="item">

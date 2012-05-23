@@ -1,5 +1,9 @@
 {% extends "SitronnierSmBoxBundle::layout.html.twig" %}
 
+{% block menu %}
+    {% include 'SitronnierSmBoxBundle:Default:menu.html.twig' with {'active': 'sprint'} %}
+{% endblock %}
+
 {% block body %}
 <h1>{% trans %}sprint_entity.list{% endtrans %}</h1>
 

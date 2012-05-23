@@ -1,0 +1,14 @@
+<div class="navbar menu">
+    <div class="navbar-inner">
+        <div class="container">
+            <ul class="nav">
+                <li class="{% if active is defined and active == 'project' %}active{% endif %}"><a href="{{ path('project') }}">{% trans %}projects{% endtrans %}</a></li>
+                <li class="{% if active is defined and active == 'sprint' %}active{% endif %}"><a href="{{ path('sprint') }}">{% trans %}sprints{% endtrans %}</a></li>
+                <li class="divider-vertical"></li>
+                <li class="{% if active is defined and active == 'faq' %}active{% endif %}"><a href="{{ path('faq') }}">{% trans %}faq{% endtrans %}</a></li>
+            </ul>
+            <div class="clearer"></div>
+        </div>
+    </div>
+</div>
+
