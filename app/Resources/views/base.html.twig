@@ -19,17 +19,18 @@
             <link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
         {% endstylesheets %}
         {% block stylesheets %}
-            <link href="{{ asset('/bundles/sitronniersmbox/css/smbox.css') }}" rel="stylesheet" type="text/css" />
         {% endblock %}
     </head>
     <body>
-        {% block top %}{% endblock %}
-        {% block menu %}{% endblock %}
-        {% block breadcrumb %}{% endblock %}
-        {% block body %}{% endblock %}
-        {% block javascripts %}
-            <script type="text/javascript" src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
-            <script type="text/javascript" src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
-        {% endblock %}
+        <div class="main-container">
+            {% block top %}{% endblock %}
+            {% block menu %}{% endblock %}
+            {% block breadcrumb %}{% endblock %}
+            {% block body %}{% endblock %}
+            {% block javascripts %}
+                <script type="text/javascript" src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+                <script type="text/javascript" src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+            {% endblock %}
+        </div>
     </body>
 </html>
