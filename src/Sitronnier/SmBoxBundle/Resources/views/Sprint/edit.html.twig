@@ -1,23 +1,24 @@
 {% extends "SitronnierSmBoxBundle::layout.html.twig" %}
 
+{% block breadcrumb %}
+    {% render "SitronnierSmBoxBundle:Default:breadcrumb" with {'project': entity.project.id } %}
+{% endblock %}
+
 {% block body %}
 <h1>{% trans %}sprint_entity.edit{% endtrans %}</h1>
 
 <form action="{{ path('sprint_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
     {{ form_widget(edit_form) }}
     <p>
-        <button type="submit">{% trans %}submit{% endtrans %}</button>
+        <button class="btn" type="submit">{% trans %}submit{% endtrans %}</button>
     </p>
 </form>
 
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('sprint') }}">{% trans %}see.all.sprint{% endtrans %}</a>
-    </li>
+<ul class="record_actions unstyled">
     <li>
         <form action="{{ path('sprint_delete', { 'id': entity.id }) }}" method="post">
             {{ form_widget(delete_form) }}
-            <button type="submit">{% trans %}delete{% endtrans %}</button>
+            <button class="btn" type="submit"><i class="icon-remove"></i> {% trans %}delete{% endtrans %}</button>
         </form>
     </li>
 </ul>

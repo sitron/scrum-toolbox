@@ -1,0 +1,45 @@
+@import "../../../../../vendor/twitter/bootstrap/less/bootstrap.less";
+
+@baseFontSize: 16px;
+@baseLineHeight: 20px;
+@textColor: @grayDark;
+@linkColor: @grayDark;
+@btnPrimaryBackground: @blue;
+@iconSpritePath:          "/bundles/sitronniersmbox/images/glyphicons/glyphicons-halflings.png";
+@iconWhiteSpritePath:     "/bundles/sitronniersmbox/images/glyphicons/glyphicons-halflings-white.png";
+
+body {
+    background-color: white;
+}
+
+a {
+    text-decoration: underline;
+}
+
+a.btn, a.list-btn {
+    text-decoration: none;
+}
+
+h1 {
+    margin-bottom: 10px;
+}
+
+// bootstrap override
+input:focus,
+textarea:focus {
+  border-color: rgba(100, 100, 100, .8);
+  @shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(100, 100, 100, .6);
+  .box-shadow(@shadow);
+  outline: 0;
+  outline: thin dotted \9; /* IE6-9 */
+}
+
+.btn {
+  line-height: @baseLineHeight + 4;
+  *line-height: 24px;
+}
+
+.btn .icon-plus {
+    margin-top: 2px;
+}
+

@@ -15,9 +15,11 @@
              var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
              })();
          </script>
-         {% stylesheets filter='lessphp'
-             '@SitronnierSmBoxBundle/Resources/less/main.less'
-             '@SitronnierSmBoxBundle/Resources/less/faq.less'
+         {% stylesheets output='css/compressed.css' filter='lessphp, yui_css'
+             '@SitronnierSmBoxBundle/Resources/less/base.less'
+             '@SitronnierSmBoxBundle/Resources/less/layout.less'
+             '@SitronnierSmBoxBundle/Resources/less/modules.less'
+             '@SitronnierSmBoxBundle/Resources/less/states.less'
          %}
              <link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
         {% endstylesheets %}

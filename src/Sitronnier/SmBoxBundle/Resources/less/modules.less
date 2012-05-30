@@ -1,0 +1,155 @@
+@import "../../../../../vendor/twitter/bootstrap/less/bootstrap.less";
+@import "base.less";
+
+// sprint list
+.sprint-list {
+    margin-top: 10px;
+    h3 {
+        text-transform: capitalize;
+    }
+}
+
+// sprint data
+#graph-canvas {
+    width: 90%;
+    height: 500px;
+    display: block;
+    background: #f9f9f9;
+    position: relative;
+}
+
+.key-figures {
+    table {
+        width: auto;
+        td, th {
+            width: 150px;
+        }
+    }
+}
+
+div#sprint-days-container {
+    .sprint-day.hidden {
+        color: #666;
+    }
+    .sprint-day.visible {
+        color: #000;
+    }
+    .sprint-day {
+        div {
+            float: left;
+            width: 120px;
+            height: 20px;
+        }
+        div.actions {
+            width: 85px;
+        }
+        div.inline-updatable span,
+        div.inline-updatable input {
+            width: 80%;
+            display: block;
+        }
+    }
+}
+
+.clearer {
+    float: none;
+    clear: both;
+}
+
+div#sprint-days-header p {
+    width: 120px;
+    float: left;
+    font-weight: bold;
+    text-transform: capitalize;
+    margin: 0;
+    padding: 0;
+    margin-bottom: .5em;
+}
+
+// shared
+.list-btn {
+    .btn;
+    .btn-small;
+}
+
+.explanation {
+    font-size: 0.8em;
+    margin-top: 0;
+    padding-top: 0;
+    margin-bottom: .4em;
+    font-style: italic;
+}
+
+#sitronnier_smboxbundle_daytype_date_day,
+#sitronnier_smboxbundle_daytype_date_month,
+#sitronnier_smboxbundle_sprinttype_start_date_day,
+#sitronnier_smboxbundle_sprinttype_start_date_month,
+#sitronnier_smboxbundle_sprinttype_end_date_day,
+#sitronnier_smboxbundle_sprinttype_end_date_month {
+    width: 50px;
+}
+
+#sitronnier_smboxbundle_daytype_date_year,
+#sitronnier_smboxbundle_sprinttype_start_date_year,
+#sitronnier_smboxbundle_sprinttype_end_date_year {
+    width: 70px;
+}
+
+#sitronnier_smboxbundle_sprinttype_index {
+    width: 60px;
+}
+
+// edit form
+.edit-form-actions {
+    div.form {
+        display: inline-block;
+    }
+}
+
+// listings
+.records-list {
+    width: 100%;
+    text-align: left;
+    margin-top: 10px;
+
+    ul.actions {
+        list-style-type: none;
+        margin: 0;
+
+        li {
+            float: left;
+            margin-right: 10px;
+        }
+    }
+}
+
+// navbar
+.navbar.menu a {
+    text-transform: capitalize;
+}
+
+// faq module
+.faq {
+    .item {
+        margin-bottom: 20px;
+        .question {
+            font-style: italic;
+            font-weight: bold;
+            margin: 0;
+        }
+        .answer {
+            margin: 0;
+        }
+        .answer .example {
+            font-style: italic;
+            color: @grey;
+        }
+    }
+    img {
+        margin: 10px 0;
+    }
+    li {
+        margin-bottom: 4px;
+    }
+}
+

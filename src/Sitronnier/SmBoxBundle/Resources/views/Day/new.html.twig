@@ -17,16 +17,11 @@
 
     {{ form_rest(form) }}
     <p>
-        <button type="submit">{% trans %}create{% endtrans %}</button>
+        <button class="btn" type="submit">{% trans %}create{% endtrans %}</button>
     </p>
     </div>
 </form>
 
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('day') }}">{% trans %}see.all.days{% endtrans %}</a>
-    </li>
-</ul>
 {% endblock %}
 
 {% block javascripts %}

@@ -13,14 +13,8 @@
 
     {{ form_rest(form) }}
     <p>
-        <button type="submit">{% trans %}create{% endtrans %}</button>
+        <button class="btn" type="submit">{% trans %}create{% endtrans %}</button>
     </p>
 </form>
-
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('project') }}">{% trans %}see.all.project{% endtrans %}</a>
-    </li>
-</ul>
 {% endblock %}
 

@@ -7,13 +7,9 @@
 {% block body %}
 <h1>{% trans %}project_entity.list{% endtrans %}</h1>
 
-<ul>
-    <li>
-        <a href="{{ path('project_new') }}">{% trans %}add.project{% endtrans %}</a>
-    </li>
-</ul>
+<a class="btn btn-success" href="{{ path('project_new') }}"><i class="icon-plus icon-white"></i> {% trans %}add.project{% endtrans %}</a>
 
-<table class="records_list">
+<table class="records-list table table-striped">
     <thead>
         <tr>
             <th>{% trans %}id{% endtrans %}</th>
@@ -27,12 +23,12 @@
             <td><a href="{{ path('project_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
             <td>{{ entity.title }}</td>
             <td>
-                <ul>
+                <ul class="actions">
                     <li>
-                        <a href="{{ path('project_show', { 'id': entity.id }) }}">{% trans %}show{% endtrans %}</a>
+                        <a class="list-btn" href="{{ path('project_show', { 'id': entity.id }) }}"><i class="icon-zoom-in"></i> {% trans %}show{% endtrans %}</a>
                     </li>
                     <li>
-                        <a href="{{ path('project_edit', { 'id': entity.id }) }}">{% trans %}edit{% endtrans %}</a>
+                        <a class="list-btn" href="{{ path('project_edit', { 'id': entity.id }) }}"><i class="icon-edit"></i> {% trans %}edit{% endtrans %}</a>
                     </li>
                 </ul>
             </td>

@@ -45,13 +45,13 @@ class SprintType extends AbstractType
             ))
             ->add('start_date', 'date', array(
                 'required' => false,
-                'widget' => 'single_text',
+                'widget' => 'choice',
                 'format' => 'dd-MM-yyyy',
                 'label' => 'sprint_form.label.start_date',
             ))
             ->add('end_date', 'date', array(
                 'required' => false,
-                'widget' => 'single_text',
+                'widget' => 'choice',
                 'format' => 'dd-MM-yyyy',
                 'label' => 'sprint_form.label.end_date',
             ))

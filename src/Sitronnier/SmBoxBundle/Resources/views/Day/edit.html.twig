@@ -16,15 +16,15 @@
 
     {{ form_rest(edit_form) }}
     <p>
-        <button type="submit">{% trans %}submit{% endtrans %}</button>
+        <button class="btn" type="submit">{% trans %}submit{% endtrans %}</button>
     </p>
 </form>
 
-<ul class="record_actions">
+<ul class="record_actions unstyled">
     <li>
         <form action="{{ path('day_delete', { 'id': entity.id }) }}" method="post">
             {{ form_widget(delete_form) }}
-            <button type="submit">{% trans %}delete{% endtrans %}</button>
+            <button class="btn" type="submit"><i class="icon-remove"></i> {% trans %}delete{% endtrans %}</button>
         </form>
     </li>
 </ul>

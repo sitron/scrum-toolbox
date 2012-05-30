@@ -2,7 +2,7 @@
 
 {% block top %}
     <div class="top clearfix">
-        <h1 class="logo">{% trans %}scrummaster.toolbox{% endtrans %}</h1>
+        <h2 class="logo">{% trans %}scrummaster.toolbox{% endtrans %}</h2>
         <div class="login-state">
             {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                 <a href="{{ path('fos_user_profile_show') }}">{{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}</a> |

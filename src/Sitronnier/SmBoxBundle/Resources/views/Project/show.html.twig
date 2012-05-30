@@ -6,11 +6,11 @@
 {% block body %}
 <h1>{{ entity.title }}</h1>
 
-<div>
+<a class="btn btn-success" href="{{ path('sprint_new', {'project': entity.id}) }}"><i class="icon-plus icon-white"></i> {% trans %}add.sprint{% endtrans %}</a>
+
+<div class="sprint-list">
+    <h3>{% trans %}sprint_entity.list{% endtrans %}</h3>
     <ul>
-        <li>
-            <a href="{{ path('sprint_new', {'project': entity.id}) }}">{% trans %}add.sprint{% endtrans %}</a>
-        </li>
         {% for sprint in sprints %}
         <li>
             <a href="{{ path('sprint_show', {'id': sprint.id}) }}">{% trans %}sprint{% endtrans %} {{ sprint.index }}</a>
@@ -19,18 +19,15 @@
     </ul>
 </div>
 
-<ul class="record_actions">
+<ul class="record_actions unstyled">
     <li>
-        <a href="{{ path('project_edit', { 'id': entity.id }) }}">{% trans %}edit{% endtrans %}</a>
+        <a class="btn" href="{{ path('project_edit', { 'id': entity.id }) }}">{% trans %}edit{% endtrans %}</a>
     </li>
     <li>
         <form action="{{ path('project_delete', { 'id': entity.id }) }}" method="post">
             {{ form_widget(delete_form) }}
-            <button type="submit">{% trans %}delete{% endtrans %}</button>
+            <button class="btn" type="submit">{% trans %}delete{% endtrans %}</button>
         </form>
-    </li>
-    <li>
-        <a href="{{ path('project') }}">{% trans %}see.all.project{% endtrans %}</a>
     </li>
 </ul>
 {% endblock %}
