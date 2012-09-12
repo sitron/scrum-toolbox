@@ -182,7 +182,7 @@ YUI.add('SprintDays', function(Y) {
                 this.get('container').all('input[type="text"]').on('blur', this.replaceToValue, this);
 
                 this.get('container').addClass(this.getVisibleClass(this.get('model').get('visible')));
-                this.get('container').addClass('sprint-day');
+                this.get('container').addClass('sprint-day clearfix');
             }
 
             // hide all text inputs (show on span click)

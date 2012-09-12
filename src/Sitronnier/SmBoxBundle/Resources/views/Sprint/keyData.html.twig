@@ -1,41 +1,45 @@
 <div class="key-figures">
-    <table class="record-properties">
-        <tbody>
+    <table class="record-properties table">
+        <thead>
             <tr>
                 <th></th>
                 <th class="md-title">{% trans %}MD{% endtrans %}</th>
                 <th class="sp-title">{% trans %}SP{% endtrans %}</th>
                 <th class="bv-title">{% trans %}BV{% endtrans %}</th>
             </tr>
+        </thead>
+        <tbody>
             <tr>
-                <th class="label">{% trans %}total{% endtrans %}</th>
+                <th>{% trans %}total{% endtrans %}</th>
                 <td>{{ sprint.mandays }}</td>
                 <td>{{ sprint.storypoints }}</td>
                 <td>{{ sprint.businessvalue }}</td>
             </tr>
             <tr>
-                <th class="label">{% trans %}burnt.data{% endtrans %}</th>
+                <th>{% trans %}burnt.data{% endtrans %}</th>
                 <td><span class="sprint-burnt-md"></span></td>
                 <td><span class="sprint-burnt-sp"></span></td>
                 <td><span class="sprint-burnt-bv"></span></td>
             </tr>
             <tr>
-                <th class="label">{% trans %}burnt.ratio{% endtrans %}</th>
+                <th>{% trans %}burnt.ratio{% endtrans %}</th>
                 <td><span class="sprint-burnt-md-ratio"></span></td>
                 <td><span class="sprint-burnt-sp-ratio"></span></td>
                 <td><span class="sprint-burnt-bv-ratio"></span></td>
             </tr>
         </tbody>
     </table>
-    <table class="record-properties">
-        <tbody>
+    <table class="record-properties table">
+        <thead>
             <tr>
                 <th></th>
                 <th>{% trans %}planned{% endtrans %}</th>
                 <th>{% trans %}actual{% endtrans %}</th>
             </tr>
+        </thead>
+        <tbody>
             <tr>
-                <th class="label">{% trans %}velocity{% endtrans %}</th>
+                <th>{% trans %}velocity{% endtrans %}</th>
                 <td><span class="sprint-velocity-planned"></span></td>
                 <td><span class="sprint-velocity-actual"></span></td>
             </tr>

@@ -102,7 +102,7 @@ class SprintController extends Controller
         $form = $this->createForm(new SprintType($user->getId()), $sprint);
 
         return $this->render('SitronnierSmBoxBundle:Sprint:new.html.twig', array(
-            'entity' => $sprint,
+            'sprint' => $sprint,
             'form'   => $form->createView()
         ));
     }

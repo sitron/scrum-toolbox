@@ -24,6 +24,7 @@ class DayType extends AbstractType
         $builder
             ->add('date', null, array(
                 'attr' => array('class' => 'day-date'),
+                'format' => 'dd-MM-yyyy',
             ))
             ->add('nb_hours_estimate', null, array(
                 'label' => 'day_form.label.nb_hours_estimate'

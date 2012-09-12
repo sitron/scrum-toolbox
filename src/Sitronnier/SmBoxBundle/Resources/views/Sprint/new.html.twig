@@ -6,14 +6,9 @@
 <form action="{{ path('sprint_create') }}" method="post" {{ form_enctype(form) }}>
     {{ form_widget(form) }}
     <p>
-        <button type="submit">{% trans %}create{% endtrans %}</button>
+        <button class="btn" type="submit">{% trans %}create{% endtrans %}</button>
     </p>
 </form>
 
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('sprint') }}">{% trans %}see.all.sprint{% endtrans %}</a>
-    </li>
-</ul>
 {% endblock %}
 

@@ -3,9 +3,6 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title>{% block title %}Scrum Toolbox!{% endblock %}</title>
-        {% block stylesheets %}
-            <link href="{{ asset('/bundles/sitronniersmbox/css/smbox.css') }}" rel="stylesheet" type="text/css" />
-        {% endblock %}
         <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
         <script type="text/javascript">
             var _gaq = _gaq || [];
@@ -17,16 +14,28 @@
              ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
              var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
              })();
-        </script>
+         </script>
+         {% stylesheets output='css/compressed.css' filter='lessphp, yui_css'
+             '@SitronnierSmBoxBundle/Resources/less/base.less'
+             '@SitronnierSmBoxBundle/Resources/less/layout.less'
+             '@SitronnierSmBoxBundle/Resources/less/modules.less'
+             '@SitronnierSmBoxBundle/Resources/less/states.less'
+         %}
+             <link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
+        {% endstylesheets %}
+        {% block stylesheets %}
+        {% endblock %}
     </head>
     <body>
-        {% block top %}{% endblock %}
-        {% block menu %}{% endblock %}
-        {% block breadcrumb %}{% endblock %}
-        {% block body %}{% endblock %}
-        {% block javascripts %}
-            <script type="text/javascript" src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
-            <script type="text/javascript" src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
-        {% endblock %}
+        <div class="main-container">
+            {% block top %}{% endblock %}
+            {% block menu %}{% endblock %}
+            {% block breadcrumb %}{% endblock %}
+            {% block body %}{% endblock %}
+            {% block javascripts %}
+                <script type="text/javascript" src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+                <script type="text/javascript" src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+            {% endblock %}
+        </div>
     </body>
 </html>

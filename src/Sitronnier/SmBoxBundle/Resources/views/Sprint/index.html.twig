@@ -1,15 +1,15 @@
 {% extends "SitronnierSmBoxBundle::layout.html.twig" %}
 
+{% block menu %}
+    {% include 'SitronnierSmBoxBundle:Default:menu.html.twig' with {'active': 'sprint'} %}
+{% endblock %}
+
 {% block body %}
 <h1>{% trans %}sprint_entity.list{% endtrans %}</h1>
 
-<ul>
-    <li>
-        <a href="{{ path('sprint_new') }}">{% trans %}add.sprint{% endtrans %}</a>
-    </li>
-</ul>
+<a class="btn btn-success" href="{{ path('sprint_new') }}"><i class="icon-plus icon-white"></i> {% trans %}add.sprint{% endtrans %}</a>
 
-<table class="records_list sprint-list">
+<table class="records-list sprint-list table table-striped">
     <thead>
         <tr>
             <th>{% trans %}project{% endtrans %}</th>
@@ -29,12 +29,12 @@
             <td>{{ entity.storypoints }}</td>
             <td>{{ entity.businessvalue }}</td>
             <td>
-                <ul>
+                <ul class="actions">
                     <li>
-                        <a href="{{ path('sprint_show', { 'id': entity.id }) }}">show</a>
+                        <a class="btn btn-small" href="{{ path('sprint_show', { 'id': entity.id }) }}"><i class="icon-zoom-in"></i> show</a>
                     </li>
                     <li>
-                        <a href="{{ path('sprint_edit', { 'id': entity.id }) }}">edit</a>
+                        <a class="btn btn-small" href="{{ path('sprint_edit', { 'id': entity.id }) }}"><i class="icon-edit"></i> edit</a>
                     </li>
                 </ul>
             </td>

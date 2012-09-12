@@ -3,7 +3,7 @@
 {% block body %}
 <h1>{% trans %}day_entity.list{% endtrans %}</h1>
 
-<table class="records_list day-list">
+<table class="records-list day-list table table-striped">
     <thead>
         <tr>
             <th>{% trans %}project{% endtrans %}</th>
@@ -27,12 +27,12 @@
             <td>{{ day['nb_story_points'] }}</td>
             <td>{{ day['nb_business_value'] }}</td>
             <td>
-                <ul>
+                <ul class="actions">
                     <li>
-                        <a href="{{ path('day_show', { 'id': day['day_id'] }) }}">show</a>
+                        <a class="list-btn" href="{{ path('day_show', { 'id': day['day_id'] }) }}">show</a>
                     </li>
                     <li>
-                        <a href="{{ path('day_edit', { 'id': day['day_id'] }) }}">edit</a>
+                        <a class="btn" href="{{ path('day_edit', { 'id': day['day_id'] }) }}">edit</a>
                     </li>
                 </ul>
             </td>

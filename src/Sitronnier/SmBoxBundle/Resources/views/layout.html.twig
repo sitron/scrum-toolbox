@@ -1,7 +1,8 @@
 {% extends '::base.html.twig' %}
 
 {% block top %}
-    <div class="top">
+    <div class="top clearfix">
+        <h2 class="logo">{% trans %}scrummaster.toolbox{% endtrans %}</h2>
         <div class="login-state">
             {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                 <a href="{{ path('fos_user_profile_show') }}">{{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}</a> |
@@ -11,7 +12,6 @@
                 <a href="{{ path('fos_user_registration_register') }}">{{ 'layout.register'|trans([], 'FOSUserBundle') }}</a>
             {% endif %}
         </div>
-        <h1 class="logo">{% trans %}scrummaster.toolbox{% endtrans %}</h1>
     </div>
 
     {% for key, flash in app.session.getFlashes() %}
@@ -22,13 +22,6 @@
 {% endblock %}
 
 {% block menu %}
-    <div class="menu">
-        <ul>
-            <li><a href="{{ path('project') }}">{% trans %}projects{% endtrans %}</a></li>
-            <li><a href="{{ path('sprint') }}">{% trans %}sprints{% endtrans %}</a></li>
-            <li><a href="{{ path('faq') }}">{% trans %}faq{% endtrans %}</a></li>
-        </ul>
-        <div class="clearer"></div>
-    </div>
+    {% include 'SitronnierSmBoxBundle:Default:menu.html.twig' %}
 {% endblock %}
 
