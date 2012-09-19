@@ -58,6 +58,10 @@ class SprintController extends Controller
             throw $this->createNotFoundException('Unable to find Sprint entity.');
         }
 
+        $project = $sprint->getProject();
+        $zebraUrl = $project->getZebraUrl();
+        $zebraUrl = urlencode($zebraUrl);
+
         $deleteForm = $this->createDeleteForm($id);
 
         $jsSprint = json_encode($sprint->toJson());
@@ -67,6 +71,7 @@ class SprintController extends Controller
             'sprint'      => $sprint,
             'delete_form' => $deleteForm->createView(),
             'jsSprint'    => $jsSprint,
+            'zebraUrl'    => $zebraUrl,
         ));
     }
 

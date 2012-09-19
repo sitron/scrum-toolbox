@@ -58,6 +58,7 @@ class Day
             'nbBV' => $this->nb_business_value,
             'nbSP' => $this->nb_story_points,
             'date' => $this->date->format('D d/m'),
+            'fullDate' => $this->date->format('d-m-Y'),
             'visible' => $this->visible,
         );
         return $json;
