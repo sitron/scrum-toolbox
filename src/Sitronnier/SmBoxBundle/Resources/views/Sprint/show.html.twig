@@ -65,7 +65,7 @@
     <script src="{{ asset('/bundles/sitronniersmbox/js/sprintdays.js') }}" type="text/javascript"></script>
     <script type="text/javascript">
         YUI().use('SprintDays', function (Y) {
-            Y.SmbSprintDays.populate('{{ jsSprint }}');
+            Y.SmbSprintDays.populate('{{ jsSprint }}', '{{ zebraUrl }}');
         });
     </script>
 {% endif %}

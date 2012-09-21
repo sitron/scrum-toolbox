@@ -1,6 +1,8 @@
 YUI.add('SprintDays', function(Y) {
     Y.namespace('SmbSprintDays');
 
+    var zebra = '';
+
     /**
      * Day model
      */
@@ -9,7 +11,7 @@ YUI.add('SprintDays', function(Y) {
         initializer: function(o) {
         },
 
-        sync: function (action, options, callback) {
+        sync: function(action, options, callback) {
             var data, o;
 
             data = this.toJSON();
@@ -18,7 +20,7 @@ YUI.add('SprintDays', function(Y) {
                 'data': Y.JSON.stringify(data),
                 'timeout': 2000,
                 'headers': {
-                    'Content-Type': 'application/json',
+                    'Content-Type': 'application/json'
                 },
                 context: this,
                 on: {
@@ -50,44 +52,46 @@ YUI.add('SprintDays', function(Y) {
         syncFailure: function(id, o, args) {
             console.log('failure');
             this.fire('error', {
-                type : 'sync',
+                type: 'sync',
                 error: 'sync error'
             });
-        },
+        }
     }, {
         ATTRS: {
             date: {
             },
+            fullDate: {
+            },
             visible: {
                 value: true,
-                validator: function (value) {
+                validator: function(value) {
                     return typeof value === 'boolean';
                 }
             },
             nbHoursEstimate: {
                 value: 0,
-                validator: function (value) {
+                validator: function(value) {
                     return typeof value === 'number' && value >= 0;
                 }
             },
             nbHours: {
                 value: 0,
-                validator: function (value) {
+                validator: function(value) {
                     return typeof value === 'number' && value >= 0;
                 }
             },
             nbSP: {
                 value: 0,
-                validator: function (value) {
+                validator: function(value) {
                     return typeof value === 'number' && value >= 0;
                 }
             },
             nbBV: {
                 value: 0,
-                validator: function (value) {
+                validator: function(value) {
                     return typeof value === 'number' && value >= 0;
                 }
-            },
+            }
         }
     });
 
@@ -99,6 +103,15 @@ YUI.add('SprintDays', function(Y) {
         model: Y.DayModel,
 
         sprint: {},
+        zebraUrl: '',
+
+        setZebraUrl: function(url) {
+            zebraUrl = url;
+        },
+
+        getZebraUrl: function() {
+            return zebraUrl;
+        },
 
         setSprint: function(newsprint) {
             sprint = newsprint;
@@ -138,10 +151,13 @@ YUI.add('SprintDays', function(Y) {
             },
             'a.edit': {
                 click: 'goToEditPage'
+            },
+            'a.zebra': {
+                click: 'goToZebraPage'
             }
         },
 
-        initializer: function () {
+        initializer: function() {
             var model = this.get('model');
 
             model.after('change', this.render, this);
@@ -152,7 +168,7 @@ YUI.add('SprintDays', function(Y) {
         },
 
         syncSuccess: function(o) {
-            switch(o.type) {
+            switch (o.type) {
                 case 'delete':
                     // call destroy again but without arguments to delete the local model and view
                     this.get('model').destroy();
@@ -160,14 +176,14 @@ YUI.add('SprintDays', function(Y) {
 
                 case 'update':
                     return;
-            };
+            }
         },
 
         error: function(o) {
             Y.log('error: ' + o.error);
         },
 
-        render: function () {
+        render: function() {
             this.get('container').setContent(Y.Lang.sub(this.template,
                 this.get('model').getAttrs(['date', 'nbHoursEstimate', 'nbHours', 'nbSP', 'nbBV'])
             ));
@@ -183,6 +199,11 @@ YUI.add('SprintDays', function(Y) {
 
                 this.get('container').addClass(this.getVisibleClass(this.get('model').get('visible')));
                 this.get('container').addClass('sprint-day clearfix');
+
+                // hide zebra button if no url defined
+                if (zebra === '') {
+                    this.get('container').all('a.zebra.btn').setStyle('display', 'none');
+                }
             }
 
             // hide all text inputs (show on span click)
@@ -190,7 +211,7 @@ YUI.add('SprintDays', function(Y) {
         },
 
         getVisibleClass: function(visible) {
-            return visible? 'visible' : 'hidden';
+            return visible ? 'visible' : 'hidden';
         },
 
         updateVisible: function(e) {
@@ -207,6 +228,19 @@ YUI.add('SprintDays', function(Y) {
 
         goToEditPage: function() {
             window.location.href = Routing.generate('day_edit', { id: this.get('model').get('id') });
+        },
+
+        goToZebraPage: function(e) {
+            var parsedZebra, fullDate;
+
+            if (zebra === '') {
+                alert('Please set the zebra url in your project settings');
+                return;
+            }
+            fullDate = this.get('model').get('fullDate');
+            parsedZebra = zebra.replace(/(start=)(\d+-\d+-\d+)/, '$1' + fullDate);
+            parsedZebra = parsedZebra.replace(/(end=)(\d+-\d+-\d+)/, '$1' + fullDate);
+            window.open(parsedZebra, '_blank');
         },
 
         onKeyPress: function(e) {
@@ -250,12 +284,13 @@ YUI.add('SprintDays', function(Y) {
         }
     });
 
-    Y.SmbSprintDays.populate = function(sprint) {
+    Y.SmbSprintDays.populate = function(sprint, zebraUrl) {
         if (typeof sprint === 'string') {
-            sprint = sprint.replace(/&quot;/ig,'"');
+            sprint = sprint.replace(/&quot;/ig, '"');
             sprint = Y.JSON.parse(sprint);
+            zebra = decodeURIComponent(zebraUrl);
             days.setSprint(sprint);
-        };
+        }
     }
 
 }, '0.1', {requires: ['app', 'model-list', 'model', 'view', 'json-parse', 'node', 'io-base', 'querystring-stringify-simple', 'json']});

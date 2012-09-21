@@ -156,7 +156,8 @@ div#sprint-days-container div.sprint-day div {
 }
 
 div#sprint-days-container div.sprint-day div.actions {
-    width: 80px;
+    width: auto;
+    margin-right: 9px;
 }
 
 div#sprint-days-container div.sprint-day div.clearer {
@@ -178,6 +179,7 @@ div#sprint-days-header p {
     margin: 0;
     padding: 0;
     margin-bottom: .5em;
+    font-size: .9em;
 }
 
 div.breadcrumb {
