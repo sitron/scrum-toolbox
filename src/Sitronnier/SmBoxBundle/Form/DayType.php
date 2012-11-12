@@ -3,7 +3,7 @@
 namespace Sitronnier\SmBoxBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\FormBuilderInterface;
 
 class DayType extends AbstractType
 {
@@ -17,7 +17,7 @@ class DayType extends AbstractType
         }
     }
 
-    public function buildForm(FormBuilder $builder, array $options, $project = null)
+    public function buildForm(FormBuilderInterface $builder, array $options, $project = null)
     {
         $project = $this->project;
 

@@ -6,14 +6,14 @@ use Doctrine\ORM\Mapping as ORM;
 use SitronnierSmBox\Entity\Project;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity()
  */
 class MyUser extends BaseUser
 {
     /**
-    * @ORM\id
+    * @ORM\Id
     * @ORM\Column(type="integer")
-    * @ORM\generatedValue(strategy="AUTO")
+    * @ORM\GeneratedValue(strategy="AUTO")
     */
     protected $id;
 

@@ -3,5 +3,6 @@ app/logs
 vendor
 web/bundles
 app/config/parameters.ini
+app/config/parameters.yml
 *.swp
 *.swo

@@ -1,7 +1,8 @@
-security:
-    acl:
-        connection: default
+jms_security_extra:
+    secure_all_services: false
+    expressions: true
 
+security:
     encoders:
         "FOS\UserBundle\Model\UserInterface": sha512
 
@@ -14,6 +15,10 @@ security:
             id: fos_user.user_manager
 
     firewalls:
+        dev:
+            pattern:  ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
         main:
             pattern:      .*
             form_login:
@@ -34,5 +39,5 @@ security:
         - { path: ^/day, role: ROLE_USER }
         - { path: ^/stats, role: ROLE_USER }
         - { path: ^/public, role: IS_AUTHENTICATED_ANONYMOUSLY }
-
-
+        #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+        #- { path: ^/_internal/secure, roles: IS_AUTHENTICATED_ANONYMOUSLY, ip: 127.0.0.1 }

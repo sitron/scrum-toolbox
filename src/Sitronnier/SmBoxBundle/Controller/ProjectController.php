@@ -103,17 +103,17 @@ class ProjectController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            // creating the ACL
-            $aclProvider = $this->get('security.acl.provider');
-            $objectIdentity = ObjectIdentity::fromDomainObject($entity);
-            $acl = $aclProvider->createAcl($objectIdentity);
+           // // creating the ACL
+           // $aclProvider = $this->get('security.acl.provider');
+           // $objectIdentity = ObjectIdentity::fromDomainObject($entity);
+           // $acl = $aclProvider->createAcl($objectIdentity);
 
-            // retrieving the security identity of the currently logged-in user
-            $securityIdentity = UserSecurityIdentity::fromAccount($user);
+           // // retrieving the security identity of the currently logged-in user
+           // $securityIdentity = UserSecurityIdentity::fromAccount($user);
 
-            // grant owner access
-            $acl->insertObjectAce($securityIdentity, MaskBuilder::MASK_OWNER);
-            $aclProvider->updateAcl($acl);
+           // // grant owner access
+           // $acl->insertObjectAce($securityIdentity, MaskBuilder::MASK_OWNER);
+           // $aclProvider->updateAcl($acl);
 
             return $this->redirect($this->generateUrl('project_show', array('id' => $entity->getId())));
             
@@ -133,25 +133,28 @@ class ProjectController extends Controller
     {
         $em = $this->getDoctrine()->getEntityManager();
 
-        $entity = $em->getRepository('SitronnierSmBoxBundle:Project')->find($id);
+        $securityContext = $this->get('security.context');
+        $user = $securityContext->getToken()->getUser();
 
-        if (!$entity) {
+        $project = $em->getRepository('SitronnierSmBoxBundle:Project')->findOneBy(array('id' => $id, 'owner' => $user->getId()));
+
+        if (!$project) {
             throw $this->createNotFoundException('Unable to find Project entity.');
         }
 
-        $securityContext = $this->get('security.context');
+       // $securityContext = $this->get('security.context');
 
-        // check for edit access
-        if (false === $securityContext->isGranted('EDIT', $entity))
-        {
-            throw new AccessDeniedException();
-        }
+       // // check for edit access
+       // if (false === $securityContext->isGranted('EDIT', $entity))
+       // {
+       //     throw new AccessDeniedException();
+       // }
 
-        $editForm = $this->createForm(new ProjectType(), $entity);
+        $editForm = $this->createForm(new ProjectType(), $project);
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('SitronnierSmBoxBundle:Project:edit.html.twig', array(
-            'entity'      => $entity,
+            'entity'      => $project,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ));
@@ -165,21 +168,24 @@ class ProjectController extends Controller
     {
         $em = $this->getDoctrine()->getEntityManager();
 
-        $entity = $em->getRepository('SitronnierSmBoxBundle:Project')->find($id);
+        $securityContext = $this->get('security.context');
+        $user = $securityContext->getToken()->getUser();
 
-        if (!$entity) {
+        $project = $em->getRepository('SitronnierSmBoxBundle:Project')->findOneBy(array('id' => $id, 'owner' => $user->getId()));
+
+        if (!$project) {
             throw $this->createNotFoundException('Unable to find Project entity.');
         }
 
-        $securityContext = $this->get('security.context');
+      //  $securityContext = $this->get('security.context');
 
-        // check for edit access
-        if (false === $securityContext->isGranted('EDIT', $entity))
-        {
-            throw new AccessDeniedException();
-        }
+      //  // check for edit access
+      //  if (false === $securityContext->isGranted('EDIT', $entity))
+      //  {
+      //      throw new AccessDeniedException();
+      //  }
 
-        $editForm   = $this->createForm(new ProjectType(), $entity);
+        $editForm   = $this->createForm(new ProjectType(), $project);
         $deleteForm = $this->createDeleteForm($id);
 
         $request = $this->getRequest();
@@ -187,14 +193,14 @@ class ProjectController extends Controller
         $editForm->bindRequest($request);
 
         if ($editForm->isValid()) {
-            $em->persist($entity);
+            $em->persist($project);
             $em->flush();
 
             return $this->redirect($this->generateUrl('project_show', array('id' => $id)));
         }
 
         return $this->render('SitronnierSmBoxBundle:Project:edit.html.twig', array(
-            'entity'      => $entity,
+            'entity'      => $project,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ));
@@ -213,21 +219,23 @@ class ProjectController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getEntityManager();
-            $entity = $em->getRepository('SitronnierSmBoxBundle:Project')->find($id);
+            $securityContext = $this->get('security.context');
+            $user = $securityContext->getToken()->getUser();
 
-            if (!$entity) {
+            $project = $em->getRepository('SitronnierSmBoxBundle:Project')->findOneBy(array('id' => $id, 'owner' => $user->getId()));
+            if (!$project) {
                 throw $this->createNotFoundException('Unable to find Project entity.');
             }
 
-            $securityContext = $this->get('security.context');
+          //  $securityContext = $this->get('security.context');
 
-            // check for delete access
-            if (false === $securityContext->isGranted('DELETE', $entity))
-            {
-                throw new AccessDeniedException();
-            }
+          //  // check for delete access
+          //  if (false === $securityContext->isGranted('DELETE', $entity))
+          //  {
+          //      throw new AccessDeniedException();
+          //  }
 
-            $em->remove($entity);
+            $em->remove($project);
             $em->flush();
         }
 

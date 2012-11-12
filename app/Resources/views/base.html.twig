@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta charset="UTF-8" />
         <title>{% block title %}Scrum Toolbox!{% endblock %}</title>
-        <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
         <script type="text/javascript">
             var _gaq = _gaq || [];
             _gaq.push(['_setAccount', 'UA-111463-2']);
@@ -16,10 +16,7 @@
              })();
          </script>
          {% stylesheets output='css/compressed.css' filter='lessphp, yui_css'
-             '@SitronnierSmBoxBundle/Resources/less/base.less'
-             '@SitronnierSmBoxBundle/Resources/less/layout.less'
-             '@SitronnierSmBoxBundle/Resources/less/modules.less'
-             '@SitronnierSmBoxBundle/Resources/less/states.less'
+             '@SitronnierSmBoxBundle/Resources/public/less/master.less'
          %}
              <link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
         {% endstylesheets %}
@@ -39,3 +36,4 @@
         </div>
     </body>
 </html>
+
